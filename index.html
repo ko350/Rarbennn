@@ -114,6 +114,56 @@
             z-index: 0;
         }
 
+        /* Arka Plan Müzik Kontrol Butonu (Sağ Üst Köşe) */
+        .bg-music-toggle {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(25, 12, 27, 0.85);
+            border: 1px solid rgba(255, 79, 163, 0.4);
+            padding: 8px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            color: var(--pink-soft);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 79, 163, 0.15);
+            transition: 0.3s ease;
+        }
+
+        .bg-music-toggle:hover {
+            border-color: var(--pink);
+            color: white;
+            box-shadow: 0 0 25px rgba(255, 79, 163, 0.35);
+        }
+
+        .music-icon {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+            animation: musicPulse 2s infinite ease-in-out;
+        }
+
+        .bg-music-toggle.playing .music-icon {
+            animation: musicSpin 1.5s linear infinite;
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes musicSpin {
+            to { transform: rotate(360deg); }
+        }
+
         .container {
             width: 100%;
             max-width: 500px;
@@ -397,6 +447,12 @@
             cursor: pointer;
         }
 
+        /* ByNoGame Butonu İçin Özel Vurgu */
+        .link-btn.donate-btn {
+            background: linear-gradient(110deg, #38152c, #260d20);
+            border-color: rgba(255, 79, 163, 0.6);
+        }
+
         .link-btn::before {
             content: "";
             position: absolute;
@@ -592,6 +648,15 @@
 
 <body>
 
+    <!-- Arka Plan Müzik Çalar Butonu -->
+    <button class="bg-music-toggle" id="musicToggleBtn" onclick="toggleMusic()">
+        <svg class="music-icon" viewBox="0 0 24 24">
+            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+        </svg>
+        <span id="musicText">MÜZİK: KAPALI</span>
+    </button>
+
+    <!-- Arkada Çalışan Pembe-Beyaz-Mor Monitör Glitch Katmanı -->
     <div class="crt-glitch-bg"></div>
 
     <main class="container" id="tiltContainer">
@@ -600,7 +665,7 @@
             <span>PERSONAL SPACE</span>
             <div class="status unknown" id="streamStatus">
                 <span class="status-dot"></span>
-                <span id="statusText">CHECKING...</span>
+                <span id="statusText">KONTROL EDİLİYOR...</span>
             </div>
         </div>
 
@@ -630,6 +695,7 @@
         <div class="section-title">// Ana bağlantılar</div>
 
         <nav class="menu">
+            <!-- KICK -->
             <a href="https://kick.com/rarbennn" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span class="link-left">
                     <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -645,6 +711,24 @@
                 </span>
             </a>
 
+            <!-- BYNOGAME DESTEK -->
+            <a href="https://donate.bynogame.com/rarbennn" target="_blank" rel="noopener noreferrer" class="link-btn donate-btn">
+                <span class="link-left">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <span class="link-name">BYNOGAME / Destek Ol</span>
+                </span>
+                <span class="arrow-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="8 7 17 7 17 16"></polyline>
+                    </svg>
+                </span>
+            </a>
+
+            <!-- DISCORD -->
             <a href="https://discord.gg/H9q3nkr3nS" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span class="link-left">
                     <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -660,6 +744,7 @@
                 </span>
             </a>
 
+            <!-- INSTAGRAM -->
             <a href="https://www.instagram.com/rarbennn?vrfl=czI0azBqNHZjeXY=" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span class="link-left">
                     <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -677,6 +762,7 @@
                 </span>
             </a>
 
+            <!-- YOUTUBE -->
             <a href="https://youtube.com/@rarbennn?si=cmO38_e32fNFl-Dc" target="_blank" rel="noopener noreferrer" class="link-btn">
                 <span class="link-left">
                     <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
@@ -729,6 +815,62 @@
 
     </main>
 
+    <!-- Web Audio API Synthwave Ambiyans Müzik Motoru -->
+    <script>
+        let audioCtx = null;
+        let isPlaying = false;
+        let musicInterval = null;
+
+        function toggleMusic() {
+            const btn = document.getElementById("musicToggleBtn");
+            const text = document.getElementById("musicText");
+
+            if (!isPlaying) {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                
+                startAmbientMusic();
+                isPlaying = true;
+                btn.classList.add("playing");
+                text.textContent = "MÜZİK: AÇIK";
+            } else {
+                stopAmbientMusic();
+                isPlaying = false;
+                btn.classList.remove("playing");
+                text.textContent = "MÜZİK: KAPALI";
+            }
+        }
+
+        function startAmbientMusic() {
+            // Synthwave / Lofi chord arpeggiator (Saf JS Web Audio)
+            const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25]; // A min akorları
+            
+            musicInterval = setInterval(() => {
+                if (!isPlaying || !audioCtx) return;
+                
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                osc.type = 'sine';
+                const note = notes[Math.floor(Math.random() * notes.length)];
+                osc.frequency.setValueAtTime(note, audioCtx.currentTime);
+
+                gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.5);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start();
+                osc.stop(audioCtx.currentTime + 3.5);
+            }, 600);
+        }
+
+        function stopAmbientMusic() {
+            if (musicInterval) clearInterval(musicInterval);
+        }
+    </script>
+
     <script>
         const channel = "rarbennn";
         const statusBox = document.getElementById("streamStatus");
@@ -762,7 +904,6 @@
 
         async function checkStream() {
             try {
-                // CORS engeline takılmamak için alternatif proxy veya direct fetch denemesi
                 const response = await fetch(`https://kick.com/api/v2/channels/${channel}/livestream`, { cache: "no-store" });
                 if (response.status === 404) { setStatus("offline"); return; }
                 if (!response.ok) throw new Error("Status unavailable");
@@ -774,15 +915,15 @@
                     setStatus("offline"); 
                 }
             } catch (error) {
-                setStatus("offline"); // Hata durumunda varsayılan offline görünmesi için
+                setStatus("offline");
             }
         }
 
         function setStatus(state) {
             statusBox.className = "status " + state;
-            if (state === "live") statusText.textContent = "LIVE NOW";
-            else if (state === "offline") statusText.textContent = "OFFLINE";
-            else statusText.textContent = "OFFLINE";
+            if (state === "live") statusText.textContent = "CANLI YAYINDA";
+            else if (state === "offline") statusText.textContent = "ÇEVRİMDIŞI";
+            else statusText.textContent = "ÇEVRİMDIŞI";
         }
 
         async function getChannelData() {
@@ -808,7 +949,7 @@
                     };
                 }
             } catch (error) {
-                followerCount.textContent = "Ağ bağlantısı bekleniyor";
+                followerCount.textContent = "Bağlantı bekleniyor";
             }
         }
 
