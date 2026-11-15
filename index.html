@@ -179,7 +179,7 @@
                 inset 0 0 35px rgba(255,79,163,.04);
             animation: appear .8s ease, neonPulse 4s infinite alternate;
             transform-style: preserve-style;
-            transition: transform 0.15s ease-out; /* Daha yumuşak geçiş */
+            transition: transform 0.15s ease-out;
             overflow: hidden;
         }
 
@@ -259,16 +259,18 @@
         .status.unknown { color: #d6a94b; }
         .status.unknown .status-dot { background: #d6a94b; box-shadow: none; animation: none; }
 
+        /* Tamamen Pembe Neon Canlı Yayın Kategori Rozeti */
         .stream-category {
             font-size: 10px;
-            color: #d8b4fe;
+            color: var(--pink-soft);
             letter-spacing: 1px;
-            background: rgba(168, 85, 247, 0.15);
-            border: 1px solid rgba(168, 85, 247, 0.35);
+            background: rgba(255, 79, 163, 0.12);
+            border: 1px solid rgba(255, 79, 163, 0.4);
             padding: 4px 10px;
             border-radius: 6px;
             width: fit-content;
             display: none;
+            box-shadow: 0 0 10px rgba(255, 79, 163, 0.15);
         }
 
         .header {
@@ -277,6 +279,7 @@
             border-bottom: 1px solid rgba(255,79,163,.22);
         }
 
+        /* Discord Tarzı Nabız Atan (Pulse) Tek Renk Pembe Konuşma/Yayın Halkası */
         .avatar-wrapper {
             width: 92px;
             height: 92px;
@@ -289,23 +292,29 @@
 
         .avatar-ring {
             position: absolute;
-            inset: 0;
+            inset: -4px;
             border-radius: 50%;
-            border: 2.5px solid transparent;
-            border-top-color: var(--pink);
-            border-right-color: #a855f7;
-            border-bottom-color: var(--pink-soft);
-            border-left-color: #00ffcc;
-            animation: spinRing 3.5s linear infinite;
-            box-shadow: 0 0 20px rgba(255,79,163,0.3);
+            border: 2.5px solid var(--pink);
+            animation: dcTalkPulse 2s infinite ease-in-out;
+            box-shadow: 0 0 18px rgba(255, 79, 163, 0.6);
         }
 
-        .avatar-ring-inner {
-            position: absolute;
-            inset: 6px;
-            border-radius: 50%;
-            border: 1.5px dashed rgba(255, 139, 196, 0.6);
-            animation: spinRingReverse 6s linear infinite;
+        @keyframes dcTalkPulse {
+            0% {
+                transform: scale(0.96);
+                box-shadow: 0 0 10px rgba(255, 79, 163, 0.4);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 25px rgba(255, 79, 163, 0.9);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.96);
+                box-shadow: 0 0 10px rgba(255, 79, 163, 0.4);
+                opacity: 0.8;
+            }
         }
 
         .avatar-core {
@@ -324,6 +333,7 @@
             text-shadow: 0 0 12px var(--pink);
             overflow: hidden;
             position: relative;
+            z-index: 2;
         }
 
         .avatar-core span {
@@ -335,14 +345,6 @@
             height: 100%;
             object-fit: cover;
             display: none;
-        }
-
-        @keyframes spinRing {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes spinRingReverse {
-            to { transform: rotate(-360deg); }
         }
 
         .logo {
@@ -691,14 +693,14 @@
                 <span class="status-dot"></span>
                 <span id="statusText">KONTROL EDİLİYOR...</span>
             </div>
-            <!-- Dinamik Kategori Alanı -->
+            <!-- Dinamik Pembe Kategori Alanı -->
             <div id="streamCategory" class="stream-category">Kategori: Yükleniyor...</div>
         </div>
 
         <header class="header">
             <div class="avatar-wrapper">
+                <!-- Discord Tarzı Nabız Atan Tek Renk Pembe Çember -->
                 <div class="avatar-ring"></div>
-                <div class="avatar-ring-inner"></div>
                 <div class="avatar-core">
                     <img id="kickAvatar" alt="RaRBennn">
                     <div id="avatarFallback">R<span>B</span></div>
@@ -906,7 +908,6 @@
         const tiltContainer = document.getElementById("tiltContainer");
         
         document.addEventListener("mousemove", (e) => {
-            // Eğim hassasiyeti artırıldı (daha az ve pürüzsüz dönmesi için 25 yerine 55 yapıldı)
             const xAxis = (window.innerWidth / 2 - e.pageX) / 55;
             const yAxis = (window.innerHeight / 2 - e.pageY) / 55;
             tiltContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
