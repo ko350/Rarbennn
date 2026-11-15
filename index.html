@@ -226,12 +226,8 @@
         .top-line {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 2.5px;
-            color: var(--muted);
+            justify-content: flex-start;
+            margin-bottom: 25px;
         }
 
         .status {
@@ -239,6 +235,9 @@
             align-items: center;
             gap: 8px;
             color: var(--pink-soft);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
         }
 
         .status-dot {
@@ -412,13 +411,27 @@
             letter-spacing: .3px;
         }
 
+        /* Daha Şık ve Modern Ana Bağlantılar Başlığı */
         .section-title {
-            margin: 30px 0 14px;
-            color: #c3a9bc;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 2px;
+            margin: 32px 0 16px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--pink-soft);
             text-transform: uppercase;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .section-title::before, .section-title::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(255,79,163,.4), transparent);
         }
 
         .menu {
@@ -447,7 +460,6 @@
             cursor: pointer;
         }
 
-        /* ByNoGame Butonu İçin Özel Vurgu */
         .link-btn.donate-btn {
             background: linear-gradient(110deg, #38152c, #260d20);
             border-color: rgba(255, 79, 163, 0.6);
@@ -636,7 +648,7 @@
             margin-top: 10px;
             color: #806b7c;
             font-size: 10px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
         @media(max-width: 450px) {
@@ -662,7 +674,6 @@
     <main class="container" id="tiltContainer">
 
         <div class="top-line">
-            <span>PERSONAL SPACE</span>
             <div class="status unknown" id="streamStatus">
                 <span class="status-dot"></span>
                 <span id="statusText">KONTROL EDİLİYOR...</span>
@@ -687,12 +698,10 @@
             </div>
             <p class="description">
                 Her yayın yeni bir hikâye, her an kendi izini bırakır.
-                <br>
-                Welcome to my space.
             </p>
         </header>
 
-        <div class="section-title">// Ana bağlantılar</div>
+        <div class="section-title">ANA BAĞLANTILAR</div>
 
         <nav class="menu">
             <!-- KICK -->
@@ -809,7 +818,7 @@
         <footer class="footer">
             <div class="footer-brand">RaRBennn</div>
             <div class="footer-text">
-                INDEPENDENTLY CREATED // 2026
+                MADEBYKOCGURBUZ // 2026
             </div>
         </footer>
 
@@ -842,8 +851,7 @@
         }
 
         function startAmbientMusic() {
-            // Synthwave / Lofi chord arpeggiator (Saf JS Web Audio)
-            const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25]; // A min akorları
+            const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25];
             
             musicInterval = setInterval(() => {
                 if (!isPlaying || !audioCtx) return;
