@@ -179,7 +179,7 @@
                 inset 0 0 35px rgba(255,79,163,.04);
             animation: appear .8s ease, neonPulse 4s infinite alternate;
             transform-style: preserve-style;
-            transition: transform 0.1s ease-out;
+            transition: transform 0.15s ease-out; /* Daha yumuşak geçiş */
             overflow: hidden;
         }
 
@@ -225,8 +225,8 @@
 
         .top-line {
             display: flex;
-            align-items: center;
-            justify-content: flex-start;
+            flex-direction: column;
+            gap: 6px;
             margin-bottom: 25px;
         }
 
@@ -259,6 +259,18 @@
         .status.unknown { color: #d6a94b; }
         .status.unknown .status-dot { background: #d6a94b; box-shadow: none; animation: none; }
 
+        .stream-category {
+            font-size: 10px;
+            color: #d8b4fe;
+            letter-spacing: 1px;
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            padding: 4px 10px;
+            border-radius: 6px;
+            width: fit-content;
+            display: none;
+        }
+
         .header {
             text-align: center;
             padding-bottom: 32px;
@@ -266,8 +278,8 @@
         }
 
         .avatar-wrapper {
-            width: 88px;
-            height: 88px;
+            width: 92px;
+            height: 92px;
             margin: 0 auto 20px;
             position: relative;
             display: flex;
@@ -279,19 +291,21 @@
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            border: 2px solid transparent;
+            border: 2.5px solid transparent;
             border-top-color: var(--pink);
+            border-right-color: #a855f7;
             border-bottom-color: var(--pink-soft);
-            animation: spinRing 4s linear infinite;
-            box-shadow: 0 0 15px rgba(255,79,163,.25);
+            border-left-color: #00ffcc;
+            animation: spinRing 3.5s linear infinite;
+            box-shadow: 0 0 20px rgba(255,79,163,0.3);
         }
 
         .avatar-ring-inner {
             position: absolute;
-            inset: 5px;
+            inset: 6px;
             border-radius: 50%;
-            border: 1.5px dashed rgba(255, 139, 196, 0.45);
-            animation: spinRingReverse 7s linear infinite;
+            border: 1.5px dashed rgba(255, 139, 196, 0.6);
+            animation: spinRingReverse 6s linear infinite;
         }
 
         .avatar-core {
@@ -299,7 +313,7 @@
             height: 68px;
             border-radius: 50%;
             background: linear-gradient(135deg, #351631, #1a0c1d);
-            border: 1px solid rgba(255,79,163,.4);
+            border: 1px solid rgba(255,79,163,.5);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -411,7 +425,6 @@
             letter-spacing: .3px;
         }
 
-        /* Daha Şık ve Modern Ana Bağlantılar Başlığı */
         .section-title {
             margin: 32px 0 16px;
             text-align: center;
@@ -678,6 +691,8 @@
                 <span class="status-dot"></span>
                 <span id="statusText">KONTROL EDİLİYOR...</span>
             </div>
+            <!-- Dinamik Kategori Alanı -->
+            <div id="streamCategory" class="stream-category">Kategori: Yükleniyor...</div>
         </div>
 
         <header class="header">
@@ -883,6 +898,7 @@
         const channel = "rarbennn";
         const statusBox = document.getElementById("streamStatus");
         const statusText = document.getElementById("statusText");
+        const streamCategory = document.getElementById("streamCategory");
         const followerCount = document.getElementById("followerCount");
         const kickAvatar = document.getElementById("kickAvatar");
         const avatarFallback = document.getElementById("avatarFallback");
@@ -890,8 +906,9 @@
         const tiltContainer = document.getElementById("tiltContainer");
         
         document.addEventListener("mousemove", (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            // Eğim hassasiyeti artırıldı (daha az ve pürüzsüz dönmesi için 25 yerine 55 yapıldı)
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 55;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 55;
             tiltContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
 
             const rect = tiltContainer.getBoundingClientRect();
@@ -917,8 +934,16 @@
                 if (!response.ok) throw new Error("Status unavailable");
                 const result = await response.json();
                 const stream = result.data ?? result;
+                
                 if (stream && (stream.id || stream.is_live)) { 
-                    setStatus("live"); 
+                    setStatus("live");
+                    const categoryName = stream.category?.name || stream.subcategory?.name;
+                    if (categoryName) {
+                        streamCategory.textContent = `Kategori: ${categoryName}`;
+                        streamCategory.style.display = "block";
+                    } else {
+                        streamCategory.style.display = "none";
+                    }
                 } else { 
                     setStatus("offline"); 
                 }
@@ -929,9 +954,12 @@
 
         function setStatus(state) {
             statusBox.className = "status " + state;
-            if (state === "live") statusText.textContent = "CANLI YAYINDA";
-            else if (state === "offline") statusText.textContent = "ÇEVRİMDIŞI";
-            else statusText.textContent = "ÇEVRİMDIŞI";
+            if (state === "live") {
+                statusText.textContent = "CANLI YAYINDA";
+            } else {
+                statusText.textContent = "ÇEVRİMDIŞI";
+                streamCategory.style.display = "none";
+            }
         }
 
         async function getChannelData() {
