@@ -45,7 +45,7 @@
             position: relative;
         }
 
-        /* Yoğun Sisli Yağmur + Pembe Şimşek Katmanı */
+        /* Yoğun Sisli Yağmur + Cam Fiziği + Pembe Şimşek Katmanı */
         .weather-layer {
             position: fixed;
             inset: 0;
@@ -54,7 +54,7 @@
             overflow: hidden;
         }
 
-        #rainCanvas {
+        #weatherCanvas {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -66,20 +66,19 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 50% 10%, rgba(255, 79, 163, 0.42), rgba(255, 139, 196, 0.16) 45%, rgba(16, 8, 18, 0.05) 80%),
-                linear-gradient(180deg, rgba(255, 110, 180, 0.18), transparent 65%);
+                radial-gradient(circle at 50% 12%, rgba(255, 95, 175, 0.45), rgba(255, 139, 196, 0.18) 45%, rgba(16, 8, 18, 0.04) 82%),
+                linear-gradient(180deg, rgba(255, 120, 190, 0.2), transparent 68%);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.06s ease-out;
+            transition: opacity 0.05s ease-out;
         }
 
-        /* Katmanlı Yoğun Sis Perdesi */
         .fog-haze {
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(180deg, rgba(24, 13, 28, 0.35) 0%, rgba(36, 18, 40, 0.25) 50%, rgba(45, 22, 48, 0.55) 100%);
-            backdrop-filter: blur(1.5px);
+                linear-gradient(180deg, rgba(24, 13, 28, 0.36) 0%, rgba(36, 18, 40, 0.26) 50%, rgba(45, 22, 48, 0.56) 100%);
+            backdrop-filter: blur(1.2px);
         }
 
         .fog-bank {
@@ -248,6 +247,13 @@
             transform-style: preserve-3d;
             transition: transform 0.15s ease-out;
             overflow: hidden;
+        }
+
+        .container.lightning-hit {
+            border-color: rgba(255, 175, 220, 0.92);
+            box-shadow:
+                0 0 85px rgba(255, 79, 163, 0.38),
+                inset 0 0 48px rgba(255, 155, 210, 0.14);
         }
 
         .container::before {
@@ -750,13 +756,13 @@
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
-    <!-- Yoğun Sisli Yağmur + Sık Pembe Şimşek Katmanı -->
+    <!-- Yoğun Sis + Cam Damlaları Fiziği + Sağanak Yağmur + Gerçekçi Pembe Şimşek -->
     <div class="weather-layer">
         <div class="fog-haze"></div>
         <div class="fog-bank"></div>
         <div class="fog-bank second"></div>
         <div class="lightning-flash" id="lightningFlash"></div>
-        <canvas id="rainCanvas"></canvas>
+        <canvas id="weatherCanvas"></canvas>
     </div>
 
     <!-- Arkada Çalışan Pembe-Beyaz-Mor Monitör Glitch Katmanı -->
@@ -917,145 +923,340 @@
 
     </main>
 
-    <!-- Gerçekçi Sağanak Yağmur (3 Derinlik Katmanı + Sıçrama) & Sık Pembe Şimşek Motoru -->
+    <!-- Cam Damlaları Fiziği + Sağanak Yağmur + Gerçekçi Pembe Şimşek Motoru -->
     <script>
-        const canvas = document.getElementById("rainCanvas");
+        const canvas = document.getElementById("weatherCanvas");
         const ctx = canvas.getContext("2d");
         const lightningFlash = document.getElementById("lightningFlash");
-        let drops = [];
+        const mainCard = document.getElementById("tiltContainer");
+
+        let rainDrops = [];
         let splashes = [];
+        let glassDrops = [];
+        let glassTrails = [];
         let activeBolts = [];
         let flashBoost = 0;
 
-        function resizeRain() {
+        function resizeWeather() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            initDrops();
+            initRain();
+            initGlassDrops();
         }
 
-        function initDrops() {
-            // Yoğun sağanak için 3 derinlik katmanı (uzak, orta, yakın)
-            const baseCount = Math.min(340, Math.floor(window.innerWidth / 4.2));
-            drops = [];
-            for (let i = 0; i < baseCount; i++) {
-                const layerRoll = Math.random();
-                let layer = 1; // 0: uzak ince, 1: orta, 2: yakın kalın & hızlı
-                if (layerRoll < 0.45) layer = 0;
-                else if (layerRoll > 0.85) layer = 2;
-
-                drops.push({
+        function initRain() {
+            const count = Math.min(320, Math.floor(window.innerWidth / 4.4));
+            rainDrops = [];
+            for (let i = 0; i < count; i++) {
+                const r = Math.random();
+                const layer = r < 0.45 ? 0 : (r > 0.84 ? 2 : 1);
+                rainDrops.push({
                     x: Math.random() * (canvas.width + 160) - 80,
                     y: Math.random() * canvas.height,
                     layer,
-                    len: layer === 0 ? Math.random() * 12 + 8 : (layer === 1 ? Math.random() * 20 + 14 : Math.random() * 32 + 22),
-                    speed: layer === 0 ? Math.random() * 4 + 5 : (layer === 1 ? Math.random() * 6 + 9 : Math.random() * 8 + 14),
-                    drift: layer === 0 ? -1.1 : (layer === 1 ? -1.8 : -2.6),
-                    width: layer === 0 ? 0.65 : (layer === 1 ? 1.05 : 1.55),
-                    opacity: layer === 0 ? Math.random() * 0.16 + 0.06 : (layer === 1 ? Math.random() * 0.25 + 0.14 : Math.random() * 0.35 + 0.22),
-                    pinkTint: Math.random() > 0.58
+                    len: layer === 0 ? Math.random() * 11 + 8 : (layer === 1 ? Math.random() * 19 + 13 : Math.random() * 30 + 20),
+                    speed: layer === 0 ? Math.random() * 4 + 5 : (layer === 1 ? Math.random() * 6 + 9 : Math.random() * 8 + 13.5),
+                    drift: layer === 0 ? -1.0 : (layer === 1 ? -1.7 : -2.5),
+                    width: layer === 0 ? 0.65 : (layer === 1 ? 1.0 : 1.5),
+                    opacity: layer === 0 ? Math.random() * 0.15 + 0.05 : (layer === 1 ? Math.random() * 0.24 + 0.13 : Math.random() * 0.34 + 0.2),
+                    pinkTint: Math.random() > 0.56
                 });
             }
         }
 
+        // Cam yüzeyine yapışan ve ağırlık/birleşme fiziğiyle süzülen damlalar
+        function makeGlassDrop(x, y, radius, sliding = false) {
+            return {
+                x,
+                y,
+                r: radius,
+                vy: sliding ? (0.9 + radius * 0.28) : 0,
+                vx: (Math.random() - 0.5) * 0.18,
+                sliding,
+                stuckTimer: Math.random() * 180,
+                thresholdR: 4.4 + Math.random() * 2.4,
+                pinkTint: Math.random() > 0.45
+            };
+        }
+
+        function initGlassDrops() {
+            const targetCount = Math.min(95, Math.floor((canvas.width * canvas.height) / 16000));
+            glassDrops = [];
+            for (let i = 0; i < targetCount; i++) {
+                const startSliding = Math.random() < 0.22;
+                glassDrops.push(
+                    makeGlassDrop(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height,
+                        Math.random() * 2.8 + 1.3,
+                        startSliding
+                    )
+                );
+            }
+        }
+
         function spawnSplash(x, y) {
-            if (splashes.length > 75) return;
+            if (splashes.length > 70) return;
             splashes.push({
                 x,
                 y,
                 r: 0.5,
-                maxR: Math.random() * 4.5 + 2.5,
-                alpha: 0.38
+                maxR: Math.random() * 4.2 + 2.2,
+                alpha: 0.35
             });
+        }
+
+        // Gerçekçi dallı şimşek kolu üretici (ana kol + ikincil kırık kol + yan dallar)
+        function buildBoltTree(startX, startY, endY, jagScale, branchProb, maxDepth) {
+            function trace(x, y, targetY, depth) {
+                const pts = [{ x, y }];
+                const branches = [];
+                let curX = x;
+                let curY = y;
+                const stepY = depth === 0 ? 18 : 14;
+
+                while (curY < targetY) {
+                    const jitter = (Math.random() - 0.5) * jagScale * (depth === 0 ? 1 : 0.7);
+                    curX += jitter;
+                    curY += stepY + Math.random() * 10;
+                    pts.push({ x: curX, y: curY });
+
+                    if (depth < maxDepth && Math.random() < branchProb) {
+                        const dir = Math.random() > 0.5 ? 1 : -1;
+                        const bEndY = Math.min(targetY + 80, curY + (canvas.height * (0.14 + Math.random() * 0.22)));
+                        const sub = trace(
+                            curX + dir * 4,
+                            curY,
+                            bEndY,
+                            depth + 1
+                        );
+                        branches.push(sub);
+                    }
+                }
+                return { pts, branches };
+            }
+            return trace(startX, startY, endY, 0);
         }
 
         function createLightningBolt() {
-            const startX = Math.random() * (canvas.width * 0.84) + canvas.width * 0.08;
-            let x = startX;
-            let y = 0;
-            const segments = [{ x, y }];
-            const branches = [];
-            const maxY = canvas.height * (0.55 + Math.random() * 0.35);
+            const startX = Math.random() * (canvas.width * 0.82) + canvas.width * 0.09;
+            const endY = canvas.height * (0.58 + Math.random() * 0.34);
+            const tree = buildBoltTree(startX, 0, endY, 44, 0.24, 2);
 
-            while (y < maxY) {
-                x += (Math.random() - 0.5) * 48;
-                y += Math.random() * 22 + 12;
-                segments.push({ x, y });
-
-                if (Math.random() < 0.36) {
-                    let bx = x;
-                    let by = y;
-                    const branchSegs = [{ x: bx, y: by }];
-                    const steps = Math.floor(Math.random() * 4) + 2;
-                    const dir = Math.random() > 0.5 ? 1 : -1;
-                    for (let s = 0; s < steps; s++) {
-                        bx += dir * (Math.random() * 24 + 8);
-                        by += Math.random() * 18 + 9;
-                        branchSegs.push({ x: bx, y: by });
-                    }
-                    branches.push(branchSegs);
-                }
-            }
+            // Ana şimşeğin hemen yanında paralel zayıf bir ikincil kanal
+            const secondary = buildBoltTree(
+                startX + (Math.random() - 0.5) * 32,
+                Math.random() * 35,
+                endY * 0.72,
+                34,
+                0.14,
+                1
+            );
 
             activeBolts.push({
-                segments,
-                branches,
-                alpha: 1
+                tree,
+                secondary,
+                alpha: 1,
+                flickerPhase: 0
             });
 
-            // Şimşek çaktığında yağmur damlaları da anlık parlasın
-            flashBoost = 0.35;
+            flashBoost = 0.42;
+            mainCard.classList.add("lightning-hit");
 
-            // Çift çakmalı pembe gökyüzü parlaması
             lightningFlash.style.opacity = "1";
-            setTimeout(() => { lightningFlash.style.opacity = "0.2"; }, 65);
+            setTimeout(() => { lightningFlash.style.opacity = "0.18"; }, 60);
             setTimeout(() => {
                 lightningFlash.style.opacity = "0.95";
-                flashBoost = 0.3;
-            }, 125);
-            setTimeout(() => { lightningFlash.style.opacity = "0"; }, 270);
+                flashBoost = 0.35;
+            }, 120);
+            setTimeout(() => { lightningFlash.style.opacity = "0.12"; }, 190);
+            setTimeout(() => { lightningFlash.style.opacity = "0.65"; }, 235);
+            setTimeout(() => {
+                lightningFlash.style.opacity = "0";
+                mainCard.classList.remove("lightning-hit");
+            }, 340);
         }
 
         function scheduleNextLightning() {
-            // Daha sık şimşek: 1.8 ile 4.6 saniye arası rastgele
-            const delay = 1800 + Math.random() * 2800;
+            const delay = 1800 + Math.random() * 2700;
             setTimeout(() => {
                 createLightningBolt();
-                // %30 ihtimalle hemen peşinden ikinci bir uzak şimşek daha çaksın
-                if (Math.random() < 0.3) {
-                    setTimeout(createLightningBolt, 350 + Math.random() * 400);
+                if (Math.random() < 0.32) {
+                    setTimeout(createLightningBolt, 320 + Math.random() * 420);
                 }
                 scheduleNextLightning();
             }, delay);
         }
 
-        function drawBoltPath(points, width, alpha) {
-            if (points.length < 2) return;
+        function renderBoltTree(node, baseWidth, alpha) {
+            if (!node || !node.pts || node.pts.length < 2) return;
+
+            // Dış pembe neon korona
             ctx.save();
             ctx.beginPath();
-            ctx.moveTo(points[0].x, points[0].y);
-            for (let i = 1; i < points.length; i++) {
-                ctx.lineTo(points[i].x, points[i].y);
+            ctx.moveTo(node.pts[0].x, node.pts[0].y);
+            for (let i = 1; i < node.pts.length; i++) {
+                ctx.lineTo(node.pts[i].x, node.pts[i].y);
             }
-            ctx.strokeStyle = `rgba(255, 210, 232, ${alpha})`;
-            ctx.lineWidth = width;
+            ctx.strokeStyle = `rgba(255, 79, 163, ${alpha * 0.85})`;
+            ctx.lineWidth = baseWidth * 2.4;
             ctx.shadowColor = "#ff4fa3";
-            ctx.shadowBlur = 24;
+            ctx.shadowBlur = 28;
             ctx.lineCap = "round";
             ctx.lineJoin = "round";
             ctx.stroke();
+
+            // İç sıcak beyaz-pembe çekirdek çizgi
+            ctx.beginPath();
+            ctx.moveTo(node.pts[0].x, node.pts[0].y);
+            for (let i = 1; i < node.pts.length; i++) {
+                ctx.lineTo(node.pts[i].x, node.pts[i].y);
+            }
+            ctx.strokeStyle = `rgba(255, 235, 246, ${alpha})`;
+            ctx.lineWidth = Math.max(0.8, baseWidth * 0.85);
+            ctx.shadowBlur = 10;
+            ctx.stroke();
             ctx.restore();
+
+            for (let br of node.branches) {
+                renderBoltTree(br, baseWidth * 0.58, alpha * 0.78);
+            }
+        }
+
+        function updateAndDrawGlassDrops() {
+            // Yeni küçük damlalar camın rastgele yerlerine yapışsın
+            if (glassDrops.length < 95 && Math.random() < 0.35) {
+                glassDrops.push(
+                    makeGlassDrop(
+                        Math.random() * canvas.width,
+                        Math.random() * (canvas.height * 0.92),
+                        Math.random() * 1.4 + 0.9,
+                        false
+                    )
+                );
+            }
+
+            // Kayma izlerini çiz ve soldur
+            for (let i = glassTrails.length - 1; i >= 0; i--) {
+                const tr = glassTrails[i];
+                ctx.beginPath();
+                ctx.moveTo(tr.x1, tr.y1);
+                ctx.lineTo(tr.x2, tr.y2);
+                ctx.strokeStyle = tr.pinkTint
+                    ? `rgba(255, 139, 196, ${tr.alpha})`
+                    : `rgba(235, 225, 245, ${tr.alpha * 0.8})`;
+                ctx.lineWidth = tr.width;
+                ctx.lineCap = "round";
+                ctx.stroke();
+
+                tr.alpha -= 0.012;
+                if (tr.alpha <= 0) glassTrails.splice(i, 1);
+            }
+
+            // Cam damlalarının kütle, yüzey gerilimi ve birleşme (coalescence) fiziği
+            for (let i = glassDrops.length - 1; i >= 0; i--) {
+                const d = glassDrops[i];
+                if (!d) continue;
+
+                if (!d.sliding) {
+                    d.stuckTimer++;
+                    // Sis/nemden zamanla ağırlaşma
+                    if (d.stuckTimer % 28 === 0 && d.r < d.thresholdR + 1.2) {
+                        d.r += 0.14;
+                    }
+                    // Yarıçap eşiği aşılınca yüzey gerilimi kırılır ve damla süzülmeye başlar
+                    if (d.r >= d.thresholdR) {
+                        d.sliding = true;
+                        d.vy = 0.85;
+                    }
+                } else {
+                    const prevX = d.x;
+                    const prevY = d.y;
+
+                    // Kütle/yarıçapa bağlı yerçekimi ivmesi
+                    const gravity = 0.032 + d.r * 0.012;
+                    d.vy = Math.min(9.5, d.vy + gravity);
+                    d.vx += (Math.random() - 0.5) * 0.08;
+                    d.vx *= 0.95;
+
+                    d.x += d.vx;
+                    d.y += d.vy;
+
+                    // Süzülürken arkasında ince ıslak kayma izi bırak
+                    glassTrails.push({
+                        x1: prevX,
+                        y1: prevY,
+                        x2: d.x,
+                        y2: d.y,
+                        width: Math.max(0.7, d.r * 0.42),
+                        alpha: 0.24,
+                        pinkTint: d.pinkTint
+                    });
+
+                    // Yolundaki diğer damlalarla birleşme (coalescence)
+                    for (let j = glassDrops.length - 1; j >= 0; j--) {
+                        if (i === j) continue;
+                        const other = glassDrops[j];
+                        if (!other) continue;
+                        const dx = other.x - d.x;
+                        const dy = other.y - d.y;
+                        const dist = Math.hypot(dx, dy);
+                        if (dist < d.r + other.r + 1.5) {
+                            // Hacim korunumuna yakın yarıçap büyümesi
+                            d.r = Math.min(7.5, Math.sqrt(d.r * d.r + other.r * other.r * 0.85));
+                            d.vy += 0.55;
+                            glassDrops.splice(j, 1);
+                            if (j < i) i--;
+                        }
+                    }
+
+                    // Ekran altından çıkarsa sıfırla
+                    if (d.y > canvas.height + 15 || d.x < -20 || d.x > canvas.width + 20) {
+                        glassDrops.splice(i, 1);
+                        continue;
+                    }
+                }
+
+                // Cam damlasını çiz (damlacık gövdesi + üst sol ışık kırılması + pembe yansıma)
+                const glowAlpha = Math.min(0.85, 0.28 + flashBoost * 0.8);
+                const stretchY = d.sliding ? d.r * (1 + Math.min(0.45, d.vy * 0.05)) : d.r;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.ellipse(d.x, d.y, d.r, stretchY, 0, 0, Math.PI * 2);
+                ctx.fillStyle = d.pinkTint
+                    ? `rgba(255, 115, 185, ${0.16 + flashBoost * 0.25})`
+                    : `rgba(235, 225, 245, ${0.13 + flashBoost * 0.2})`;
+                ctx.fill();
+
+                ctx.strokeStyle = d.pinkTint
+                    ? `rgba(255, 175, 220, ${glowAlpha})`
+                    : `rgba(255, 255, 255, ${glowAlpha * 0.85})`;
+                ctx.lineWidth = 0.85;
+                ctx.stroke();
+
+                // Damla içindeki minik parlama noktası (specular highlight)
+                ctx.beginPath();
+                ctx.arc(d.x - d.r * 0.3, d.y - stretchY * 0.3, Math.max(0.5, d.r * 0.24), 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.9, 0.45 + flashBoost)})`;
+                ctx.fill();
+                ctx.restore();
+            }
         }
 
         function drawWeather() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             if (flashBoost > 0) {
-                flashBoost = Math.max(0, flashBoost - 0.025);
+                flashBoost = Math.max(0, flashBoost - 0.024);
             }
 
-            // Yoğun sağanak yağmur damlaları
-            for (let d of drops) {
-                const alpha = Math.min(0.85, d.opacity + flashBoost * (d.layer === 2 ? 0.6 : 0.3));
+            // 1) Cam yüzeyindeki damlalar ve süzülme fiziği
+            updateAndDrawGlassDrops();
+
+            // 2) 3 derinlik katmanlı sağanak yağmur
+            for (let d of rainDrops) {
+                const alpha = Math.min(0.88, d.opacity + flashBoost * (d.layer === 2 ? 0.6 : 0.3));
                 const grad = ctx.createLinearGradient(d.x, d.y, d.x + d.drift * 2, d.y + d.len);
                 if (d.pinkTint) {
                     grad.addColorStop(0, "rgba(255, 139, 196, 0)");
@@ -1088,7 +1289,7 @@
                 }
             }
 
-            // Alt kenarda yağmur sıçrama halkaları
+            // 3) Alt kenarda sıçrama halkaları
             for (let i = splashes.length - 1; i >= 0; i--) {
                 const s = splashes[i];
                 ctx.beginPath();
@@ -1104,13 +1305,15 @@
                 }
             }
 
-            // Pembe şimşek çizgileri
+            // 4) Gerçekçi dallı pembe şimşekler
             for (let i = activeBolts.length - 1; i >= 0; i--) {
                 const bolt = activeBolts[i];
-                drawBoltPath(bolt.segments, 2.5, bolt.alpha);
-                for (let br of bolt.branches) {
-                    drawBoltPath(br, 1.2, bolt.alpha * 0.8);
-                }
+                bolt.flickerPhase++;
+                const flicker = (bolt.flickerPhase === 2 || bolt.flickerPhase === 4) ? 0.35 : 1;
+
+                renderBoltTree(bolt.tree, 2.4, bolt.alpha * flicker);
+                renderBoltTree(bolt.secondary, 1.35, bolt.alpha * 0.55 * flicker);
+
                 bolt.alpha -= 0.055;
                 if (bolt.alpha <= 0) {
                     activeBolts.splice(i, 1);
@@ -1120,8 +1323,8 @@
             requestAnimationFrame(drawWeather);
         }
 
-        window.addEventListener("resize", resizeRain);
-        resizeRain();
+        window.addEventListener("resize", resizeWeather);
+        resizeWeather();
         drawWeather();
         setTimeout(createLightningBolt, 900);
         scheduleNextLightning();
