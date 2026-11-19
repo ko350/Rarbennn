@@ -45,6 +45,60 @@
             position: relative;
         }
 
+        /* Sisli Yağmur + Pembe Şimşek Katmanı */
+        .weather-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        #rainCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .lightning-flash {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 15%, rgba(255, 79, 163, 0.28), rgba(255, 139, 196, 0.08) 45%, transparent 75%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.08s ease-out;
+        }
+
+        .fog-bank {
+            position: absolute;
+            inset: -20%;
+            background:
+                radial-gradient(ellipse at 25% 75%, rgba(255, 139, 196, 0.08), transparent 55%),
+                radial-gradient(ellipse at 75% 30%, rgba(168, 85, 247, 0.07), transparent 50%),
+                radial-gradient(ellipse at 50% 95%, rgba(235, 215, 230, 0.07), transparent 60%);
+            filter: blur(45px);
+            animation: fogDrift 18s ease-in-out infinite alternate;
+        }
+
+        .fog-bank.second {
+            background:
+                radial-gradient(ellipse at 70% 80%, rgba(255, 79, 163, 0.06), transparent 50%),
+                radial-gradient(ellipse at 30% 25%, rgba(255, 255, 255, 0.04), transparent 55%);
+            animation: fogDriftReverse 24s ease-in-out infinite alternate;
+        }
+
+        @keyframes fogDrift {
+            0% { transform: translate(-4%, 2%) scale(1); }
+            100% { transform: translate(5%, -3%) scale(1.08); }
+        }
+
+        @keyframes fogDriftReverse {
+            0% { transform: translate(4%, -2%) scale(1.05); }
+            100% { transform: translate(-5%, 3%) scale(0.98); }
+        }
+
         /* Arkada Kalacak Pembe-Beyaz-Mor Monitör Glitch Çizgileri */
         .crt-glitch-bg {
             position: fixed;
@@ -178,7 +232,7 @@
                 0 0 60px rgba(255,79,163,.15),
                 inset 0 0 35px rgba(255,79,163,.04);
             animation: appear .8s ease, neonPulse 4s infinite alternate;
-            transform-style: preserve-style;
+            transform-style: preserve-3d;
             transition: transform 0.15s ease-out;
             overflow: hidden;
         }
@@ -683,6 +737,14 @@
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
+    <!-- Sisli Yağmur + Pembe Şimşek Katmanı -->
+    <div class="weather-layer">
+        <div class="fog-bank"></div>
+        <div class="fog-bank second"></div>
+        <div class="lightning-flash" id="lightningFlash"></div>
+        <canvas id="rainCanvas"></canvas>
+    </div>
+
     <!-- Arkada Çalışan Pembe-Beyaz-Mor Monitör Glitch Katmanı -->
     <div class="crt-glitch-bg"></div>
 
@@ -840,6 +902,153 @@
         </footer>
 
     </main>
+
+    <!-- Sisli Yağmur + Pembe Şimşek Motoru -->
+    <script>
+        const canvas = document.getElementById("rainCanvas");
+        const ctx = canvas.getContext("2d");
+        const lightningFlash = document.getElementById("lightningFlash");
+        let drops = [];
+        let activeBolts = [];
+
+        function resizeRain() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initDrops();
+        }
+
+        function initDrops() {
+            const dropCount = Math.min(115, Math.floor(window.innerWidth / 11));
+            drops = [];
+            for (let i = 0; i < dropCount; i++) {
+                drops.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    len: Math.random() * 18 + 10,
+                    speed: Math.random() * 4.5 + 3.5,
+                    drift: -0.9,
+                    opacity: Math.random() * 0.25 + 0.08,
+                    pinkTint: Math.random() > 0.65
+                });
+            }
+        }
+
+        function createLightningBolt() {
+            const startX = Math.random() * (canvas.width * 0.8) + canvas.width * 0.1;
+            let x = startX;
+            let y = 0;
+            const segments = [{ x, y }];
+            const branches = [];
+            const maxY = canvas.height * (0.45 + Math.random() * 0.35);
+
+            while (y < maxY) {
+                x += (Math.random() - 0.5) * 42;
+                y += Math.random() * 24 + 14;
+                segments.push({ x, y });
+
+                if (Math.random() < 0.28) {
+                    let bx = x;
+                    let by = y;
+                    const branchSegs = [{ x: bx, y: by }];
+                    const steps = Math.floor(Math.random() * 4) + 2;
+                    const dir = Math.random() > 0.5 ? 1 : -1;
+                    for (let s = 0; s < steps; s++) {
+                        bx += dir * (Math.random() * 22 + 8);
+                        by += Math.random() * 20 + 10;
+                        branchSegs.push({ x: bx, y: by });
+                    }
+                    branches.push(branchSegs);
+                }
+            }
+
+            activeBolts.push({
+                segments,
+                branches,
+                alpha: 1
+            });
+
+            // Gökyüzü pembe parlama efekti (çift çakma hissi)
+            lightningFlash.style.opacity = "1";
+            setTimeout(() => { lightningFlash.style.opacity = "0.25"; }, 70);
+            setTimeout(() => { lightningFlash.style.opacity = "0.85"; }, 130);
+            setTimeout(() => { lightningFlash.style.opacity = "0"; }, 260);
+        }
+
+        function scheduleNextLightning() {
+            const delay = 4500 + Math.random() * 7500;
+            setTimeout(() => {
+                createLightningBolt();
+                scheduleNextLightning();
+            }, delay);
+        }
+
+        function drawBoltPath(points, width, alpha) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.strokeStyle = `rgba(255, 193, 223, ${alpha})`;
+            ctx.lineWidth = width;
+            ctx.shadowColor = "#ff4fa3";
+            ctx.shadowBlur = 18;
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawWeather() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Yağmur damlaları
+            for (let d of drops) {
+                ctx.beginPath();
+                ctx.moveTo(d.x, d.y);
+                ctx.lineTo(d.x + d.drift * 2.2, d.y + d.len);
+                ctx.strokeStyle = d.pinkTint
+                    ? `rgba(255, 139, 196, ${d.opacity})`
+                    : `rgba(235, 225, 240, ${d.opacity * 0.8})`;
+                ctx.lineWidth = 1;
+                ctx.lineCap = "round";
+                ctx.stroke();
+
+                d.x += d.drift;
+                d.y += d.speed;
+
+                if (d.y > canvas.height + 20) {
+                    d.y = -20;
+                    d.x = Math.random() * (canvas.width + 60);
+                }
+                if (d.x < -20) {
+                    d.x = canvas.width + 20;
+                }
+            }
+
+            // Pembe şimşek çizgileri
+            for (let i = activeBolts.length - 1; i >= 0; i--) {
+                const bolt = activeBolts[i];
+                drawBoltPath(bolt.segments, 2.2, bolt.alpha);
+                for (let br of bolt.branches) {
+                    drawBoltPath(br, 1.1, bolt.alpha * 0.75);
+                }
+                bolt.alpha -= 0.06;
+                if (bolt.alpha <= 0) {
+                    activeBolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(drawWeather);
+        }
+
+        window.addEventListener("resize", resizeRain);
+        resizeRain();
+        drawWeather();
+        setTimeout(createLightningBolt, 2200);
+        scheduleNextLightning();
+    </script>
 
     <!-- Web Audio API Synthwave Ambiyans Müzik Motoru -->
     <script>
