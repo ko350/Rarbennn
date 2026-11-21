@@ -80,6 +80,12 @@
             background:
                 radial-gradient(circle at 50% 35%, rgba(255, 79, 163, 0.05), transparent 65%),
                 linear-gradient(180deg, rgba(22, 11, 26, 0.34) 0%, rgba(34, 17, 38, 0.24) 52%, rgba(44, 21, 47, 0.54) 100%);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .fog-haze.storm-swell {
+            transform: scale(1.04);
+            filter: brightness(1.12);
         }
 
         .fog-bank {
@@ -231,6 +237,19 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Gizli / Kompakt YouTube Loop Oynatıcı Yuvası */
+        .yt-loop-frame {
+            position: fixed;
+            width: 1px;
+            height: 1px;
+            opacity: 0.001;
+            pointer-events: none;
+            bottom: 0;
+            right: 0;
+            border: 0;
+            z-index: -1;
+        }
+
         .container {
             width: 100%;
             max-width: 500px;
@@ -333,18 +352,18 @@
         .status.unknown { color: #d6a94b; }
         .status.unknown .status-dot { background: #d6a94b; box-shadow: none; animation: none; }
 
-        /* Tamamen Pembe Neon Canlı Yayın Kategori Rozeti */
+        /* Tamamen Pembe Neon Canlı Yayın Kategori Rozeti + Hafif Pembe Vurgu */
         .stream-category {
             font-size: 10px;
             color: var(--pink-soft);
             letter-spacing: 1px;
             background: rgba(255, 79, 163, 0.12);
-            border: 1px solid rgba(255, 79, 163, 0.4);
+            border: 1px solid rgba(255, 79, 163, 0.45);
             padding: 4px 10px;
             border-radius: 6px;
             width: fit-content;
             display: none;
-            box-shadow: 0 0 10px rgba(255, 79, 163, 0.15);
+            box-shadow: 0 0 12px rgba(255, 79, 163, 0.22), inset 0 0 6px rgba(255, 139, 196, 0.14);
         }
 
         .header {
@@ -353,7 +372,6 @@
             border-bottom: 1px solid rgba(255,79,163,.22);
         }
 
-        /* Discord Tarzı Nabız Atan (Pulse) Tek Renk Pembe Konuşma/Yayın Halkası */
         .avatar-wrapper {
             width: 92px;
             height: 92px;
@@ -529,6 +547,7 @@
             gap: 12px;
         }
 
+        /* Bağlantı Butonlarında Çift Katmanlı Cam Kenar & Derinlik */
         .link-btn {
             display: flex;
             justify-content: space-between;
@@ -543,6 +562,10 @@
             background: linear-gradient(110deg, #30152d, #1c1020);
             border: 1px solid #572849;
             border-radius: 12px;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 165, 215, 0.24),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.72),
+                0 6px 16px rgba(8, 3, 12, 0.35);
             transition: .25s ease;
             position: relative;
             overflow: hidden;
@@ -566,7 +589,10 @@
         .link-btn:hover {
             transform: translateY(-3px);
             border-color: var(--pink);
-            box-shadow: 0 6px 24px rgba(255,79,163,.2);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 195, 228, 0.38),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.8),
+                0 8px 24px rgba(255,79,163,.24);
             background: #3a1732;
         }
 
@@ -757,9 +783,12 @@
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
+    <!-- YouTube Loop Oynatıcı (Link aşağıda DEFAULT_YOUTUBE_URL alanına yapıştırılır) -->
+    <iframe id="ytLoopPlayer" class="yt-loop-frame" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+
     <!-- Sinematik Sis + Optik Cam Damlaları + 4K Sağanak + Hacimsel Pembe Şimşek -->
     <div class="weather-layer">
-        <div class="fog-haze"></div>
+        <div class="fog-haze" id="fogHaze"></div>
         <div class="fog-bank"></div>
         <div class="fog-bank second"></div>
         <div class="lightning-flash" id="lightningFlash"></div>
@@ -926,9 +955,13 @@
 
     <!-- Fotogerçekçi Optik Cam Damlaları, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek -->
     <script>
+        // BURAYA DİREK YOUTUBE LİNKİNİ YAPIŞTIR (OTOMATİK LOOP ALIR)
+        const DEFAULT_YOUTUBE_URL = "";
+
         const canvas = document.getElementById("weatherCanvas");
         const ctx = canvas.getContext("2d");
         const lightningFlash = document.getElementById("lightningFlash");
+        const fogHaze = document.getElementById("fogHaze");
         const mainCard = document.getElementById("tiltContainer");
 
         let viewW = window.innerWidth;
@@ -942,6 +975,7 @@
         let glassTrails = [];
         let activeBolts = [];
         let cloudGlows = [];
+        let preStrikeAccumulators = [];
         let flashBoost = 0;
 
         function resizeWeather() {
@@ -959,7 +993,6 @@
             initGlassDrops();
         }
 
-        // Hareket bulanıklı (motion-blurred) derinlik katmanlı sağanak çizgileri
         function initRainStreaks() {
             const count = Math.min(280, Math.floor(viewW / 4.8));
             rainStreaks = [];
@@ -984,7 +1017,6 @@
             }
         }
 
-        // Havada asılı duran yumuşak sis / buğu zerrecikleri
         function initMist() {
             const count = Math.min(55, Math.floor((viewW * viewH) / 28000));
             mistParticles = [];
@@ -1001,7 +1033,6 @@
             }
         }
 
-        // Camda sabit duran çok ince buğu / mikro damlacık dokusu
         function initMicroBeads() {
             const count = Math.min(180, Math.floor((viewW * viewH) / 9500));
             microBeads = [];
@@ -1027,7 +1058,6 @@
                 age: Math.random() * 240,
                 releaseR: 4.6 + Math.random() * 2.8,
                 pinkRefraction: Math.random() > 0.38,
-                // Damlaya özel organik form & iç odak kayması
                 wobble: (Math.random() - 0.5) * 0.14,
                 tiltAngle: (Math.random() - 0.5) * 0.22
             };
@@ -1064,8 +1094,32 @@
             return points;
         }
 
-        function createRealisticLightning() {
+        // Yıldırım kolu belirmeden önce sis içinde toplanıp büyüyen gizli pembe ışık kütlesi
+        function triggerStormSequence() {
             const originX = viewW * (0.14 + Math.random() * 0.72);
+            const originY = viewH * (0.12 + Math.random() * 0.16);
+
+            preStrikeAccumulators.push({
+                x: originX,
+                y: originY,
+                radius: 24,
+                maxRadius: 155,
+                alpha: 0.04,
+                growSpeed: 2.3
+            });
+
+            fogHaze.classList.add("storm-swell");
+            setTimeout(() => fogHaze.classList.remove("storm-swell"), 750);
+
+            setTimeout(() => {
+                createRealisticLightning(originX);
+            }, 340);
+        }
+
+        function createRealisticLightning(forcedOriginX = null) {
+            const originX = typeof forcedOriginX === "number"
+                ? forcedOriginX
+                : viewW * (0.14 + Math.random() * 0.72);
             const originY = -10;
             const endX = originX + (Math.random() - 0.5) * (viewW * 0.28);
             const endY = viewH * (0.55 + Math.random() * 0.36);
@@ -1115,20 +1169,24 @@
 
             cloudGlows.push({
                 x: originX,
-                y: viewH * 0.12,
-                rx: viewW * (0.35 + Math.random() * 0.25),
-                ry: viewH * 0.28,
-                alpha: 0.42
+                y: viewH * 0.14,
+                rx: viewW * (0.38 + Math.random() * 0.25),
+                ry: viewH * 0.32,
+                alpha: 0.46
             });
 
-            flashBoost = 0.45;
+            flashBoost = 0.52;
             mainCard.classList.add("lightning-hit");
+
+            if (typeof playDistantThunder === "function") {
+                playDistantThunder();
+            }
 
             lightningFlash.style.opacity = "0.95";
             setTimeout(() => { lightningFlash.style.opacity = "0.14"; }, 55);
             setTimeout(() => {
                 lightningFlash.style.opacity = "1";
-                flashBoost = 0.38;
+                flashBoost = 0.42;
             }, 115);
             setTimeout(() => { lightningFlash.style.opacity = "0.22"; }, 185);
             setTimeout(() => { lightningFlash.style.opacity = "0.55"; }, 225);
@@ -1139,11 +1197,11 @@
         }
 
         function scheduleLightning() {
-            const wait = 1800 + Math.random() * 2600;
+            const wait = 2100 + Math.random() * 2800;
             setTimeout(() => {
-                createRealisticLightning();
-                if (Math.random() < 0.32) {
-                    setTimeout(createRealisticLightning, 300 + Math.random() * 380);
+                triggerStormSequence();
+                if (Math.random() < 0.28) {
+                    setTimeout(() => triggerStormSequence(), 550 + Math.random() * 450);
                 }
                 scheduleLightning();
             }, wait);
@@ -1170,15 +1228,33 @@
         }
 
         function drawLightningLayer() {
+            for (let i = preStrikeAccumulators.length - 1; i >= 0; i--) {
+                const p = preStrikeAccumulators[i];
+                const grad = ctx.createRadialGradient(p.x, p.y, 4, p.x, p.y, p.radius);
+                grad.addColorStop(0, `rgba(255, 145, 205, ${p.alpha})`);
+                grad.addColorStop(0.55, `rgba(255, 79, 163, ${p.alpha * 0.55})`);
+                grad.addColorStop(1, "rgba(255, 79, 163, 0)");
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                p.radius += p.growSpeed;
+                p.alpha = Math.min(0.28, p.alpha + 0.014);
+                if (p.radius >= p.maxRadius) {
+                    preStrikeAccumulators.splice(i, 1);
+                }
+            }
+
             for (let i = cloudGlows.length - 1; i >= 0; i--) {
                 const g = cloudGlows[i];
                 ctx.save();
                 ctx.translate(g.x, g.y);
                 ctx.scale(g.rx / 100, g.ry / 100);
                 const grad = ctx.createRadialGradient(0, 0, 5, 0, 0, 100);
-                grad.addColorStop(0, `rgba(255, 160, 215, ${g.alpha * 0.7})`);
-                grad.addColorStop(0.45, `rgba(255, 79, 163, ${g.alpha * 0.38})`);
-                grad.addColorStop(0.8, `rgba(168, 85, 247, ${g.alpha * 0.14})`);
+                grad.addColorStop(0, `rgba(255, 160, 215, ${g.alpha * 0.75})`);
+                grad.addColorStop(0.45, `rgba(255, 79, 163, ${g.alpha * 0.42})`);
+                grad.addColorStop(0.8, `rgba(168, 85, 247, ${g.alpha * 0.16})`);
                 grad.addColorStop(1, "rgba(16, 8, 18, 0)");
                 ctx.fillStyle = grad;
                 ctx.beginPath();
@@ -1195,7 +1271,7 @@
                 const flicker = Math.sin(b.life * 28 + b.pulseSeed) > -0.65 ? 1 : 0.45;
                 const a = Math.max(0, b.life * flicker);
 
-                strokeSmoothPath(b.mainPts, 11, `rgba(255, 79, 163, ${a * 0.22})`, "#ff4fa3", 36);
+                strokeSmoothPath(b.mainPts, 13, `rgba(255, 79, 163, ${a * 0.25})`, "#ff4fa3", 40);
                 strokeSmoothPath(b.mainPts, 3.6, `rgba(255, 115, 188, ${a * 0.85})`, "#ff4fa3", 18);
                 strokeSmoothPath(b.mainPts, 1.35, `rgba(255, 242, 250, ${a})`, "#ffffff", 6);
 
@@ -1287,7 +1363,6 @@
             }
         }
 
-        // Fotogerçekçi optik mercek kırılmalı, nem izli ve birleşen cam damlaları
         function drawGlassDropsLayer() {
             if (glassDrops.length < 72 && Math.random() < 0.24) {
                 glassDrops.push(
@@ -1300,7 +1375,6 @@
                 );
             }
 
-            // Camda süzülen damlaların arkasında ince ıslak iz ve mikro damlacık şeridi
             for (let i = glassTrails.length - 1; i >= 0; i--) {
                 const tr = glassTrails[i];
                 const grad = ctx.createLinearGradient(tr.x1, tr.y1, tr.x2, tr.y2);
@@ -1358,7 +1432,6 @@
                         pink: d.pinkRefraction
                     });
 
-                    // Diğer damlalarla birleşme (coalescence)
                     for (let j = glassDrops.length - 1; j >= 0; j--) {
                         if (i === j) continue;
                         const other = glassDrops[j];
@@ -1378,9 +1451,6 @@
                     }
                 }
 
-                // Optik cam damlası çizimi:
-                // 1) Dış yüzeyde ince temas/gölge halkası ve ışık kırılması
-                // 2) Damla içinde mercek odak noktası (caustic) + üst kırılma yayı + alt yansıma
                 const stretch = d.sliding ? (1 + Math.min(0.48, d.vy * 0.05)) : 1;
                 const rx = d.r * (1 - stretch * 0.05);
                 const ry = d.r * stretch;
@@ -1389,13 +1459,11 @@
                 ctx.translate(d.x, d.y);
                 ctx.rotate(d.tiltAngle + d.vx * 0.12);
 
-                // Camın altında hafif yumuşak kontak gölgesi
                 ctx.beginPath();
                 ctx.ellipse(rx * 0.08, ry * 0.14, rx * 1.05, ry * 1.05, 0, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(8, 3, 12, ${0.24 + flashBoost * 0.08})`;
                 ctx.fill();
 
-                // Ana su merceği gövdesi (radyal kırılma gradyanı)
                 const lensGrad = ctx.createRadialGradient(
                     -rx * 0.25,
                     -ry * 0.28,
@@ -1406,15 +1474,15 @@
                 );
 
                 if (d.pinkRefraction) {
-                    lensGrad.addColorStop(0.0, `rgba(255, 240, 250, ${0.22 + flashBoost * 0.35})`);
-                    lensGrad.addColorStop(0.35, `rgba(255, 115, 188, ${0.07 + flashBoost * 0.16})`);
-                    lensGrad.addColorStop(0.75, `rgba(255, 79, 163, ${0.14 + flashBoost * 0.22})`);
-                    lensGrad.addColorStop(0.94, `rgba(255, 190, 228, ${0.38 + flashBoost * 0.4})`);
-                    lensGrad.addColorStop(1.0, `rgba(255, 255, 255, ${0.12 + flashBoost * 0.2})`);
+                    lensGrad.addColorStop(0.0, `rgba(255, 240, 250, ${0.22 + flashBoost * 0.38})`);
+                    lensGrad.addColorStop(0.35, `rgba(255, 115, 188, ${0.07 + flashBoost * 0.18})`);
+                    lensGrad.addColorStop(0.75, `rgba(255, 79, 163, ${0.14 + flashBoost * 0.24})`);
+                    lensGrad.addColorStop(0.94, `rgba(255, 190, 228, ${0.38 + flashBoost * 0.42})`);
+                    lensGrad.addColorStop(1.0, `rgba(255, 255, 255, ${0.12 + flashBoost * 0.22})`);
                 } else {
-                    lensGrad.addColorStop(0.0, `rgba(255, 255, 255, ${0.18 + flashBoost * 0.25})`);
-                    lensGrad.addColorStop(0.42, `rgba(225, 215, 240, ${0.05 + flashBoost * 0.12})`);
-                    lensGrad.addColorStop(0.78, `rgba(195, 175, 220, ${0.12 + flashBoost * 0.14})`);
+                    lensGrad.addColorStop(0.0, `rgba(255, 255, 255, ${0.18 + flashBoost * 0.28})`);
+                    lensGrad.addColorStop(0.42, `rgba(225, 215, 240, ${0.05 + flashBoost * 0.14})`);
+                    lensGrad.addColorStop(0.78, `rgba(195, 175, 220, ${0.12 + flashBoost * 0.16})`);
                     lensGrad.addColorStop(0.95, `rgba(255, 255, 255, ${0.32 + flashBoost * 0.35})`);
                     lensGrad.addColorStop(1.0, "rgba(255, 255, 255, 0.08)");
                 }
@@ -1424,7 +1492,14 @@
                 ctx.fillStyle = lensGrad;
                 ctx.fill();
 
-                // Üst-sol kırılma hilali (ışığın damla tavanından kırılıp girmesi)
+                // Şimşek çakınca damlaların içinden geçen kısa pembe/beyaz odak parlaması
+                if (flashBoost > 0.08) {
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, rx * 0.65, ry * 0.65, 0, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 145, 205, ${Math.min(0.45, flashBoost * 0.65)})`;
+                    ctx.fill();
+                }
+
                 ctx.beginPath();
                 ctx.ellipse(-rx * 0.06, -ry * 0.08, rx * 0.72, ry * 0.68, 0, Math.PI * 1.12, Math.PI * 1.68);
                 ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(0.88, 0.42 + flashBoost * 0.7)})`;
@@ -1432,7 +1507,6 @@
                 ctx.lineCap = "round";
                 ctx.stroke();
 
-                // Alt-sağ odak yansıması (ışığın damlanın alt merceğinde toplanması)
                 ctx.beginPath();
                 ctx.ellipse(rx * 0.08, ry * 0.12, rx * 0.62, ry * 0.58, 0, Math.PI * 0.12, Math.PI * 0.65);
                 ctx.strokeStyle = d.pinkRefraction
@@ -1442,7 +1516,6 @@
                 ctx.lineCap = "round";
                 ctx.stroke();
 
-                // Minik odak parlaması (specular pinpoint)
                 ctx.beginPath();
                 ctx.arc(-rx * 0.32, -ry * 0.34, Math.max(0.45, d.r * 0.17), 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.96, 0.52 + flashBoost)})`;
@@ -1471,15 +1544,38 @@
         window.addEventListener("resize", resizeWeather);
         resizeWeather();
         renderScene();
-        setTimeout(createRealisticLightning, 800);
+        setTimeout(() => triggerStormSequence(), 800);
         scheduleLightning();
     </script>
 
-    <!-- Web Audio API Synthwave Ambiyans Müzik Motoru -->
+    <!-- YouTube Loop Oynatıcı + Synthwave Ambiyans & Şimşekle Senkron Uzak Gök Gürültüsü -->
     <script>
         let audioCtx = null;
         let isPlaying = false;
         let musicInterval = null;
+
+        function extractYouTubeId(url) {
+            if (!url || typeof url !== "string") return "";
+            const trimmed = url.trim();
+            const match = trimmed.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+            if (match && match[1]) return match[1];
+            return /^[A-Za-z0-9_-]{11}$/.test(trimmed) ? trimmed : "";
+        }
+
+        function syncYouTubeLoop(shouldPlay) {
+            const frame = document.getElementById("ytLoopPlayer");
+            const videoId = extractYouTubeId(DEFAULT_YOUTUBE_URL);
+            if (!videoId) {
+                frame.removeAttribute("src");
+                return false;
+            }
+            if (shouldPlay) {
+                frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&enablejsapi=1`;
+            } else {
+                frame.removeAttribute("src");
+            }
+            return true;
+        }
 
         function toggleMusic() {
             const btn = document.getElementById("musicToggleBtn");
@@ -1488,12 +1584,14 @@
             if (!isPlaying) {
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
-                
+
+                const hasYt = syncYouTubeLoop(true);
                 startAmbientMusic();
                 isPlaying = true;
                 btn.classList.add("playing");
-                text.textContent = "MÜZİK: AÇIK";
+                text.textContent = hasYt ? "MÜZİK: LOOP AÇIK" : "MÜZİK: AÇIK";
             } else {
+                syncYouTubeLoop(false);
                 stopAmbientMusic();
                 isPlaying = false;
                 btn.classList.remove("playing");
@@ -1503,13 +1601,13 @@
 
         function startAmbientMusic() {
             const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25];
-            
+
             musicInterval = setInterval(() => {
                 if (!isPlaying || !audioCtx) return;
-                
+
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                
+
                 osc.type = 'sine';
                 const note = notes[Math.floor(Math.random() * notes.length)];
                 osc.frequency.setValueAtTime(note, audioCtx.currentTime);
@@ -1528,6 +1626,48 @@
         function stopAmbientMusic() {
             if (musicInterval) clearInterval(musicInterval);
         }
+
+        // Müzik açıksa şimşek çaktıktan kısa süre sonra uzak gök gürültüsü
+        function playDistantThunder() {
+            if (!isPlaying || !audioCtx) return;
+            const delayMs = 350 + Math.random() * 550;
+            setTimeout(() => {
+                if (!isPlaying || !audioCtx) return;
+                const now = audioCtx.currentTime;
+                const duration = 2.4;
+                const bufferSize = Math.floor(audioCtx.sampleRate * duration);
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+
+                let lastOut = 0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    data[i] = (lastOut + 0.025 * white) / 1.025;
+                    lastOut = data[i];
+                    data[i] *= 2.8;
+                }
+
+                const noise = audioCtx.createBufferSource();
+                noise.buffer = buffer;
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = "lowpass";
+                filter.frequency.setValueAtTime(140, now);
+                filter.frequency.exponentialRampToValueAtTime(48, now + duration);
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(0.08, now + 0.25);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                noise.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                noise.start(now);
+                noise.stop(now + duration);
+            }, delayMs);
+        }
     </script>
 
     <script>
@@ -1540,7 +1680,7 @@
         const avatarFallback = document.getElementById("avatarFallback");
 
         const tiltContainer = document.getElementById("tiltContainer");
-        
+
         document.addEventListener("mousemove", (e) => {
             const xAxis = (window.innerWidth / 2 - e.pageX) / 55;
             const yAxis = (window.innerHeight / 2 - e.pageY) / 55;
@@ -1569,8 +1709,8 @@
                 if (!response.ok) throw new Error("Status unavailable");
                 const result = await response.json();
                 const stream = result.data ?? result;
-                
-                if (stream && (stream.id || stream.is_live)) { 
+
+                if (stream && (stream.id || stream.is_live)) {
                     setStatus("live");
                     const categoryName = stream.category?.name || stream.subcategory?.name;
                     if (categoryName) {
@@ -1579,8 +1719,8 @@
                     } else {
                         streamCategory.style.display = "none";
                     }
-                } else { 
-                    setStatus("offline"); 
+                } else {
+                    setStatus("offline");
                 }
             } catch (error) {
                 setStatus("offline");
