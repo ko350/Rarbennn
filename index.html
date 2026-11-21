@@ -24,24 +24,29 @@
             --pink-soft: #ff8bc4;
             --pink-light: #ffc1df;
             --bg: #100812;
+            --surface: rgba(24, 11, 27, 0.84);
+            --surface-elevated: rgba(38, 17, 42, 0.88);
             --text: #fff5fb;
             --muted: #b39aaa;
+            --glass-border: rgba(255, 139, 196, 0.34);
+            --neon-border: rgba(255, 79, 163, 0.52);
         }
 
         body {
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 44px 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-family: 'Space Grotesk', sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 50% 15%, rgba(255,79,163,.13), transparent 35%),
-                linear-gradient(rgba(16,8,18,.82), rgba(16,8,18,.96)),
+                radial-gradient(circle at 50% 12%, rgba(255, 79, 163, 0.16), transparent 40%),
+                radial-gradient(circle at 18% 82%, rgba(192, 132, 252, 0.08), transparent 44%),
+                linear-gradient(180deg, rgba(16, 8, 18, 0.82), rgba(11, 5, 13, 0.96)),
                 url('bg.jpg') center / cover fixed;
             overflow-x: hidden;
-            perspective: 1000px;
+            perspective: 1100px;
             position: relative;
         }
 
@@ -139,7 +144,7 @@
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
-            opacity: 0.6;
+            opacity: 0.52;
         }
 
         .crt-glitch-bg::before {
@@ -148,9 +153,9 @@
             inset: -50%;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(255, 79, 163, 0.08) 0px,
-                rgba(168, 85, 247, 0.06) 2px,
-                rgba(255, 255, 255, 0.04) 4px,
+                rgba(255, 79, 163, 0.075) 0px,
+                rgba(168, 85, 247, 0.055) 2px,
+                rgba(255, 255, 255, 0.035) 4px,
                 transparent 6px
             );
             animation: scanlineScroll 12s linear infinite;
@@ -166,9 +171,9 @@
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 79, 163, 0.2),
-                rgba(216, 180, 254, 0.3),
-                rgba(255, 255, 255, 0.25),
+                rgba(255, 79, 163, 0.18),
+                rgba(216, 180, 254, 0.26),
+                rgba(255, 255, 255, 0.22),
                 transparent
             );
             filter: blur(8px);
@@ -189,19 +194,19 @@
         body::before {
             content: "";
             position: fixed;
-            width: 400px;
-            height: 400px;
+            width: 420px;
+            height: 420px;
             background: var(--pink);
-            filter: blur(200px);
-            opacity: .15;
-            top: 5%;
+            filter: blur(210px);
+            opacity: 0.14;
+            top: 6%;
             left: 50%;
             transform: translateX(-50%);
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Arka Plan Müzik Kontrol Butonu (Sağ Üst Köşe) */
+        /* Arka Plan Müzik Kontrol Butonu (Sağ Üst Köşe - Elegan Cam Dokunuşlu) */
         .bg-music-toggle {
             position: fixed;
             top: 25px;
@@ -209,26 +214,36 @@
             z-index: 100;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(25, 12, 27, 0.88);
-            border: 1px solid rgba(255, 79, 163, 0.45);
-            padding: 8px 14px;
-            border-radius: 30px;
+            gap: 9px;
+            background: rgba(24, 11, 27, 0.84);
+            border: 1px solid rgba(255, 139, 196, 0.38);
+            padding: 9px 16px;
+            border-radius: 999px;
             cursor: pointer;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             color: var(--pink-soft);
             font-family: 'Space Grotesk', sans-serif;
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 1px;
-            box-shadow: 0 0 20px rgba(255, 79, 163, 0.18);
-            transition: 0.3s ease;
+            letter-spacing: 1.2px;
+            box-shadow:
+                0 10px 26px rgba(8, 3, 12, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .bg-music-toggle:hover {
             border-color: var(--pink);
-            color: white;
-            box-shadow: 0 0 25px rgba(255, 79, 163, 0.38);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 12px 30px rgba(255, 79, 163, 0.28);
+        }
+
+        .bg-music-toggle.playing {
+            border-color: var(--pink);
+            color: #ffffff;
+            background: rgba(48, 17, 46, 0.9);
+            box-shadow: 0 0 28px rgba(255, 79, 163, 0.32);
         }
 
         .music-icon {
@@ -239,12 +254,12 @@
         }
 
         .bg-music-toggle.playing .music-icon {
-            animation: musicSpin 1.5s linear infinite;
+            animation: musicSpin 1.8s linear infinite;
         }
 
         @keyframes musicPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.18); }
         }
 
         @keyframes musicSpin {
@@ -254,8 +269,8 @@
         /* YouTube API Player Yuvası */
         .yt-player-host {
             position: fixed;
-            width: 48px;
-            height: 48px;
+            width: 64px;
+            height: 64px;
             opacity: 0.015;
             bottom: 8px;
             right: 8px;
@@ -264,28 +279,32 @@
             overflow: hidden;
         }
 
+        /* Elegan + Neon Hibrit Ana Kart */
         .container {
             width: 100%;
             max-width: 500px;
             position: relative;
             z-index: 2;
-            padding: 42px 32px;
-            background: rgba(25, 12, 27, .90);
-            border: 1px solid rgba(255,79,163,.45);
-            border-radius: 20px;
-            backdrop-filter: blur(20px);
+            padding: 42px 34px;
+            background: var(--surface);
+            border: 1px solid rgba(255, 139, 196, 0.34);
+            border-radius: 26px;
+            backdrop-filter: blur(24px);
             box-shadow:
-                0 0 60px rgba(255,79,163,.15),
-                inset 0 0 35px rgba(255,79,163,.04);
-            animation: appear .8s ease, neonPulse 4s infinite alternate;
+                0 24px 70px rgba(8, 3, 12, 0.65),
+                0 0 55px rgba(255, 79, 163, 0.14),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 0 35px rgba(255, 79, 163, 0.04);
+            animation: appear 0.8s cubic-bezier(0.22, 1, 0.36, 1), neonPulse 4.5s infinite alternate;
             transform-style: preserve-3d;
             transition: transform 0.15s ease-out;
             overflow: hidden;
         }
 
         .container.lightning-hit {
-            border-color: rgba(255, 185, 228, 0.95);
+            border-color: rgba(255, 185, 228, 0.92);
             box-shadow:
+                0 24px 80px rgba(8, 3, 12, 0.72),
                 0 0 95px rgba(255, 79, 163, 0.42),
                 inset 0 0 52px rgba(255, 165, 218, 0.16);
         }
@@ -295,9 +314,9 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(
-                500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                520px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
                 rgba(255, 79, 163, 0.14),
-                transparent 45%
+                transparent 46%
             );
             pointer-events: none;
             z-index: 0;
@@ -315,14 +334,20 @@
         }
 
         @keyframes neonPulse {
-            0% { border-color: rgba(255,79,163,.3); box-shadow: 0 0 30px rgba(255,79,163,.10); }
-            100% { border-color: rgba(255,79,163,.7); box-shadow: 0 0 65px rgba(255,79,163,.25); }
+            0% {
+                border-color: rgba(255, 139, 196, 0.28);
+                box-shadow: 0 20px 60px rgba(8, 3, 12, 0.62), 0 0 34px rgba(255, 79, 163, 0.11);
+            }
+            100% {
+                border-color: rgba(255, 79, 163, 0.68);
+                box-shadow: 0 24px 72px rgba(8, 3, 12, 0.68), 0 0 65px rgba(255, 79, 163, 0.24);
+            }
         }
 
         @keyframes appear {
             from {
                 opacity: 0;
-                transform: translateY(20px) scale(0.95);
+                transform: translateY(20px) scale(0.96);
             }
             to {
                 opacity: 1;
@@ -333,16 +358,21 @@
         .top-line {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 25px;
+            gap: 7px;
+            margin-bottom: 26px;
         }
 
         .status {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            width: fit-content;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 139, 196, 0.16);
             color: var(--pink-soft);
-            font-size: 11px;
+            font-size: 10.5px;
             font-weight: 600;
             letter-spacing: 2px;
         }
@@ -357,38 +387,43 @@
         }
 
         @keyframes pulse {
-            50% { opacity: .35; }
+            50% { opacity: 0.35; }
         }
 
-        .status.live { color: #ff8bc4; }
-        .status.offline { color: #888; }
+        .status.live {
+            color: #ff9dd0;
+            border-color: rgba(255, 79, 163, 0.42);
+            background: rgba(255, 79, 163, 0.1);
+        }
+
+        .status.offline { color: #968293; }
         .status.offline .status-dot { background: #888; box-shadow: none; animation: none; }
         .status.unknown { color: #d6a94b; }
         .status.unknown .status-dot { background: #d6a94b; box-shadow: none; animation: none; }
 
-        /* Tamamen Pembe Neon Canlı Yayın Kategori Rozeti + Hafif Pembe Vurgu */
+        /* Tamamen Pembe Neon Canlı Yayın Kategori Rozeti + Elegan Vurgu */
         .stream-category {
             font-size: 10px;
             color: var(--pink-soft);
             letter-spacing: 1px;
             background: rgba(255, 79, 163, 0.12);
             border: 1px solid rgba(255, 79, 163, 0.45);
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 4px 11px;
+            border-radius: 999px;
             width: fit-content;
             display: none;
-            box-shadow: 0 0 12px rgba(255, 79, 163, 0.22), inset 0 0 6px rgba(255, 139, 196, 0.14);
+            box-shadow: 0 0 14px rgba(255, 79, 163, 0.22), inset 0 0 6px rgba(255, 139, 196, 0.14);
         }
 
         .header {
             text-align: center;
             padding-bottom: 32px;
-            border-bottom: 1px solid rgba(255,79,163,.22);
+            border-bottom: 1px solid rgba(255, 139, 196, 0.18);
         }
 
         .avatar-wrapper {
-            width: 92px;
-            height: 92px;
+            width: 96px;
+            height: 96px;
             margin: 0 auto 20px;
             position: relative;
             display: flex;
@@ -400,35 +435,35 @@
             position: absolute;
             inset: -4px;
             border-radius: 50%;
-            border: 2.5px solid var(--pink);
-            animation: dcTalkPulse 2s infinite ease-in-out;
-            box-shadow: 0 0 18px rgba(255, 79, 163, 0.6);
+            border: 2px solid var(--pink);
+            animation: dcTalkPulse 2.2s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 79, 163, 0.55);
         }
 
         @keyframes dcTalkPulse {
             0% {
                 transform: scale(0.96);
-                box-shadow: 0 0 10px rgba(255, 79, 163, 0.4);
-                opacity: 0.8;
+                box-shadow: 0 0 12px rgba(255, 79, 163, 0.35);
+                opacity: 0.78;
             }
             50% {
                 transform: scale(1.05);
-                box-shadow: 0 0 25px rgba(255, 79, 163, 0.9);
+                box-shadow: 0 0 26px rgba(255, 79, 163, 0.85);
                 opacity: 1;
             }
             100% {
                 transform: scale(0.96);
-                box-shadow: 0 0 10px rgba(255, 79, 163, 0.4);
-                opacity: 0.8;
+                box-shadow: 0 0 12px rgba(255, 79, 163, 0.35);
+                opacity: 0.78;
             }
         }
 
         .avatar-core {
-            width: 68px;
-            height: 68px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #351631, #1a0c1d);
-            border: 1px solid rgba(255,79,163,.5);
+            background: linear-gradient(135deg, #351631, #180a1b);
+            border: 1px solid rgba(255, 139, 196, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -455,12 +490,12 @@
 
         .logo {
             font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(38px, 9vw, 52px);
+            font-size: clamp(38px, 9vw, 50px);
             font-weight: 700;
-            letter-spacing: -1px;
+            letter-spacing: -1.2px;
             color: white;
             position: relative;
-            text-shadow: 0 0 25px rgba(255,79,163,.3);
+            text-shadow: 0 0 26px rgba(255, 79, 163, 0.28);
         }
 
         .logo span {
@@ -470,22 +505,25 @@
         .logo::before, .logo::after {
             content: "RaRBennn";
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.8;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.72;
         }
 
         .logo::before {
             left: 2px;
             text-shadow: -2px 0 #00ffcc;
             clip: rect(44px, 450px, 56px, 0);
-            animation: logo-glitch-1 5s infinite linear alternate-reverse;
+            animation: logo-glitch-1 5.5s infinite linear alternate-reverse;
         }
 
         .logo::after {
             left: -2px;
             text-shadow: -2px 0 #ff0055;
             clip: rect(85px, 450px, 140px, 0);
-            animation: logo-glitch-2 5s infinite linear alternate-reverse;
+            animation: logo-glitch-2 5.5s infinite linear alternate-reverse;
         }
 
         @keyframes logo-glitch-1 {
@@ -503,11 +541,11 @@
         }
 
         .subtitle {
-            margin-top: 12px;
+            margin-top: 11px;
             color: var(--pink-soft);
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 3px;
+            letter-spacing: 3.4px;
             text-transform: uppercase;
         }
 
@@ -515,30 +553,30 @@
             margin-top: 16px;
             color: var(--muted);
             font-size: 11px;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.6px;
         }
 
         .followers span {
-            color: var(--pink-soft);
+            color: #ffffff;
             font-weight: 700;
             font-size: 14px;
-            margin-left: 5px;
+            margin-left: 6px;
         }
 
         .description {
-            margin-top: 18px;
+            margin-top: 16px;
             color: var(--muted);
-            font-size: 12px;
+            font-size: 12.5px;
             line-height: 1.8;
-            letter-spacing: .3px;
+            letter-spacing: 0.3px;
         }
 
         .section-title {
-            margin: 32px 0 16px;
+            margin: 30px 0 16px;
             text-align: center;
             font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 3px;
+            font-weight: 600;
+            letter-spacing: 3.2px;
             color: var(--pink-soft);
             text-transform: uppercase;
             position: relative;
@@ -552,16 +590,16 @@
             content: "";
             height: 1px;
             flex: 1;
-            background: linear-gradient(90deg, transparent, rgba(255,79,163,.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.34), transparent);
         }
 
         .menu {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 11px;
         }
 
-        /* Bağlantı Butonlarında Çift Katmanlı Cam Kenar & Derinlik */
+        /* Bağlantı Butonlarında Elegan Cam Kenar & Çift Katmanlı Derinlik */
         .link-btn {
             display: flex;
             justify-content: space-between;
@@ -572,42 +610,42 @@
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
-            letter-spacing: .8px;
-            background: linear-gradient(110deg, #30152d, #1c1020);
-            border: 1px solid #572849;
-            border-radius: 12px;
+            letter-spacing: 0.7px;
+            background: linear-gradient(115deg, rgba(48, 21, 45, 0.85), rgba(24, 13, 29, 0.9));
+            border: 1px solid rgba(255, 139, 196, 0.24);
+            border-radius: 14px;
             box-shadow:
-                inset 0 1px 0 rgba(255, 165, 215, 0.24),
-                inset 0 -1px 0 rgba(8, 3, 12, 0.72),
-                0 6px 16px rgba(8, 3, 12, 0.35);
-            transition: .25s ease;
+                inset 0 1px 0 rgba(255, 195, 228, 0.16),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.68),
+                0 6px 18px rgba(8, 3, 12, 0.35);
+            transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
             cursor: pointer;
         }
 
         .link-btn.donate-btn {
-            background: linear-gradient(110deg, #38152c, #260d20);
-            border-color: rgba(255, 79, 163, 0.6);
+            background: linear-gradient(115deg, rgba(64, 21, 52, 0.88), rgba(34, 12, 31, 0.92));
+            border-color: rgba(255, 79, 163, 0.48);
         }
 
         .link-btn::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,79,163,.13), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.13), transparent);
             transform: translateX(-100%);
-            transition: .5s;
+            transition: transform 0.55s ease;
         }
 
         .link-btn:hover {
-            transform: translateY(-3px);
-            border-color: var(--pink);
+            transform: translateY(-2.5px);
+            border-color: rgba(255, 139, 196, 0.68);
             box-shadow:
-                inset 0 1px 0 rgba(255, 195, 228, 0.38),
-                inset 0 -1px 0 rgba(8, 3, 12, 0.8),
-                0 8px 24px rgba(255,79,163,.24);
-            background: #3a1732;
+                inset 0 1px 0 rgba(255, 210, 236, 0.28),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.78),
+                0 10px 26px rgba(255, 79, 163, 0.22);
+            background: linear-gradient(115deg, rgba(62, 26, 58, 0.92), rgba(30, 15, 35, 0.94));
         }
 
         .link-btn:hover::before {
@@ -626,14 +664,14 @@
             width: 19px;
             height: 19px;
             color: var(--pink-soft);
-            transition: .25s ease;
+            transition: all 0.25s ease;
             flex-shrink: 0;
         }
 
         .link-btn:hover .platform-icon {
-            color: var(--pink);
-            transform: scale(1.12);
-            filter: drop-shadow(0 0 6px rgba(255, 79, 163, 0.7));
+            color: #ffffff;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 6px rgba(255, 79, 163, 0.65));
         }
 
         .arrow-badge {
@@ -641,9 +679,9 @@
             z-index: 1;
             width: 30px;
             height: 30px;
-            border-radius: 8px;
+            border-radius: 9px;
             background: rgba(255, 79, 163, 0.08);
-            border: 1px solid rgba(255, 79, 163, 0.28);
+            border: 1px solid rgba(255, 139, 196, 0.24);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -662,7 +700,7 @@
             background: var(--pink);
             border-color: var(--pink);
             color: #100812;
-            box-shadow: 0 0 14px rgba(255, 79, 163, 0.65);
+            box-shadow: 0 0 14px rgba(255, 79, 163, 0.6);
         }
 
         .link-btn:hover .arrow-badge svg {
@@ -671,9 +709,9 @@
 
         details {
             margin-top: 20px;
-            border: 1px solid rgba(255,79,163,.38);
-            border-radius: 12px;
-            background: rgba(255,79,163,.045);
+            border: 1px solid rgba(255, 139, 196, 0.26);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.025);
             overflow: hidden;
         }
 
@@ -687,14 +725,14 @@
             color: var(--pink-soft);
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 1.5px;
-            transition: .25s;
+            letter-spacing: 1.6px;
+            transition: all 0.25s ease;
         }
 
         summary::-webkit-details-marker { display: none; }
 
         summary:hover {
-            background: rgba(255,79,163,.09);
+            background: rgba(255, 79, 163, 0.09);
             color: white;
         }
 
@@ -719,7 +757,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            border-top: 1px solid rgba(255,79,163,.18);
+            border-top: 1px solid rgba(255, 139, 196, 0.14);
         }
 
         .sub-btn {
@@ -727,25 +765,25 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 14px;
-            color: #c8b5c3;
+            color: #d2bfd0;
             text-decoration: none;
             font-size: 12px;
             font-weight: 500;
-            border-radius: 9px;
-            transition: .2s;
+            border-radius: 10px;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .sub-btn:hover {
             color: white;
-            background: rgba(255,79,163,.13);
+            background: rgba(255, 79, 163, 0.13);
             padding-left: 18px;
         }
 
         .sub-btn .arrow-badge {
             width: 26px;
             height: 26px;
-            border-radius: 7px;
+            border-radius: 8px;
         }
 
         .sub-btn:hover .arrow-badge {
@@ -760,28 +798,28 @@
         }
 
         .footer {
-            margin-top: 35px;
+            margin-top: 34px;
             padding-top: 22px;
-            border-top: 1px solid rgba(255,79,163,.18);
+            border-top: 1px solid rgba(255, 139, 196, 0.16);
             text-align: center;
         }
 
         .footer-brand {
-            color: #f4dce9;
+            color: #ffffff;
             font-size: 12px;
             font-weight: 600;
-            letter-spacing: 3px;
+            letter-spacing: 3.2px;
         }
 
         .footer-text {
             margin-top: 10px;
-            color: #806b7c;
+            color: #887285;
             font-size: 10px;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.6px;
         }
 
         @media(max-width: 450px) {
-            .container { padding: 30px 20px; }
+            .container { padding: 30px 20px; border-radius: 22px; }
             .link-btn { padding: 14px 15px; }
         }
     </style>
@@ -797,7 +835,8 @@
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
-    <!-- YouTube API Oynatıcı Yuvası -->
+    <!-- Doğrudan Ses Oynatıcı + YouTube IFrame API Oynatıcı Yuvası -->
+    <audio id="directAudio" preload="auto" loop crossorigin="anonymous"></audio>
     <div class="yt-player-host">
         <div id="ytApiMount"></div>
     </div>
@@ -972,6 +1011,8 @@
 
     <!-- Fotogerçekçi Optik Cam Damlaları, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek -->
     <script>
+        // İstersen direkt ses/MP3 linki verebilirsin; boşsa YouTube oynatıcı devreye girer
+        const DIRECT_AUDIO_URL = "";
         // BURAYA DİREK YOUTUBE LİNKİNİ YAPIŞTIR (OTOMATİK LOOP ALIR)
         const DEFAULT_YOUTUBE_URL = "https://youtu.be/gD3SqwOJ9Sc?si=7xVev-QNveAajMo8";
 
@@ -1041,7 +1082,6 @@
             }
         }
 
-        // Daha yoğun ve farklı hızlarda kayan çok katmanlı sis bulutları
         function initMist() {
             const count = Math.min(144, Math.floor((viewW * viewH) / 11500));
             mistParticles = [];
@@ -1060,7 +1100,6 @@
             }
         }
 
-        // Havada süzülen ince ışık / nem tozları
         function initLightDust() {
             const count = Math.min(88, Math.floor((viewW * viewH) / 20500));
             lightDustParticles = [];
@@ -1781,15 +1820,16 @@
         scheduleLightning();
     </script>
 
-    <!-- YouTube IFrame API Loop Oynatıcı + Synthwave Ambiyans & Şimşekle Senkron Uzak Gök Gürültüsü -->
+    <!-- İlk Basışta Kesin Başlayan YouTube / Ses Oynatıcı + Ambiyans & Gök Gürültüsü -->
     <script>
+        const directAudio = document.getElementById("directAudio");
         let audioCtx = null;
         let isPlaying = false;
         let musicInterval = null;
         let ytPlayer = null;
         let ytPlayerReady = false;
         let pendingPlayOnReady = false;
-        let playRetryTimer = null;
+        let playRetryTimers = [];
 
         function extractYouTubeId(url) {
             if (!url || typeof url !== "string") return "";
@@ -1799,7 +1839,15 @@
             return /^[A-Za-z0-9_-]{11}$/.test(trimmed) ? trimmed : "";
         }
 
+        function clearPlayRetryTimers() {
+            playRetryTimers.forEach((timerId) => clearTimeout(timerId));
+            playRetryTimers = [];
+        }
+
         function ensureYouTubeApiLoaded() {
+            const videoId = extractYouTubeId(DEFAULT_YOUTUBE_URL);
+            if (!videoId) return;
+
             if (window.YT && window.YT.Player) {
                 initYouTubePlayerIfNeeded();
                 return;
@@ -1817,8 +1865,8 @@
             if (!videoId || ytPlayer || !window.YT || !window.YT.Player) return;
 
             ytPlayer = new window.YT.Player("ytApiMount", {
-                height: "48",
-                width: "48",
+                height: "64",
+                width: "64",
                 videoId,
                 playerVars: {
                     autoplay: 0,
@@ -1834,7 +1882,7 @@
                         try {
                             event.target.cueVideoById({ videoId, startSeconds: 0 });
                             event.target.unMute();
-                            event.target.setVolume(90);
+                            event.target.setVolume(95);
                             if (isPlaying || pendingPlayOnReady) {
                                 pendingPlayOnReady = false;
                                 event.target.playVideo();
@@ -1861,51 +1909,69 @@
             initYouTubePlayerIfNeeded();
         };
 
-        function triggerYouTubeImmediatePlay() {
+        function forceYouTubePlayAttempt(videoId, reloadIfStuck = false) {
+            if (!ytPlayer || !videoId) return;
+            try {
+                if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
+                if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(95);
+                if (reloadIfStuck && typeof ytPlayer.loadVideoById === "function") {
+                    ytPlayer.loadVideoById({ videoId, startSeconds: 0 });
+                } else if (typeof ytPlayer.playVideo === "function") {
+                    ytPlayer.playVideo();
+                }
+            } catch (_) {}
+        }
+
+        function triggerImmediatePlay() {
             const videoId = extractYouTubeId(DEFAULT_YOUTUBE_URL);
+            clearPlayRetryTimers();
+
+            if (DIRECT_AUDIO_URL && DIRECT_AUDIO_URL.trim()) {
+                if (directAudio.src !== DIRECT_AUDIO_URL.trim()) {
+                    directAudio.src = DIRECT_AUDIO_URL.trim();
+                }
+                directAudio.volume = 0.88;
+                directAudio.play().catch(() => {});
+            }
+
             if (!videoId) return;
 
             if (!ytPlayer) {
                 pendingPlayOnReady = true;
                 ensureYouTubeApiLoaded();
-                return;
+            } else {
+                forceYouTubePlayAttempt(videoId, false);
             }
 
-            try {
-                if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
-                if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(90);
-                if (typeof ytPlayer.playVideo === "function") {
-                    ytPlayer.playVideo();
-                }
-            } catch (_) {}
-
-            clearTimeout(playRetryTimer);
-            playRetryTimer = setTimeout(() => {
-                if (!isPlaying || !ytPlayer) return;
-                try {
-                    const state = typeof ytPlayer.getPlayerState === "function" ? ytPlayer.getPlayerState() : -1;
-                    if (state !== window.YT?.PlayerState?.PLAYING) {
-                        if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
-                        if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(90);
-                        if (typeof ytPlayer.loadVideoById === "function") {
-                            ytPlayer.loadVideoById({ videoId, startSeconds: 0 });
-                        }
-                        if (typeof ytPlayer.playVideo === "function") {
-                            ytPlayer.playVideo();
-                        }
+            // İlk basışta tarayıcı/iframe uyandırma gecikmesine karşı kademeli tetikleme
+            [250, 650, 1200].forEach((delay, idx) => {
+                const t = setTimeout(() => {
+                    if (!isPlaying) return;
+                    if (!ytPlayer) {
+                        ensureYouTubeApiLoaded();
+                        return;
                     }
-                } catch (_) {}
-            }, 350);
+                    try {
+                        const state = typeof ytPlayer.getPlayerState === "function" ? ytPlayer.getPlayerState() : -1;
+                        if (state !== window.YT?.PlayerState?.PLAYING) {
+                            forceYouTubePlayAttempt(videoId, idx === 2);
+                        }
+                    } catch (_) {}
+                }, delay);
+                playRetryTimers.push(t);
+            });
         }
 
-        function stopYouTubePlayback() {
+        function stopAllPlayback() {
             pendingPlayOnReady = false;
-            clearTimeout(playRetryTimer);
+            clearPlayRetryTimers();
+            try { directAudio.pause(); } catch (_) {}
             if (ytPlayer && typeof ytPlayer.pauseVideo === "function") {
                 try {
                     ytPlayer.pauseVideo();
                 } catch (_) {}
             }
+            stopAmbientMusic();
         }
 
         function toggleMusic() {
@@ -1913,24 +1979,26 @@
             const text = document.getElementById("musicText");
 
             if (!isPlaying) {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === "suspended") {
+                    audioCtx.resume();
+                }
 
                 isPlaying = true;
                 btn.classList.add("playing");
+                const hasDirect = Boolean(DIRECT_AUDIO_URL && DIRECT_AUDIO_URL.trim());
                 const hasYt = Boolean(extractYouTubeId(DEFAULT_YOUTUBE_URL));
-                text.textContent = hasYt ? "MÜZİK: LOOP AÇIK" : "MÜZİK: AÇIK";
+                text.textContent = (hasDirect || hasYt) ? "MÜZİK: LOOP AÇIK" : "MÜZİK: AÇIK";
 
-                if (hasYt) {
-                    triggerYouTubeImmediatePlay();
-                }
+                triggerImmediatePlay();
                 startAmbientMusic();
             } else {
                 isPlaying = false;
                 btn.classList.remove("playing");
                 text.textContent = "MÜZİK: KAPALI";
-                stopYouTubePlayback();
-                stopAmbientMusic();
+                stopAllPlayback();
             }
         }
 
@@ -1941,6 +2009,7 @@
         });
 
         function startAmbientMusic() {
+            stopAmbientMusic();
             const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25];
 
             musicInterval = setInterval(() => {
@@ -1949,11 +2018,11 @@
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
 
-                osc.type = 'sine';
+                osc.type = "sine";
                 const note = notes[Math.floor(Math.random() * notes.length)];
                 osc.frequency.setValueAtTime(note, audioCtx.currentTime);
 
-                gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.014, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.5);
 
                 osc.connect(gain);
@@ -1965,7 +2034,10 @@
         }
 
         function stopAmbientMusic() {
-            if (musicInterval) clearInterval(musicInterval);
+            if (musicInterval) {
+                clearInterval(musicInterval);
+                musicInterval = null;
+            }
         }
 
         // Müzik açıksa şimşek çaktıktan kısa süre sonra uzak gök gürültüsü
@@ -2011,6 +2083,7 @@
         }
     </script>
 
+    <!-- Kick Canlı Yayın, Kategori, Takipçi ve 3D Kart Etkileşimi -->
     <script>
         const channel = "rarbennn";
         const statusBox = document.getElementById("streamStatus");
@@ -2019,12 +2092,11 @@
         const followerCount = document.getElementById("followerCount");
         const kickAvatar = document.getElementById("kickAvatar");
         const avatarFallback = document.getElementById("avatarFallback");
-
         const tiltContainer = document.getElementById("tiltContainer");
 
         document.addEventListener("mousemove", (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 55;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 55;
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 58;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 58;
             tiltContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
 
             const rect = tiltContainer.getBoundingClientRect();
