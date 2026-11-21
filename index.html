@@ -25,11 +25,11 @@
             --pink-light: #ffc1df;
             --bg: #100812;
             --surface: rgba(24, 11, 27, 0.85);
-            --surface-elevated: rgba(40, 18, 44, 0.9);
+            --surface-elevated: rgba(42, 18, 46, 0.92);
             --text: #fff5fb;
-            --muted: #b59cb0;
+            --muted: #b79eb2;
             --glass-border: rgba(255, 139, 196, 0.38);
-            --neon-border: rgba(255, 79, 163, 0.56);
+            --neon-border: rgba(255, 79, 163, 0.58);
         }
 
         body {
@@ -41,7 +41,7 @@
             font-family: 'Space Grotesk', sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 50% 12%, rgba(255, 79, 163, 0.17), transparent 42%),
+                radial-gradient(circle at 50% 12%, rgba(255, 79, 163, 0.18), transparent 42%),
                 radial-gradient(circle at 18% 82%, rgba(192, 132, 252, 0.09), transparent 45%),
                 linear-gradient(180deg, rgba(16, 8, 18, 0.82), rgba(10, 5, 12, 0.96)),
                 url('bg.jpg') center / cover fixed;
@@ -194,8 +194,8 @@
         body::before {
             content: "";
             position: fixed;
-            width: 440px;
-            height: 440px;
+            width: 450px;
+            height: 450px;
             background: var(--pink);
             filter: blur(215px);
             opacity: 0.15;
@@ -206,7 +206,7 @@
             z-index: 0;
         }
 
-        /* Arka Plan Müzik Kontrol Butonu (Cam Dokunuşlu) */
+        /* Arka Plan Müzik Kontrol Butonu */
         .bg-music-toggle {
             position: fixed;
             top: 25px;
@@ -215,7 +215,7 @@
             display: flex;
             align-items: center;
             gap: 9px;
-            background: rgba(24, 11, 27, 0.85);
+            background: rgba(24, 11, 27, 0.86);
             border: 1px solid rgba(255, 139, 196, 0.42);
             padding: 9px 16px;
             border-radius: 999px;
@@ -315,7 +315,7 @@
             inset: 0;
             background: radial-gradient(
                 520px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(255, 79, 163, 0.14),
+                rgba(255, 79, 163, 0.15),
                 transparent 46%
             );
             pointer-events: none;
@@ -631,7 +631,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.13), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.14), transparent);
             transform: translateX(-100%);
             transition: transform 0.55s ease;
         }
@@ -648,6 +648,23 @@
 
         .link-btn:hover::before {
             transform: translateX(100%);
+        }
+
+        .ripple-wave {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 185, 228, 0.48) 0%, rgba(255, 79, 163, 0.18) 55%, transparent 75%);
+            transform: scale(0);
+            animation: rippleExpand 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes rippleExpand {
+            to {
+                transform: scale(3.4);
+                opacity: 0;
+            }
         }
 
         .link-left {
@@ -2094,7 +2111,7 @@
         }
     </script>
 
-    <!-- Kick Canlı Yayın, Kategori, Takipçi (Zaman Aşımı Korumalı) ve 3D Kart Etkileşimi -->
+    <!-- Kick Canlı Yayın, Kategori, Takipçi (Zaman Aşımı Korumalı), Dalga Efekti ve 3D Kart Etkileşimi -->
     <script>
         const channel = "rarbennn";
         const statusBox = document.getElementById("streamStatus");
@@ -2111,6 +2128,21 @@
             return fetch(url, { cache: "no-store", signal: controller.signal })
                 .finally(() => clearTimeout(timer));
         }
+
+        document.querySelectorAll(".link-btn, .sub-btn").forEach((btn) => {
+            btn.addEventListener("pointerdown", (e) => {
+                const rect = btn.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height) * 0.55;
+                const wave = document.createElement("span");
+                wave.className = "ripple-wave";
+                wave.style.width = `${size}px`;
+                wave.style.height = `${size}px`;
+                wave.style.left = `${e.clientX - rect.left - size / 2}px`;
+                wave.style.top = `${e.clientY - rect.top - size / 2}px`;
+                btn.appendChild(wave);
+                setTimeout(() => wave.remove(), 650);
+            });
+        });
 
         document.addEventListener("mousemove", (e) => {
             if (isPageHidden) return;
