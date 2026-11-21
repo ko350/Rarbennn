@@ -254,8 +254,8 @@
         /* YouTube API Player Yuvası */
         .yt-player-host {
             position: fixed;
-            width: 24px;
-            height: 24px;
+            width: 48px;
+            height: 48px;
             opacity: 0.015;
             bottom: 8px;
             right: 8px;
@@ -1787,7 +1787,9 @@
         let isPlaying = false;
         let musicInterval = null;
         let ytPlayer = null;
+        let ytPlayerReady = false;
         let pendingPlayOnReady = false;
+        let playRetryTimer = null;
 
         function extractYouTubeId(url) {
             if (!url || typeof url !== "string") return "";
@@ -1798,7 +1800,10 @@
         }
 
         function ensureYouTubeApiLoaded() {
-            if (window.YT && window.YT.Player) return;
+            if (window.YT && window.YT.Player) {
+                initYouTubePlayerIfNeeded();
+                return;
+            }
             if (!document.getElementById("ytIframeApiScript")) {
                 const tag = document.createElement("script");
                 tag.id = "ytIframeApiScript";
@@ -1807,38 +1812,16 @@
             }
         }
 
-        window.onYouTubeIframeAPIReady = function () {
-            if (pendingPlayOnReady && isPlaying) {
-                mountAndPlayYouTube();
-            }
-        };
-
-        function mountAndPlayYouTube() {
+        function initYouTubePlayerIfNeeded() {
             const videoId = extractYouTubeId(DEFAULT_YOUTUBE_URL);
-            if (!videoId) return;
-
-            if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
-                try {
-                    ytPlayer.unMute();
-                    ytPlayer.setVolume(85);
-                    ytPlayer.loadVideoById({ videoId, startSeconds: 0 });
-                    ytPlayer.playVideo();
-                    return;
-                } catch (_) {}
-            }
-
-            if (!window.YT || !window.YT.Player) {
-                pendingPlayOnReady = true;
-                ensureYouTubeApiLoaded();
-                return;
-            }
+            if (!videoId || ytPlayer || !window.YT || !window.YT.Player) return;
 
             ytPlayer = new window.YT.Player("ytApiMount", {
-                height: "24",
-                width: "24",
+                height: "48",
+                width: "48",
                 videoId,
                 playerVars: {
-                    autoplay: 1,
+                    autoplay: 0,
                     loop: 1,
                     playlist: videoId,
                     controls: 0,
@@ -1847,10 +1830,13 @@
                 },
                 events: {
                     onReady: (event) => {
+                        ytPlayerReady = true;
                         try {
+                            event.target.cueVideoById({ videoId, startSeconds: 0 });
                             event.target.unMute();
-                            event.target.setVolume(85);
-                            if (isPlaying) {
+                            event.target.setVolume(90);
+                            if (isPlaying || pendingPlayOnReady) {
+                                pendingPlayOnReady = false;
                                 event.target.playVideo();
                             }
                         } catch (_) {}
@@ -1871,11 +1857,53 @@
             });
         }
 
+        window.onYouTubeIframeAPIReady = function () {
+            initYouTubePlayerIfNeeded();
+        };
+
+        function triggerYouTubeImmediatePlay() {
+            const videoId = extractYouTubeId(DEFAULT_YOUTUBE_URL);
+            if (!videoId) return;
+
+            if (!ytPlayer) {
+                pendingPlayOnReady = true;
+                ensureYouTubeApiLoaded();
+                return;
+            }
+
+            try {
+                if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
+                if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(90);
+                if (typeof ytPlayer.playVideo === "function") {
+                    ytPlayer.playVideo();
+                }
+            } catch (_) {}
+
+            clearTimeout(playRetryTimer);
+            playRetryTimer = setTimeout(() => {
+                if (!isPlaying || !ytPlayer) return;
+                try {
+                    const state = typeof ytPlayer.getPlayerState === "function" ? ytPlayer.getPlayerState() : -1;
+                    if (state !== window.YT?.PlayerState?.PLAYING) {
+                        if (typeof ytPlayer.unMute === "function") ytPlayer.unMute();
+                        if (typeof ytPlayer.setVolume === "function") ytPlayer.setVolume(90);
+                        if (typeof ytPlayer.loadVideoById === "function") {
+                            ytPlayer.loadVideoById({ videoId, startSeconds: 0 });
+                        }
+                        if (typeof ytPlayer.playVideo === "function") {
+                            ytPlayer.playVideo();
+                        }
+                    }
+                } catch (_) {}
+            }, 350);
+        }
+
         function stopYouTubePlayback() {
             pendingPlayOnReady = false;
-            if (ytPlayer && typeof ytPlayer.stopVideo === "function") {
+            clearTimeout(playRetryTimer);
+            if (ytPlayer && typeof ytPlayer.pauseVideo === "function") {
                 try {
-                    ytPlayer.stopVideo();
+                    ytPlayer.pauseVideo();
                 } catch (_) {}
             }
         }
@@ -1894,8 +1922,7 @@
                 text.textContent = hasYt ? "MÜZİK: LOOP AÇIK" : "MÜZİK: AÇIK";
 
                 if (hasYt) {
-                    ensureYouTubeApiLoaded();
-                    mountAndPlayYouTube();
+                    triggerYouTubeImmediatePlay();
                 }
                 startAmbientMusic();
             } else {
@@ -1906,6 +1933,12 @@
                 stopAmbientMusic();
             }
         }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            if (extractYouTubeId(DEFAULT_YOUTUBE_URL)) {
+                ensureYouTubeApiLoaded();
+            }
+        });
 
         function startAmbientMusic() {
             const notes = [220.00, 261.63, 329.63, 392.00, 440.00, 523.25];
