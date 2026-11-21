@@ -66,70 +66,70 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 80% 55% at 50% 8%, rgba(255, 125, 195, 0.48), rgba(255, 79, 163, 0.20) 45%, rgba(168, 85, 247, 0.08) 70%, transparent 90%),
-                linear-gradient(180deg, rgba(255, 165, 215, 0.22) 0%, rgba(255, 79, 163, 0.06) 55%, transparent 100%);
+                radial-gradient(ellipse 85% 60% at 50% 8%, rgba(255, 130, 198, 0.52), rgba(255, 79, 163, 0.24) 48%, rgba(168, 85, 247, 0.10) 74%, transparent 92%),
+                linear-gradient(180deg, rgba(255, 165, 215, 0.24) 0%, rgba(255, 79, 163, 0.08) 55%, transparent 100%);
             opacity: 0;
             pointer-events: none;
             mix-blend-mode: screen;
-            transition: opacity 0.04s ease-out;
+            transition: opacity 0.22s ease-out;
         }
 
         .fog-haze {
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 50% 35%, rgba(255, 79, 163, 0.08), transparent 65%),
-                linear-gradient(180deg, rgba(22, 11, 26, 0.42) 0%, rgba(36, 18, 40, 0.32) 52%, rgba(48, 22, 52, 0.64) 100%);
-            transition: transform 0.6s ease, filter 0.6s ease;
+                radial-gradient(circle at 50% 35%, rgba(255, 79, 163, 0.12), transparent 68%),
+                linear-gradient(180deg, rgba(24, 11, 28, 0.52) 0%, rgba(42, 20, 46, 0.42) 52%, rgba(56, 25, 60, 0.74) 100%);
+            transition: transform 0.65s ease, filter 0.65s ease;
         }
 
         .fog-haze.storm-swell {
-            transform: scale(1.045);
-            filter: brightness(1.14);
+            transform: scale(1.055);
+            filter: brightness(1.18);
         }
 
         .fog-bank {
             position: absolute;
-            inset: -28%;
+            inset: -32%;
             background:
-                radial-gradient(ellipse at 20% 70%, rgba(235, 200, 228, 0.19), transparent 52%),
-                radial-gradient(ellipse at 78% 35%, rgba(255, 139, 196, 0.17), transparent 50%),
-                radial-gradient(ellipse at 50% 92%, rgba(225, 205, 232, 0.23), transparent 58%);
-            filter: blur(48px);
+                radial-gradient(ellipse at 20% 70%, rgba(235, 200, 228, 0.26), transparent 54%),
+                radial-gradient(ellipse at 78% 35%, rgba(255, 139, 196, 0.23), transparent 52%),
+                radial-gradient(ellipse at 50% 92%, rgba(225, 205, 232, 0.30), transparent 60%);
+            filter: blur(50px);
             animation: fogDrift 14s ease-in-out infinite alternate;
         }
 
         .fog-bank.second {
             background:
-                radial-gradient(ellipse at 72% 78%, rgba(255, 79, 163, 0.16), transparent 50%),
-                radial-gradient(ellipse at 28% 28%, rgba(248, 235, 248, 0.15), transparent 55%),
-                radial-gradient(ellipse at 50% 60%, rgba(190, 125, 205, 0.14), transparent 60%);
-            filter: blur(60px);
+                radial-gradient(ellipse at 72% 78%, rgba(255, 79, 163, 0.22), transparent 52%),
+                radial-gradient(ellipse at 28% 28%, rgba(248, 235, 248, 0.20), transparent 56%),
+                radial-gradient(ellipse at 50% 60%, rgba(190, 125, 205, 0.19), transparent 62%);
+            filter: blur(62px);
             animation: fogDriftReverse 24s ease-in-out infinite alternate;
         }
 
         .fog-bank.third {
             background:
-                radial-gradient(ellipse at 18% 22%, rgba(255, 120, 190, 0.13), transparent 54%),
-                radial-gradient(ellipse at 82% 82%, rgba(230, 198, 235, 0.16), transparent 56%),
-                radial-gradient(ellipse at 50% 48%, rgba(255, 79, 163, 0.08), transparent 62%);
-            filter: blur(72px);
+                radial-gradient(ellipse at 18% 22%, rgba(255, 120, 190, 0.18), transparent 55%),
+                radial-gradient(ellipse at 82% 82%, rgba(230, 198, 235, 0.22), transparent 58%),
+                radial-gradient(ellipse at 50% 48%, rgba(255, 79, 163, 0.12), transparent 64%);
+            filter: blur(74px);
             animation: fogDriftDeep 30s ease-in-out infinite alternate;
         }
 
         @keyframes fogDrift {
-            0% { transform: translate(-7%, 2%) scale(1.02); }
-            100% { transform: translate(7%, -3%) scale(1.11); }
+            0% { transform: translate(-7%, 2%) scale(1.03); }
+            100% { transform: translate(7%, -3%) scale(1.12); }
         }
 
         @keyframes fogDriftReverse {
-            0% { transform: translate(5%, -2%) scale(1.06); }
-            100% { transform: translate(-6%, 3%) scale(1); }
+            0% { transform: translate(5%, -2%) scale(1.07); }
+            100% { transform: translate(-6%, 3%) scale(1.01); }
         }
 
         @keyframes fogDriftDeep {
-            0% { transform: translate(-3%, -3%) scale(1.04); }
-            100% { transform: translate(4%, 3%) scale(1.09); }
+            0% { transform: translate(-3%, -3%) scale(1.05); }
+            100% { transform: translate(4%, 3%) scale(1.10); }
         }
 
         /* Arkada Kalacak Pembe-Beyaz-Mor Monitör Glitch Çizgileri */
@@ -797,7 +797,7 @@
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
-    <!-- YouTube Loop Oynatıcı (Link aşağıda DEFAULT_YOUTUBE_URL alanına yapıştırılır) -->
+    <!-- YouTube Loop Oynatıcı -->
     <iframe id="ytLoopPlayer" class="yt-loop-frame" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 
     <!-- Sinematik Sis + Optik Cam Damlaları + 4K Sağanak + Hacimsel Pembe Şimşek -->
@@ -971,7 +971,7 @@
     <!-- Fotogerçekçi Optik Cam Damlaları, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek -->
     <script>
         // BURAYA DİREK YOUTUBE LİNKİNİ YAPIŞTIR (OTOMATİK LOOP ALIR)
-        const DEFAULT_YOUTUBE_URL = "";
+        const DEFAULT_YOUTUBE_URL = "https://youtu.be/gD3SqwOJ9Sc?si=7xVev-QNveAajMo8";
 
         const canvas = document.getElementById("weatherCanvas");
         const ctx = canvas.getContext("2d");
@@ -985,6 +985,8 @@
 
         let rainStreaks = [];
         let mistParticles = [];
+        let fogEdgeGlows = [];
+        let horizontalFogWaves = [];
         let lightDustParticles = [];
         let microBeads = [];
         let glassDrops = [];
@@ -1036,38 +1038,38 @@
             }
         }
 
-        // Farklı hız ve derinlik katmanlarında süzülen yoğun sis bulutları
+        // Daha yoğun ve farklı hızlarda kayan çok katmanlı sis bulutları
         function initMist() {
-            const count = Math.min(88, Math.floor((viewW * viewH) / 18500));
+            const count = Math.min(136, Math.floor((viewW * viewH) / 12000));
             mistParticles = [];
             for (let i = 0; i < count; i++) {
-                const layer = i % 3; // 0: ağır arka sis, 1: orta sis, 2: hızlı ön sis
-                const speedScale = layer === 0 ? 0.55 : (layer === 1 ? 1.0 : 1.55);
+                const layer = i % 4; // 0: çok ağır arka sis, 1: orta sis, 2: hızlı ön sis, 3: yoğun alt/yan sis
+                const speedScale = layer === 0 ? 0.42 : (layer === 1 ? 0.95 : (layer === 2 ? 1.65 : 0.72));
                 mistParticles.push({
                     x: Math.random() * viewW,
                     y: Math.random() * viewH,
-                    r: layer === 0 ? (45 + Math.random() * 65) : (layer === 1 ? (28 + Math.random() * 46) : (16 + Math.random() * 28)),
-                    vx: (-0.22 - Math.random() * 0.42) * speedScale,
-                    vy: (0.08 + Math.random() * 0.24) * speedScale,
-                    alpha: layer === 0 ? (0.025 + Math.random() * 0.03) : (0.02 + Math.random() * 0.032),
-                    pink: Math.random() > 0.45
+                    r: layer === 0 ? (65 + Math.random() * 85) : (layer === 1 ? (36 + Math.random() * 58) : (layer === 2 ? (22 + Math.random() * 36) : (52 + Math.random() * 72))),
+                    vx: (-0.28 - Math.random() * 0.48) * speedScale,
+                    vy: (0.06 + Math.random() * 0.22) * speedScale,
+                    alpha: layer === 0 ? (0.042 + Math.random() * 0.038) : (layer === 1 ? (0.032 + Math.random() * 0.038) : (layer === 2 ? (0.025 + Math.random() * 0.032) : (0.038 + Math.random() * 0.036))),
+                    pink: Math.random() > 0.42
                 });
             }
         }
 
         // Havada süzülen ince ışık / nem tozları
         function initLightDust() {
-            const count = Math.min(75, Math.floor((viewW * viewH) / 24000));
+            const count = Math.min(85, Math.floor((viewW * viewH) / 21000));
             lightDustParticles = [];
             for (let i = 0; i < count; i++) {
                 lightDustParticles.push({
                     x: Math.random() * viewW,
                     y: Math.random() * viewH,
-                    r: 0.7 + Math.random() * 1.4,
+                    r: 0.75 + Math.random() * 1.45,
                     vx: (Math.random() - 0.5) * 0.35 - 0.12,
                     vy: -0.12 - Math.random() * 0.28,
                     phase: Math.random() * Math.PI * 2,
-                    alpha: 0.12 + Math.random() * 0.22,
+                    alpha: 0.14 + Math.random() * 0.22,
                     pink: Math.random() > 0.35
                 });
             }
@@ -1087,32 +1089,36 @@
             }
         }
 
-        function makeGlassDrop(x, y, r, sliding = false) {
+        function makeGlassDrop(x, y, r, sliding = false, tailed = false) {
             return {
                 x,
                 y,
                 r,
-                vy: sliding ? (1.0 + r * 0.32) : 0,
+                vy: sliding ? (1.05 + r * 0.35) : 0,
                 vx: (Math.random() - 0.5) * 0.12,
                 sliding,
+                tailed,
                 age: Math.random() * 240,
-                releaseR: 4.6 + Math.random() * 2.8,
+                releaseR: 4.5 + Math.random() * 2.9,
                 pinkRefraction: Math.random() > 0.38,
                 wobble: (Math.random() - 0.5) * 0.14,
-                tiltAngle: (Math.random() - 0.5) * 0.22
+                tiltAngle: (Math.random() - 0.5) * 0.24,
+                facetSeed: Math.random() * Math.PI * 2
             };
         }
 
         function initGlassDrops() {
-            const count = Math.min(72, Math.floor((viewW * viewH) / 21000));
+            const count = Math.min(78, Math.floor((viewW * viewH) / 19500));
             glassDrops = [];
             for (let i = 0; i < count; i++) {
+                const isSliding = Math.random() < 0.28;
                 glassDrops.push(
                     makeGlassDrop(
                         Math.random() * viewW,
                         Math.random() * viewH,
-                        1.4 + Math.random() * 3.1,
-                        Math.random() < 0.25
+                        1.4 + Math.random() * 3.2,
+                        isSliding,
+                        isSliding && Math.random() < 0.45
                     )
                 );
             }
@@ -1141,14 +1147,14 @@
             preStrikeAccumulators.push({
                 x: originX,
                 y: originY,
-                radius: 24,
-                maxRadius: isSecondary ? 120 : 165,
-                alpha: 0.04,
+                radius: 26,
+                maxRadius: isSecondary ? 130 : 180,
+                alpha: 0.045,
                 growSpeed: isSecondary ? 2.8 : 2.3
             });
 
             fogHaze.classList.add("storm-swell");
-            setTimeout(() => fogHaze.classList.remove("storm-swell"), 750);
+            setTimeout(() => fogHaze.classList.remove("storm-swell"), 850);
 
             setTimeout(() => {
                 createRealisticLightning(originX, isSecondary);
@@ -1204,18 +1210,40 @@
                 mainPts,
                 subBranches,
                 life: intensity,
-                decay: isSecondary ? 0.062 : (0.048 + Math.random() * 0.02),
+                decay: isSecondary ? 0.036 : (0.028 + Math.random() * 0.012),
                 pulseSeed: Math.random() * 10,
                 softness: isSecondary ? 0.65 : 1.0
             });
 
-            // Yıldırım sonrası siste kalan hafif pembe ışık kuyruğu
+            // Yıldırım sonrası siste kalan hafif pembe ışık kuyruğu (kademeli sönüm)
             postStrikeTails.push({
                 pts: mainPts,
-                alpha: isSecondary ? 0.14 : 0.24,
-                fade: isSecondary ? 0.009 : 0.0065,
-                width: isSecondary ? 18 : 26
+                alpha: isSecondary ? 0.16 : 0.28,
+                fade: isSecondary ? 0.0055 : 0.0042,
+                width: isSecondary ? 20 : 28
             });
+
+            // Sis içindeki pembe parıltının kenarlarda bulut gibi dağılması
+            fogEdgeGlows.push({
+                x: originX,
+                y: viewH * (0.25 + Math.random() * 0.45),
+                rx: viewW * (isSecondary ? 0.42 : 0.55),
+                ry: viewH * (isSecondary ? 0.28 : 0.38),
+                alpha: isSecondary ? 0.18 : 0.30,
+                fade: isSecondary ? 0.0045 : 0.0034
+            });
+
+            // Şimşek çaktığında sis içinde yatay ışık dalgaları
+            const waveCount = isSecondary ? 2 : 3;
+            for (let w = 0; w < waveCount; w++) {
+                horizontalFogWaves.push({
+                    y: viewH * (0.16 + w * 0.24 + Math.random() * 0.08),
+                    h: 28 + Math.random() * 34,
+                    alpha: isSecondary ? 0.12 : 0.20,
+                    fade: 0.0055 + Math.random() * 0.003,
+                    drift: (Math.random() - 0.5) * 1.4
+                });
+            }
 
             cloudGlows.push({
                 x: originX,
@@ -1225,7 +1253,7 @@
                 alpha: isSecondary ? 0.24 : 0.46
             });
 
-            flashBoost = Math.max(flashBoost, isSecondary ? 0.24 : 0.52);
+            flashBoost = Math.max(flashBoost, isSecondary ? 0.26 : 0.54);
             if (!isSecondary) {
                 mainCard.classList.add("lightning-hit");
             }
@@ -1239,14 +1267,14 @@
             setTimeout(() => { lightningFlash.style.opacity = isSecondary ? "0.08" : "0.14"; }, 55);
             setTimeout(() => {
                 lightningFlash.style.opacity = isSecondary ? "0.48" : "1";
-                flashBoost = Math.max(flashBoost, isSecondary ? 0.20 : 0.42);
+                flashBoost = Math.max(flashBoost, isSecondary ? 0.22 : 0.44);
             }, 115);
             setTimeout(() => { lightningFlash.style.opacity = "0.14"; }, 185);
             setTimeout(() => { lightningFlash.style.opacity = isSecondary ? "0.24" : "0.55"; }, 225);
             setTimeout(() => {
                 lightningFlash.style.opacity = "0";
                 mainCard.classList.remove("lightning-hit");
-            }, 350);
+            }, 420);
         }
 
         function scheduleLightning() {
@@ -1299,7 +1327,48 @@
                 }
             }
 
-            // Yıldırım sonrası siste kalan yumuşak pembe ışık kuyruğu
+            // Sis içinde yatay ışık dalgaları
+            for (let i = horizontalFogWaves.length - 1; i >= 0; i--) {
+                const w = horizontalFogWaves[i];
+                const grad = ctx.createLinearGradient(0, w.y - w.h * 0.5, 0, w.y + w.h * 0.5);
+                grad.addColorStop(0, "rgba(255, 79, 163, 0)");
+                grad.addColorStop(0.5, `rgba(255, 165, 218, ${w.alpha})`);
+                grad.addColorStop(1, "rgba(255, 79, 163, 0)");
+
+                ctx.save();
+                ctx.translate(w.drift, 0);
+                ctx.fillStyle = grad;
+                ctx.fillRect(-40, w.y - w.h * 0.5, viewW + 80, w.h);
+                ctx.restore();
+
+                w.drift *= 1.02;
+                w.alpha -= w.fade;
+                if (w.alpha <= 0) horizontalFogWaves.splice(i, 1);
+            }
+
+            // Sis içindeki pembe parıltının kenarlarda yumuşak bulut gibi dağılması
+            for (let i = fogEdgeGlows.length - 1; i >= 0; i--) {
+                const eg = fogEdgeGlows[i];
+                ctx.save();
+                ctx.translate(eg.x, eg.y);
+                ctx.scale(eg.rx / 100, eg.ry / 100);
+                const grad = ctx.createRadialGradient(0, 0, 12, 0, 0, 100);
+                grad.addColorStop(0, `rgba(255, 125, 195, ${eg.alpha * 0.55})`);
+                grad.addColorStop(0.6, `rgba(255, 79, 163, ${eg.alpha * 0.35})`);
+                grad.addColorStop(1, "rgba(255, 79, 163, 0)");
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(0, 0, 100, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+
+                eg.rx += 2.2;
+                eg.ry += 1.4;
+                eg.alpha -= eg.fade;
+                if (eg.alpha <= 0) fogEdgeGlows.splice(i, 1);
+            }
+
+            // Yıldırım sonrası siste kalan yumuşak pembe ışık kuyruğu (kademeli kısılma)
             for (let i = postStrikeTails.length - 1; i >= 0; i--) {
                 const tail = postStrikeTails[i];
                 strokeSmoothPath(
@@ -1307,10 +1376,10 @@
                     tail.width,
                     `rgba(255, 79, 163, ${tail.alpha * 0.45})`,
                     "#ff4fa3",
-                    38
+                    42
                 );
                 tail.alpha -= tail.fade;
-                tail.width += 0.12;
+                tail.width += 0.14;
                 if (tail.alpha <= 0) postStrikeTails.splice(i, 1);
             }
 
@@ -1330,7 +1399,7 @@
                 ctx.fill();
                 ctx.restore();
 
-                g.alpha -= 0.022;
+                g.alpha -= 0.016;
                 if (g.alpha <= 0) cloudGlows.splice(i, 1);
             }
 
@@ -1340,7 +1409,7 @@
                 const a = Math.max(0, b.life * flicker);
                 const s = b.softness || 1;
 
-                strokeSmoothPath(b.mainPts, 13 * s, `rgba(255, 79, 163, ${a * 0.25})`, "#ff4fa3", 40 * s);
+                strokeSmoothPath(b.mainPts, 14 * s, `rgba(255, 79, 163, ${a * 0.26})`, "#ff4fa3", 44 * s);
                 strokeSmoothPath(b.mainPts, 3.6 * s, `rgba(255, 115, 188, ${a * 0.85})`, "#ff4fa3", 18 * s);
                 strokeSmoothPath(b.mainPts, 1.35 * s, `rgba(255, 242, 250, ${a})`, "#ffffff", 6 * s);
 
@@ -1359,12 +1428,12 @@
         function drawMistLayer() {
             for (let m of mistParticles) {
                 const grad = ctx.createRadialGradient(m.x, m.y, m.r * 0.1, m.x, m.y, m.r);
-                const boost = flashBoost * 0.09;
+                const boost = flashBoost * 0.12;
                 if (m.pink) {
                     grad.addColorStop(0, `rgba(255, 139, 196, ${m.alpha + boost})`);
                     grad.addColorStop(1, "rgba(255, 79, 163, 0)");
                 } else {
-                    grad.addColorStop(0, `rgba(240, 225, 245, ${m.alpha * 0.88 + boost * 0.65})`);
+                    grad.addColorStop(0, `rgba(240, 225, 245, ${m.alpha * 0.92 + boost * 0.7})`);
                     grad.addColorStop(1, "rgba(240, 225, 245, 0)");
                 }
                 ctx.fillStyle = grad;
@@ -1379,17 +1448,29 @@
             }
         }
 
+        // Havada süzülen ince ışık / nem tozları (şimşekle kısa canlanma)
         function drawLightDustLayer() {
             for (let p of lightDustParticles) {
                 p.phase += 0.025;
                 const twinkle = 0.65 + Math.sin(p.phase) * 0.35;
-                const a = Math.min(0.65, (p.alpha + flashBoost * 0.22) * twinkle);
+                const surge = flashBoost > 0.05 ? (1 + flashBoost * 1.45) : 1;
+                const a = Math.min(0.78, (p.alpha + flashBoost * 0.28) * twinkle);
+
+                if (flashBoost > 0.08) {
+                    const halo = ctx.createRadialGradient(p.x, p.y, 0.2, p.x, p.y, p.r * 3.4 * surge);
+                    halo.addColorStop(0, `rgba(255, 185, 225, ${Math.min(0.45, flashBoost * 0.55)})`);
+                    halo.addColorStop(1, "rgba(255, 79, 163, 0)");
+                    ctx.fillStyle = halo;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r * 3.4 * surge, 0, Math.PI * 2);
+                    ctx.fill();
+                }
 
                 ctx.fillStyle = p.pink
-                    ? `rgba(255, 175, 220, ${a})`
-                    : `rgba(255, 250, 255, ${a * 0.9})`;
+                    ? `rgba(255, 180, 222, ${a})`
+                    : `rgba(255, 250, 255, ${a * 0.92})`;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, p.r * surge, 0, Math.PI * 2);
                 ctx.fill();
 
                 p.x += p.vx + Math.sin(p.phase * 0.5) * 0.12;
@@ -1458,12 +1539,13 @@
         }
 
         function drawGlassDropsLayer() {
-            if (glassDrops.length < 72 && Math.random() < 0.24) {
+            if (glassDrops.length < 78 && Math.random() < 0.25) {
                 glassDrops.push(
                     makeGlassDrop(
                         Math.random() * viewW,
                         Math.random() * (viewH * 0.94),
-                        1.1 + Math.random() * 1.4,
+                        1.15 + Math.random() * 1.5,
+                        false,
                         false
                     )
                 );
@@ -1526,7 +1608,8 @@
                     }
                     if (d.r >= d.releaseR) {
                         d.sliding = true;
-                        d.vy = 0.7;
+                        d.tailed = Math.random() < 0.45;
+                        d.vy = 0.75;
                     }
                 } else {
                     const prevX = d.x;
@@ -1558,6 +1641,7 @@
                         if (dist < d.r + other.r + 1.4) {
                             d.r = Math.min(7.8, Math.sqrt(d.r * d.r + other.r * other.r * 0.88));
                             d.vy += 0.45;
+                            d.tailed = true;
                             glassDrops.splice(j, 1);
                             if (j < i) i--;
                         }
@@ -1569,18 +1653,52 @@
                     }
                 }
 
-                const stretch = d.sliding ? (1 + Math.min(0.48, d.vy * 0.05)) : 1;
-                const rx = d.r * (1 - stretch * 0.05);
+                const stretch = d.sliding ? (1 + Math.min(0.52, d.vy * 0.055)) : 1;
+                const rx = d.r * (1 - stretch * 0.06);
                 const ry = d.r * stretch;
 
                 ctx.save();
                 ctx.translate(d.x, d.y);
                 ctx.rotate(d.tiltAngle + d.vx * 0.12);
 
-                ctx.beginPath();
-                ctx.ellipse(rx * 0.08, ry * 0.14, rx * 1.05, ry * 1.05, 0, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(8, 3, 12, ${0.24 + flashBoost * 0.08})`;
+                // Görseldeki gibi hafif köşeli/organik cam damla gövdesi
+                function traceOrganicDrop(scaleX = 1, scaleY = 1) {
+                    const w = rx * scaleX;
+                    const h = ry * scaleY;
+                    const c = Math.sin(d.facetSeed) * 0.14;
+                    ctx.beginPath();
+                    ctx.moveTo(0, -h);
+                    ctx.bezierCurveTo(w * (0.96 + c), -h * 0.72, w * 1.04, h * 0.28, w * (0.68 - c), h * 0.92);
+                    ctx.bezierCurveTo(w * 0.25, h * 1.06, -w * 0.35, h * 1.04, -w * (0.74 + c), h * 0.86);
+                    ctx.bezierCurveTo(-w * 1.05, h * 0.22, -w * (0.95 - c), -h * 0.74, 0, -h);
+                    ctx.closePath();
+                }
+
+                // Kuyruklu akan damla formu
+                if (d.tailed && d.sliding) {
+                    const tailLen = Math.min(28, ry * 2.6 + d.vy * 1.6);
+                    const tailGrad = ctx.createLinearGradient(0, -ry * 0.7, 0, -ry - tailLen);
+                    tailGrad.addColorStop(0, d.pinkRefraction
+                        ? `rgba(255, 195, 228, ${0.42 + flashBoost * 0.38})`
+                        : `rgba(248, 244, 255, ${0.38 + flashBoost * 0.35})`);
+                    tailGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
+
+                    ctx.beginPath();
+                    ctx.moveTo(-rx * 0.38, -ry * 0.72);
+                    ctx.quadraticCurveTo(-rx * 0.14, -ry - tailLen * 0.65, -rx * 0.05, -ry - tailLen);
+                    ctx.lineTo(rx * 0.08, -ry - tailLen * 0.85);
+                    ctx.quadraticCurveTo(rx * 0.24, -ry - tailLen * 0.45, rx * 0.38, -ry * 0.72);
+                    ctx.closePath();
+                    ctx.fillStyle = tailGrad;
+                    ctx.fill();
+                }
+
+                ctx.save();
+                ctx.translate(rx * 0.08, ry * 0.14);
+                traceOrganicDrop(1.05, 1.05);
+                ctx.fillStyle = `rgba(8, 3, 12, ${0.26 + flashBoost * 0.08})`;
                 ctx.fill();
+                ctx.restore();
 
                 const lensGrad = ctx.createRadialGradient(
                     -rx * 0.25,
@@ -1605,8 +1723,7 @@
                     lensGrad.addColorStop(1.0, "rgba(255, 255, 255, 0.08)");
                 }
 
-                ctx.beginPath();
-                ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+                traceOrganicDrop(1, 1);
                 ctx.fillStyle = lensGrad;
                 ctx.fill();
 
@@ -1647,7 +1764,7 @@
             ctx.clearRect(0, 0, viewW, viewH);
 
             if (flashBoost > 0) {
-                flashBoost = Math.max(0, flashBoost - 0.022);
+                flashBoost = Math.max(0, flashBoost - 0.011);
             }
 
             drawLightningLayer();
