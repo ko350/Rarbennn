@@ -251,17 +251,17 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Gizli / Kompakt YouTube Loop Oynatıcı Yuvası */
-        .yt-loop-frame {
+        /* YouTube API Player Yuvası (Tarayıcı engelini aşmak için görünür küçük alan içinde tutuldu) */
+        .yt-player-host {
             position: fixed;
-            width: 1px;
-            height: 1px;
-            opacity: 0.001;
+            width: 16px;
+            height: 16px;
+            opacity: 0.015;
+            bottom: 8px;
+            right: 8px;
+            z-index: 90;
             pointer-events: none;
-            bottom: 0;
-            right: 0;
-            border: 0;
-            z-index: -1;
+            overflow: hidden;
         }
 
         .container {
@@ -797,8 +797,10 @@
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
-    <!-- YouTube Loop Oynatıcı -->
-    <iframe id="ytLoopPlayer" class="yt-loop-frame" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <!-- YouTube API Oynatıcı Yuvası -->
+    <div class="yt-player-host">
+        <div id="ytApiMount"></div>
+    </div>
 
     <!-- Sinematik Sis + Optik Cam Damlaları + 4K Sağanak + Hacimsel Pembe Şimşek -->
     <div class="weather-layer">
@@ -1043,7 +1045,7 @@
             const count = Math.min(136, Math.floor((viewW * viewH) / 12000));
             mistParticles = [];
             for (let i = 0; i < count; i++) {
-                const layer = i % 4; // 0: çok ağır arka sis, 1: orta sis, 2: hızlı ön sis, 3: yoğun alt/yan sis
+                const layer = i % 4;
                 const speedScale = layer === 0 ? 0.42 : (layer === 1 ? 0.95 : (layer === 2 ? 1.65 : 0.72));
                 mistParticles.push({
                     x: Math.random() * viewW,
@@ -1215,7 +1217,6 @@
                 softness: isSecondary ? 0.65 : 1.0
             });
 
-            // Yıldırım sonrası siste kalan hafif pembe ışık kuyruğu (kademeli sönüm)
             postStrikeTails.push({
                 pts: mainPts,
                 alpha: isSecondary ? 0.16 : 0.28,
@@ -1223,7 +1224,6 @@
                 width: isSecondary ? 20 : 28
             });
 
-            // Sis içindeki pembe parıltının kenarlarda bulut gibi dağılması
             fogEdgeGlows.push({
                 x: originX,
                 y: viewH * (0.25 + Math.random() * 0.45),
@@ -1233,7 +1233,6 @@
                 fade: isSecondary ? 0.0045 : 0.0034
             });
 
-            // Şimşek çaktığında sis içinde yatay ışık dalgaları
             const waveCount = isSecondary ? 2 : 3;
             for (let w = 0; w < waveCount; w++) {
                 horizontalFogWaves.push({
@@ -1327,7 +1326,6 @@
                 }
             }
 
-            // Sis içinde yatay ışık dalgaları
             for (let i = horizontalFogWaves.length - 1; i >= 0; i--) {
                 const w = horizontalFogWaves[i];
                 const grad = ctx.createLinearGradient(0, w.y - w.h * 0.5, 0, w.y + w.h * 0.5);
@@ -1346,7 +1344,6 @@
                 if (w.alpha <= 0) horizontalFogWaves.splice(i, 1);
             }
 
-            // Sis içindeki pembe parıltının kenarlarda yumuşak bulut gibi dağılması
             for (let i = fogEdgeGlows.length - 1; i >= 0; i--) {
                 const eg = fogEdgeGlows[i];
                 ctx.save();
@@ -1368,7 +1365,6 @@
                 if (eg.alpha <= 0) fogEdgeGlows.splice(i, 1);
             }
 
-            // Yıldırım sonrası siste kalan yumuşak pembe ışık kuyruğu (kademeli kısılma)
             for (let i = postStrikeTails.length - 1; i >= 0; i--) {
                 const tail = postStrikeTails[i];
                 strokeSmoothPath(
@@ -1448,7 +1444,6 @@
             }
         }
 
-        // Havada süzülen ince ışık / nem tozları (şimşekle kısa canlanma)
         function drawLightDustLayer() {
             for (let p of lightDustParticles) {
                 p.phase += 0.025;
@@ -1551,7 +1546,6 @@
                 );
             }
 
-            // Camda kayarken incelen izler ve parçalanan mikro damlacıklar
             for (let i = glassTrails.length - 1; i >= 0; i--) {
                 const tr = glassTrails[i];
                 const grad = ctx.createLinearGradient(tr.x1, tr.y1, tr.x2, tr.y2);
@@ -1661,7 +1655,6 @@
                 ctx.translate(d.x, d.y);
                 ctx.rotate(d.tiltAngle + d.vx * 0.12);
 
-                // Görseldeki gibi hafif köşeli/organik cam damla gövdesi
                 function traceOrganicDrop(scaleX = 1, scaleY = 1) {
                     const w = rx * scaleX;
                     const h = ry * scaleY;
@@ -1674,7 +1667,6 @@
                     ctx.closePath();
                 }
 
-                // Kuyruklu akan damla formu
                 if (d.tailed && d.sliding) {
                     const tailLen = Math.min(28, ry * 2.6 + d.vy * 1.6);
                     const tailGrad = ctx.createLinearGradient(0, -ry * 0.7, 0, -ry - tailLen);
@@ -1727,7 +1719,6 @@
                 ctx.fillStyle = lensGrad;
                 ctx.fill();
 
-                // Şimşek çakınca damlaların içinden geçen kısa pembe/beyaz odak parlaması
                 if (flashBoost > 0.08) {
                     ctx.beginPath();
                     ctx.ellipse(0, 0, rx * 0.65, ry * 0.65, 0, 0, Math.PI * 2);
@@ -1784,11 +1775,14 @@
         scheduleLightning();
     </script>
 
-    <!-- YouTube Loop Oynatıcı + Synthwave Ambiyans & Şimşekle Senkron Uzak Gök Gürültüsü -->
+    <!-- YouTube IFrame API Loop Oynatıcı + Synthwave Ambiyans & Şimşekle Senkron Uzak Gök Gürültüsü -->
     <script>
         let audioCtx = null;
         let isPlaying = false;
         let musicInterval = null;
+        let ytPlayer = null;
+        let ytApiReady = false;
+        let pendingPlayOnReady = false;
 
         function extractYouTubeId(url) {
             if (!url || typeof url !== "string") return "";
@@ -1798,19 +1792,91 @@
             return /^[A-Za-z0-9_-]{11}$/.test(trimmed) ? trimmed : "";
         }
 
-        function syncYouTubeLoop(shouldPlay) {
-            const frame = document.getElementById("ytLoopPlayer");
+        function ensureYouTubeApiLoaded() {
+            if (window.YT && window.YT.Player) {
+                ytApiReady = true;
+                return;
+            }
+            if (!document.getElementById("ytIframeApiScript")) {
+                const tag = document.createElement("script");
+                tag.id = "ytIframeApiScript";
+                tag.src = "https://www.youtube.com/iframe_api";
+                document.head.appendChild(tag);
+            }
+        }
+
+        window.onYouTubeIframeAPIReady = function () {
+            ytApiReady = true;
+            if (pendingPlayOnReady && isPlaying) {
+                mountAndPlayYouTube();
+            }
+        };
+
+        function mountAndPlayYouTube() {
             const videoId = extractYouTubeId(DEFAULT_YOUTUBE_URL);
-            if (!videoId) {
-                frame.removeAttribute("src");
-                return false;
+            if (!videoId) return;
+
+            if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
+                try {
+                    ytPlayer.unMute();
+                    ytPlayer.setVolume(80);
+                    ytPlayer.loadVideoById({ videoId, startSeconds: 0 });
+                    ytPlayer.playVideo();
+                    return;
+                } catch (_) {}
             }
-            if (shouldPlay) {
-                frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&enablejsapi=1`;
-            } else {
-                frame.removeAttribute("src");
+
+            if (!window.YT || !window.YT.Player) {
+                pendingPlayOnReady = true;
+                ensureYouTubeApiLoaded();
+                return;
             }
-            return true;
+
+            ytPlayer = new window.YT.Player("ytApiMount", {
+                height: "16",
+                width: "16",
+                videoId,
+                playerVars: {
+                    autoplay: 1,
+                    loop: 1,
+                    playlist: videoId,
+                    controls: 0,
+                    rel: 0,
+                    playsinline: 1
+                },
+                events: {
+                    onReady: (event) => {
+                        try {
+                            event.target.unMute();
+                            event.target.setVolume(80);
+                            if (isPlaying) {
+                                event.target.playVideo();
+                            }
+                        } catch (_) {}
+                    },
+                    onStateChange: (event) => {
+                        if (event.data === window.YT.PlayerState.ENDED && isPlaying) {
+                            event.target.seekTo(0);
+                            event.target.playVideo();
+                        }
+                    },
+                    onError: () => {
+                        const text = document.getElementById("musicText");
+                        if (isPlaying && text) {
+                            text.textContent = "MÜZİK: AMBİYANS AÇIK";
+                        }
+                    }
+                }
+            });
+        }
+
+        function stopYouTubePlayback() {
+            pendingPlayOnReady = false;
+            if (ytPlayer && typeof ytPlayer.stopVideo === "function") {
+                try {
+                    ytPlayer.stopVideo();
+                } catch (_) {}
+            }
         }
 
         function toggleMusic() {
@@ -1821,17 +1887,22 @@
                 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 if (audioCtx.state === 'suspended') audioCtx.resume();
 
-                const hasYt = syncYouTubeLoop(true);
-                startAmbientMusic();
                 isPlaying = true;
                 btn.classList.add("playing");
+                const hasYt = Boolean(extractYouTubeId(DEFAULT_YOUTUBE_URL));
                 text.textContent = hasYt ? "MÜZİK: LOOP AÇIK" : "MÜZİK: AÇIK";
+
+                if (hasYt) {
+                    ensureYouTubeApiLoaded();
+                    mountAndPlayYouTube();
+                }
+                startAmbientMusic();
             } else {
-                syncYouTubeLoop(false);
-                stopAmbientMusic();
                 isPlaying = false;
                 btn.classList.remove("playing");
                 text.textContent = "MÜZİK: KAPALI";
+                stopYouTubePlayback();
+                stopAmbientMusic();
             }
         }
 
@@ -2005,5 +2076,6 @@
         setInterval(checkStream, 60000);
         setInterval(getChannelData, 300000);
     </script>
+
 </body>
 </html>
