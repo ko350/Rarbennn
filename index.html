@@ -25,7 +25,7 @@
             --pink-light: #ffc1df;
             --violet: #c084fc;
             --bg: #100812;
-            --surface: rgba(24, 10, 28, 0.84);
+            --surface: rgba(24, 10, 28, 0.85);
             --surface-elevated: rgba(46, 18, 52, 0.92);
             --text: #fff5fb;
             --muted: #c2a7be;
@@ -42,7 +42,7 @@
             font-family: 'Space Grotesk', sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 50% 10%, rgba(255, 79, 163, 0.24), transparent 44%),
+                radial-gradient(circle at 50% 10%, rgba(255, 79, 163, 0.25), transparent 44%),
                 radial-gradient(circle at 16% 80%, rgba(192, 132, 252, 0.14), transparent 48%),
                 radial-gradient(circle at 86% 76%, rgba(255, 79, 163, 0.12), transparent 46%),
                 linear-gradient(180deg, rgba(16, 8, 18, 0.78), rgba(9, 4, 11, 0.95)),
@@ -289,14 +289,14 @@
             z-index: 2;
             padding: 44px 36px;
             background: var(--surface);
-            border: 1px solid rgba(255, 139, 196, 0.4);
+            border: 1px solid rgba(255, 139, 196, 0.42);
             border-radius: 28px;
             backdrop-filter: blur(26px);
             box-shadow:
-                0 28px 86px rgba(6, 2, 10, 0.76),
-                0 0 72px rgba(255, 79, 163, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.14),
-                inset 0 -1px 0 rgba(255, 79, 163, 0.14),
+                0 28px 86px rgba(6, 2, 10, 0.78),
+                0 0 74px rgba(255, 79, 163, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(255, 79, 163, 0.15),
                 inset 0 0 42px rgba(255, 79, 163, 0.05);
             animation: appear 0.8s cubic-bezier(0.22, 1, 0.36, 1), neonPulse 4.5s infinite alternate;
             transform-style: preserve-3d;
@@ -311,7 +311,7 @@
             left: 10%;
             right: 10%;
             height: 1.5px;
-            background: linear-gradient(90deg, transparent, rgba(255, 165, 218, 0.9), rgba(255, 79, 163, 1), rgba(216, 180, 254, 0.75), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 165, 218, 0.92), rgba(255, 79, 163, 1), rgba(216, 180, 254, 0.78), transparent);
             pointer-events: none;
             z-index: 2;
         }
@@ -330,7 +330,7 @@
             inset: 0;
             background: radial-gradient(
                 560px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(255, 79, 163, 0.18),
+                rgba(255, 79, 163, 0.19),
                 rgba(192, 132, 252, 0.06) 34%,
                 transparent 50%
             );
@@ -351,12 +351,12 @@
 
         @keyframes neonPulse {
             0% {
-                border-color: rgba(255, 139, 196, 0.34);
-                box-shadow: 0 24px 70px rgba(8, 3, 12, 0.68), 0 0 42px rgba(255, 79, 163, 0.15);
+                border-color: rgba(255, 139, 196, 0.35);
+                box-shadow: 0 24px 70px rgba(8, 3, 12, 0.68), 0 0 44px rgba(255, 79, 163, 0.16);
             }
             100% {
-                border-color: rgba(255, 79, 163, 0.78);
-                box-shadow: 0 28px 84px rgba(8, 3, 12, 0.75), 0 0 78px rgba(255, 79, 163, 0.28);
+                border-color: rgba(255, 79, 163, 0.8);
+                box-shadow: 0 28px 84px rgba(8, 3, 12, 0.75), 0 0 80px rgba(255, 79, 163, 0.3);
             }
         }
 
@@ -375,7 +375,7 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             gap: 8px;
             margin-bottom: 28px;
         }
@@ -396,30 +396,40 @@
             background: rgba(255, 255, 255, 0.035);
             border: 1px solid rgba(255, 139, 196, 0.22);
             color: var(--pink-soft);
-            font-size: 10.5px;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             user-select: none;
             transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, transform 0.15s ease;
         }
 
         .status.live {
-            color: #ffb0d9;
-            border-color: rgba(255, 79, 163, 0.52);
-            background: linear-gradient(135deg, rgba(255, 79, 163, 0.16), rgba(192, 132, 252, 0.08));
-            box-shadow: 0 0 18px rgba(255, 79, 163, 0.22);
+            color: #ffffff;
+            border-color: rgba(255, 79, 163, 0.58);
+            background: linear-gradient(135deg, rgba(255, 79, 163, 0.18), rgba(192, 132, 252, 0.09));
+            box-shadow: 0 0 20px rgba(255, 79, 163, 0.26);
             cursor: pointer;
         }
 
         .status.live:hover {
-            border-color: rgba(255, 175, 224, 0.92);
-            background: linear-gradient(135deg, rgba(255, 79, 163, 0.24), rgba(192, 132, 252, 0.12));
-            box-shadow: 0 0 24px rgba(255, 79, 163, 0.38);
-            color: #ffffff;
+            border-color: rgba(255, 175, 224, 0.94);
+            background: linear-gradient(135deg, rgba(255, 79, 163, 0.26), rgba(192, 132, 252, 0.13));
+            box-shadow: 0 0 26px rgba(255, 79, 163, 0.42);
         }
 
         .status.live:active {
             transform: scale(0.97);
+        }
+
+        .status-sep {
+            color: var(--pink-soft);
+            opacity: 0.7;
+            font-weight: 500;
+        }
+
+        .status-viewers {
+            color: var(--pink-light);
+            font-weight: 700;
         }
 
         .status-dot {
@@ -427,52 +437,27 @@
             height: 8px;
             border-radius: 50%;
             background: var(--pink);
-            box-shadow: 0 0 12px var(--pink);
-            animation: pulse 1.7s infinite;
+            box-shadow: 0 0 12px var(--pink), 0 0 20px rgba(255, 79, 163, 0.85);
+            animation: liveDotGlow 1.5s infinite ease-in-out;
         }
 
-        @keyframes pulse {
-            50% { opacity: 0.35; }
+        @keyframes liveDotGlow {
+            0%, 100% {
+                transform: scale(0.95);
+                opacity: 0.75;
+                box-shadow: 0 0 8px var(--pink), 0 0 14px rgba(255, 79, 163, 0.55);
+            }
+            50% {
+                transform: scale(1.22);
+                opacity: 1;
+                box-shadow: 0 0 14px #ff9ed0, 0 0 24px rgba(255, 79, 163, 0.95);
+            }
         }
 
-        .status.offline { color: #9c8699; cursor: default; }
+        .status.offline { color: #9c8699; letter-spacing: 2px; font-size: 10.5px; cursor: default; }
         .status.offline .status-dot { background: #888; box-shadow: none; animation: none; }
-        .status.unknown { color: #d6a94b; cursor: default; }
+        .status.unknown { color: #d6a94b; letter-spacing: 2px; font-size: 10.5px; cursor: default; }
         .status.unknown .status-dot { background: #d6a94b; box-shadow: none; animation: none; }
-
-        .refresh-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            background: rgba(255, 79, 163, 0.09);
-            border: 1px solid rgba(255, 139, 196, 0.26);
-            color: var(--pink-soft);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 1.2px;
-            cursor: pointer;
-            transition: all 0.22s ease;
-        }
-
-        .refresh-btn:hover {
-            color: #ffffff;
-            border-color: var(--pink);
-            background: rgba(255, 79, 163, 0.2);
-            box-shadow: 0 0 14px rgba(255, 79, 163, 0.24);
-        }
-
-        .refresh-btn svg {
-            width: 12px;
-            height: 12px;
-            transition: transform 0.35s ease;
-        }
-
-        .refresh-btn.spinning svg {
-            transform: rotate(360deg);
-        }
 
         .stream-category {
             font-size: 10px;
@@ -494,8 +479,8 @@
         }
 
         .avatar-wrapper {
-            width: 102px;
-            height: 102px;
+            width: 104px;
+            height: 104px;
             margin: 0 auto 22px;
             position: relative;
             display: flex;
@@ -509,15 +494,15 @@
             border-radius: 50%;
             border: 2px solid var(--pink);
             animation: dcTalkPulse 2.2s infinite ease-in-out;
-            box-shadow: 0 0 24px rgba(255, 79, 163, 0.62);
+            box-shadow: 0 0 24px rgba(255, 79, 163, 0.65);
         }
 
         .avatar-halo {
             position: absolute;
-            inset: -12px;
+            inset: -14px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 79, 163, 0.22), rgba(192, 132, 252, 0.08) 65%, transparent 75%);
-            filter: blur(6px);
+            background: radial-gradient(circle, rgba(255, 79, 163, 0.26), rgba(192, 132, 252, 0.1) 65%, transparent 75%);
+            filter: blur(7px);
             pointer-events: none;
         }
 
@@ -529,7 +514,7 @@
             }
             50% {
                 transform: scale(1.05);
-                box-shadow: 0 0 28px rgba(255, 79, 163, 0.9);
+                box-shadow: 0 0 28px rgba(255, 79, 163, 0.92);
                 opacity: 1;
             }
             100% {
@@ -540,11 +525,11 @@
         }
 
         .avatar-core {
-            width: 78px;
-            height: 78px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #3c1738, #160819);
-            border: 1.5px solid rgba(255, 155, 208, 0.58);
+            background: linear-gradient(135deg, #42173c, #160819);
+            border: 1.5px solid rgba(255, 160, 212, 0.62);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -553,7 +538,7 @@
             letter-spacing: 1px;
             color: white;
             text-shadow: 0 0 14px var(--pink);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 10px 24px rgba(8, 2, 12, 0.6);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 26px rgba(8, 2, 12, 0.65);
             overflow: hidden;
             position: relative;
             z-index: 2;
@@ -577,12 +562,12 @@
             letter-spacing: -1.2px;
             color: white;
             position: relative;
-            text-shadow: 0 0 32px rgba(255, 79, 163, 0.35);
+            text-shadow: 0 0 34px rgba(255, 79, 163, 0.38);
         }
 
         .logo span {
             color: var(--pink);
-            text-shadow: 0 0 24px rgba(255, 79, 163, 0.65);
+            text-shadow: 0 0 26px rgba(255, 79, 163, 0.72);
         }
 
         .logo::before, .logo::after {
@@ -637,10 +622,11 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 7px 16px;
+            padding: 7px 17px;
             border-radius: 999px;
-            background: rgba(255, 79, 163, 0.08);
-            border: 1px solid rgba(255, 139, 196, 0.22);
+            background: linear-gradient(135deg, rgba(255, 79, 163, 0.1), rgba(192, 132, 252, 0.06));
+            border: 1px solid rgba(255, 139, 196, 0.25);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 18px rgba(8, 2, 12, 0.28);
             color: var(--muted);
             font-size: 10.5px;
             letter-spacing: 1.7px;
@@ -650,7 +636,7 @@
             color: #ffffff;
             font-weight: 700;
             font-size: 13.5px;
-            text-shadow: 0 0 12px rgba(255, 139, 196, 0.35);
+            text-shadow: 0 0 14px rgba(255, 139, 196, 0.42);
         }
 
         .description {
@@ -680,7 +666,7 @@
             content: "";
             height: 1px;
             flex: 1;
-            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.38), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.42), transparent);
         }
 
         .menu {
@@ -689,31 +675,24 @@
             gap: 12px;
         }
 
-        .link-row {
-            display: flex;
-            align-items: stretch;
-            gap: 8px;
-        }
-
         .link-btn {
-            flex: 1;
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 15px 18px;
+            padding: 16px 19px;
             color: white;
             text-decoration: none;
             font-size: 13px;
             font-weight: 500;
             letter-spacing: 0.75px;
-            background: linear-gradient(120deg, rgba(54, 22, 50, 0.88), rgba(24, 12, 29, 0.92));
-            border: 1px solid rgba(255, 139, 196, 0.26);
+            background: linear-gradient(120deg, rgba(58, 22, 54, 0.9), rgba(24, 12, 30, 0.94));
+            border: 1px solid rgba(255, 139, 196, 0.28);
             border-radius: 15px;
             box-shadow:
-                inset 0 1px 0 rgba(255, 205, 234, 0.18),
-                inset 0 -1px 0 rgba(8, 3, 12, 0.72),
-                0 8px 20px rgba(8, 3, 12, 0.38);
+                inset 0 1px 0 rgba(255, 210, 238, 0.2),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.74),
+                0 8px 22px rgba(8, 3, 12, 0.4);
             transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
@@ -721,68 +700,35 @@
         }
 
         .link-btn.donate-btn {
-            background: linear-gradient(120deg, rgba(76, 22, 60, 0.92), rgba(36, 12, 34, 0.95));
-            border-color: rgba(255, 79, 163, 0.56);
+            background: linear-gradient(120deg, rgba(84, 22, 66, 0.94), rgba(36, 12, 35, 0.96));
+            border-color: rgba(255, 79, 163, 0.58);
             box-shadow:
-                inset 0 1px 0 rgba(255, 210, 236, 0.24),
-                inset 0 -1px 0 rgba(8, 3, 12, 0.76),
-                0 8px 24px rgba(255, 79, 163, 0.18);
+                inset 0 1px 0 rgba(255, 215, 240, 0.26),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.78),
+                0 8px 26px rgba(255, 79, 163, 0.2);
         }
 
         .link-btn::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 155, 208, 0.18), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 160, 214, 0.2), transparent);
             transform: translateX(-100%);
             transition: transform 0.55s ease;
         }
 
         .link-btn:hover {
             transform: translateY(-3px);
-            border-color: rgba(255, 155, 208, 0.78);
+            border-color: rgba(255, 165, 218, 0.82);
             box-shadow:
-                inset 0 1px 0 rgba(255, 220, 242, 0.32),
-                inset 0 -1px 0 rgba(8, 3, 12, 0.82),
-                0 12px 30px rgba(255, 79, 163, 0.28);
-            background: linear-gradient(120deg, rgba(70, 28, 66, 0.94), rgba(32, 15, 38, 0.96));
+                inset 0 1px 0 rgba(255, 225, 246, 0.34),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.84),
+                0 14px 32px rgba(255, 79, 163, 0.3);
+            background: linear-gradient(120deg, rgba(74, 28, 70, 0.95), rgba(32, 15, 39, 0.97));
         }
 
         .link-btn:hover::before {
             transform: translateX(100%);
-        }
-
-        .copy-btn {
-            width: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 15px;
-            background: rgba(38, 15, 42, 0.88);
-            border: 1px solid rgba(255, 139, 196, 0.26);
-            color: var(--pink-soft);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.7px;
-            cursor: pointer;
-            transition: all 0.22s ease;
-            flex-shrink: 0;
-        }
-
-        .copy-btn:hover {
-            border-color: var(--pink);
-            color: #ffffff;
-            background: rgba(68, 24, 68, 0.96);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(255, 79, 163, 0.22);
-        }
-
-        .copy-btn.copied {
-            border-color: #ffb8df;
-            color: #100812;
-            background: var(--pink);
-            box-shadow: 0 0 18px rgba(255, 79, 163, 0.65);
         }
 
         .ripple-wave {
@@ -827,11 +773,11 @@
         .arrow-badge {
             position: relative;
             z-index: 1;
-            width: 30px;
-            height: 30px;
+            width: 31px;
+            height: 31px;
             border-radius: 10px;
-            background: rgba(255, 79, 163, 0.09);
-            border: 1px solid rgba(255, 139, 196, 0.26);
+            background: rgba(255, 79, 163, 0.1);
+            border: 1px solid rgba(255, 139, 196, 0.28);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -850,7 +796,7 @@
             background: var(--pink);
             border-color: var(--pink);
             color: #100812;
-            box-shadow: 0 0 16px rgba(255, 79, 163, 0.68);
+            box-shadow: 0 0 16px rgba(255, 79, 163, 0.7);
         }
 
         .link-btn:hover .arrow-badge svg {
@@ -867,8 +813,8 @@
         }
 
         details[open] {
-            border-color: rgba(255, 79, 163, 0.48);
-            background: rgba(255, 79, 163, 0.03);
+            border-color: rgba(255, 79, 163, 0.5);
+            background: rgba(255, 79, 163, 0.035);
         }
 
         summary {
@@ -965,7 +911,7 @@
             font-size: 12px;
             font-weight: 600;
             letter-spacing: 3.4px;
-            text-shadow: 0 0 16px rgba(255, 79, 163, 0.28);
+            text-shadow: 0 0 16px rgba(255, 79, 163, 0.3);
         }
 
         .footer-text {
@@ -978,7 +924,7 @@
         @media(max-width: 450px) {
             body { padding: 32px 16px; }
             .container { padding: 32px 20px; border-radius: 22px; }
-            .link-btn { padding: 14px 15px; }
+            .link-btn { padding: 15px 16px; }
         }
     </style>
 </head>
@@ -1023,14 +969,6 @@
                 <!-- Dinamik Pembe Kategori Alanı -->
                 <div id="streamCategory" class="stream-category">Kategori: Yükleniyor...</div>
             </div>
-
-            <button class="refresh-btn" id="refreshStatusBtn" type="button" onclick="manualRefresh()" title="Yayın durumunu yenile">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
-                    <polyline points="21 3 21 9 15 9"></polyline>
-                </svg>
-                <span>YENİLE</span>
-            </button>
         </div>
 
         <header class="header">
@@ -1059,102 +997,87 @@
 
         <nav class="menu">
             <!-- KICK -->
-            <div class="link-row">
-                <a href="https://kick.com/rarbennn" target="_blank" rel="noopener noreferrer" class="link-btn">
-                    <span class="link-left">
-                        <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M3 3h6v7.2L15.6 3H21l-7.2 8.4L21.3 21h-5.7L9 13.2V21H3V3z"/>
-                        </svg>
-                        <span class="link-name">KICK / rarbennn</span>
-                    </span>
-                    <span class="arrow-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="8 7 17 7 17 16"></polyline>
-                        </svg>
-                    </span>
-                </a>
-                <button type="button" class="copy-btn" onclick="copyLink('https://kick.com/rarbennn', this)" title="Kick linkini kopyala">LINK</button>
-            </div>
+            <a href="https://kick.com/rarbennn" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="link-left">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 3h6v7.2L15.6 3H21l-7.2 8.4L21.3 21h-5.7L9 13.2V21H3V3z"/>
+                    </svg>
+                    <span class="link-name">KICK / rarbennn</span>
+                </span>
+                <span class="arrow-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="8 7 17 7 17 16"></polyline>
+                    </svg>
+                </span>
+            </a>
 
             <!-- BYNOGAME DESTEK -->
-            <div class="link-row">
-                <a href="https://donate.bynogame.com/rarbennn" target="_blank" rel="noopener noreferrer" class="link-btn donate-btn">
-                    <span class="link-left">
-                        <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                        <span class="link-name">BYNOGAME / Destek Ol</span>
-                    </span>
-                    <span class="arrow-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="8 7 17 7 17 16"></polyline>
-                        </svg>
-                    </span>
-                </a>
-                <button type="button" class="copy-btn" onclick="copyLink('https://donate.bynogame.com/rarbennn', this)" title="ByNoGame linkini kopyala">LINK</button>
-            </div>
+            <a href="https://donate.bynogame.com/rarbennn" target="_blank" rel="noopener noreferrer" class="link-btn donate-btn">
+                <span class="link-left">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <span class="link-name">BYNOGAME / Destek Ol</span>
+                </span>
+                <span class="arrow-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="8 7 17 7 17 16"></polyline>
+                    </svg>
+                </span>
+            </a>
 
             <!-- DISCORD -->
-            <div class="link-row">
-                <a href="https://discord.gg/H9q3nkr3nS" target="_blank" rel="noopener noreferrer" class="link-btn">
-                    <span class="link-left">
-                        <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-                        </svg>
-                        <span class="link-name">DISCORD / Community</span>
-                    </span>
-                    <span class="arrow-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="8 7 17 7 17 16"></polyline>
-                        </svg>
-                    </span>
-                </a>
-                <button type="button" class="copy-btn" onclick="copyLink('https://discord.gg/H9q3nkr3nS', this)" title="Discord linkini kopyala">LINK</button>
-            </div>
+            <a href="https://discord.gg/H9q3nkr3nS" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="link-left">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    <span class="link-name">DISCORD / Community</span>
+                </span>
+                <span class="arrow-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="8 7 17 7 17 16"></polyline>
+                    </svg>
+                </span>
+            </a>
 
             <!-- INSTAGRAM -->
-            <div class="link-row">
-                <a href="https://www.instagram.com/rarbennn?vrfl=czI0azBqNHZjeXY=" target="_blank" rel="noopener noreferrer" class="link-btn">
-                    <span class="link-left">
-                        <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                        </svg>
-                        <span class="link-name">INSTAGRAM / @rarbennn</span>
-                    </span>
-                    <span class="arrow-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="8 7 17 7 17 16"></polyline>
-                        </svg>
-                    </span>
-                </a>
-                <button type="button" class="copy-btn" onclick="copyLink('https://www.instagram.com/rarbennn?vrfl=czI0azBqNHZjeXY=', this)" title="Instagram linkini kopyala">LINK</button>
-            </div>
+            <a href="https://www.instagram.com/rarbennn?vrfl=czI0azBqNHZjeXY=" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="link-left">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span class="link-name">INSTAGRAM / @rarbennn</span>
+                </span>
+                <span class="arrow-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="8 7 17 7 17 16"></polyline>
+                    </svg>
+                </span>
+            </a>
 
             <!-- YOUTUBE -->
-            <div class="link-row">
-                <a href="https://youtube.com/@rarbennn?si=cmO38_e32fNFl-Dc" target="_blank" rel="noopener noreferrer" class="link-btn">
-                    <span class="link-left">
-                        <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                        </svg>
-                        <span class="link-name">YOUTUBE / @rarbennn</span>
-                    </span>
-                    <span class="arrow-badge">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="7" y1="17" x2="17" y2="7"></line>
-                            <polyline points="8 7 17 7 17 16"></polyline>
-                        </svg>
-                    </span>
-                </a>
-                <button type="button" class="copy-btn" onclick="copyLink('https://youtube.com/@rarbennn?si=cmO38_e32fNFl-Dc', this)" title="YouTube linkini kopyala">LINK</button>
-            </div>
+            <a href="https://youtube.com/@rarbennn?si=cmO38_e32fNFl-Dc" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="link-left">
+                    <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <span class="link-name">YOUTUBE / @rarbennn</span>
+                </span>
+                <span class="arrow-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="8 7 17 7 17 16"></polyline>
+                    </svg>
+                </span>
+            </a>
         </nav>
 
         <details>
@@ -2189,7 +2112,7 @@
         });
     </script>
 
-    <!-- Kick Canlı Yayın, Kategori, Takipçi, Gizli Yayın Yönlendirme, Kopyalama ve 3D Kart Etkileşimi -->
+    <!-- Kick Canlı Yayın, İzleyici Sayısı, Kategori, Takipçi, Gizli Yayın Yönlendirme ve 3D Kart Etkileşimi -->
     <script>
         const channel = "rarbennn";
         const liveStreamUrl = `https://kick.com/${channel}`;
@@ -2200,9 +2123,7 @@
         const kickAvatar = document.getElementById("kickAvatar");
         const avatarFallback = document.getElementById("avatarFallback");
         const tiltContainer = document.getElementById("tiltContainer");
-        const refreshBtn = document.getElementById("refreshStatusBtn");
         let isStreamLive = false;
-        let lastRefreshAt = 0;
 
         function goToLiveStream() {
             if (!isStreamLive) return;
@@ -2223,28 +2144,6 @@
             const timer = setTimeout(() => controller.abort(), timeoutMs);
             return fetch(url, { cache: "no-store", signal: controller.signal })
                 .finally(() => clearTimeout(timer));
-        }
-
-        async function copyLink(url, btnEl) {
-            try {
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText(url);
-                } else {
-                    const tempInput = document.createElement("input");
-                    tempInput.value = url;
-                    document.body.appendChild(tempInput);
-                    tempInput.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(tempInput);
-                }
-                const prev = btnEl.textContent;
-                btnEl.textContent = "OK";
-                btnEl.classList.add("copied");
-                setTimeout(() => {
-                    btnEl.textContent = prev;
-                    btnEl.classList.remove("copied");
-                }, 1200);
-            } catch (_) {}
         }
 
         document.querySelectorAll(".link-btn, .sub-btn").forEach((btn) => {
@@ -2293,7 +2192,8 @@
                 const stream = result.data ?? result;
 
                 if (stream && (stream.id || stream.is_live)) {
-                    setStatus("live");
+                    const viewers = Number(stream.viewer_count ?? stream.viewers);
+                    setStatus("live", Number.isFinite(viewers) ? viewers.toLocaleString("tr-TR") : "0");
                     const categoryName = stream.category?.name || stream.subcategory?.name;
                     if (categoryName) {
                         streamCategory.textContent = `Kategori: ${categoryName}`;
@@ -2309,11 +2209,11 @@
             }
         }
 
-        function setStatus(state) {
+        function setStatus(state, viewerLabel = "") {
             isStreamLive = state === "live";
             statusBox.className = "status " + state;
             if (isStreamLive) {
-                statusText.textContent = "CANLI YAYINDA";
+                statusText.innerHTML = `YAYINDA <span class="status-sep">•</span> <span class="status-viewers">${viewerLabel || "0"}</span>`;
                 statusBox.setAttribute("tabindex", "0");
                 statusBox.setAttribute("aria-disabled", "false");
                 statusBox.setAttribute("title", "Yayına git");
@@ -2351,16 +2251,6 @@
             } catch (error) {
                 followerCount.textContent = "Bağlantı bekleniyor";
             }
-        }
-
-        async function manualRefresh() {
-            const now = Date.now();
-            if (now - lastRefreshAt < 1200) return;
-            lastRefreshAt = now;
-
-            refreshBtn.classList.add("spinning");
-            await Promise.all([checkStream(), getChannelData()]);
-            setTimeout(() => refreshBtn.classList.remove("spinning"), 450);
         }
 
         checkStream();
