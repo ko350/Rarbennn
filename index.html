@@ -45,7 +45,7 @@
             position: relative;
         }
 
-        /* Sinematik Sisli Yağmur + Cam Damlaları + Hacimsel Pembe Şimşek Katmanı */
+        /* Sinematik Sisli Yağmur + Optik Cam Damlaları + Hacimsel Pembe Şimşek Katmanı */
         .weather-layer {
             position: fixed;
             inset: 0;
@@ -924,7 +924,7 @@
 
     </main>
 
-    <!-- HiDPI / 4K Optik Cam Yağmuru, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek -->
+    <!-- Fotogerçekçi Optik Cam Damlaları, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek -->
     <script>
         const canvas = document.getElementById("weatherCanvas");
         const ctx = canvas.getContext("2d");
@@ -937,6 +937,7 @@
 
         let rainStreaks = [];
         let mistParticles = [];
+        let microBeads = [];
         let glassDrops = [];
         let glassTrails = [];
         let activeBolts = [];
@@ -954,6 +955,7 @@
 
             initRainStreaks();
             initMist();
+            initMicroBeads();
             initGlassDrops();
         }
 
@@ -963,9 +965,8 @@
             rainStreaks = [];
             for (let i = 0; i < count; i++) {
                 const roll = Math.random();
-                // 0: uzak yumuşak odak dışı, 1: orta yağmur, 2: ön plan hızlı sağanak
                 const depth = roll < 0.48 ? 0 : (roll > 0.85 ? 2 : 1);
-                const angle = -0.14 - depth * 0.03; // hafif rüzgâr eğimi (radyan)
+                const angle = -0.14 - depth * 0.03;
                 const speed = depth === 0 ? (6.5 + Math.random() * 3.5) : (depth === 1 ? (11.5 + Math.random() * 5) : (18 + Math.random() * 7));
                 const len = depth === 0 ? (14 + Math.random() * 10) : (depth === 1 ? (26 + Math.random() * 16) : (42 + Math.random() * 24));
 
@@ -1000,38 +1001,53 @@
             }
         }
 
+        // Camda sabit duran çok ince buğu / mikro damlacık dokusu
+        function initMicroBeads() {
+            const count = Math.min(180, Math.floor((viewW * viewH) / 9500));
+            microBeads = [];
+            for (let i = 0; i < count; i++) {
+                microBeads.push({
+                    x: Math.random() * viewW,
+                    y: Math.random() * viewH,
+                    r: 0.55 + Math.random() * 1.05,
+                    alpha: 0.06 + Math.random() * 0.12,
+                    pink: Math.random() > 0.5
+                });
+            }
+        }
+
         function makeGlassDrop(x, y, r, sliding = false) {
             return {
                 x,
                 y,
                 r,
-                vy: sliding ? (1.1 + r * 0.34) : 0,
-                vx: (Math.random() - 0.5) * 0.14,
+                vy: sliding ? (1.0 + r * 0.32) : 0,
+                vx: (Math.random() - 0.5) * 0.12,
                 sliding,
-                age: Math.random() * 220,
-                releaseR: 4.3 + Math.random() * 2.5,
-                pinkRefraction: Math.random() > 0.42,
-                // Damlaya özel hafif asimetri (organik form)
-                wobble: (Math.random() - 0.5) * 0.12
+                age: Math.random() * 240,
+                releaseR: 4.6 + Math.random() * 2.8,
+                pinkRefraction: Math.random() > 0.38,
+                // Damlaya özel organik form & iç odak kayması
+                wobble: (Math.random() - 0.5) * 0.14,
+                tiltAngle: (Math.random() - 0.5) * 0.22
             };
         }
 
         function initGlassDrops() {
-            const count = Math.min(85, Math.floor((viewW * viewH) / 18000));
+            const count = Math.min(72, Math.floor((viewW * viewH) / 21000));
             glassDrops = [];
             for (let i = 0; i < count; i++) {
                 glassDrops.push(
                     makeGlassDrop(
                         Math.random() * viewW,
                         Math.random() * viewH,
-                        1.2 + Math.random() * 2.7,
-                        Math.random() < 0.24
+                        1.4 + Math.random() * 3.1,
+                        Math.random() < 0.25
                     )
                 );
             }
         }
 
-        // Gerçekçi çok kıvrımlı şimşek yolu üretici
         function generateJaggedPath(x1, y1, x2, y2, displ, segs) {
             let points = [{ x: x1, y: y1 }];
             function subdivide(ax, ay, bx, by, d, depth) {
@@ -1057,7 +1073,6 @@
             const mainPts = generateJaggedPath(originX, originY, endX, endY, 130, 5);
             const subBranches = [];
 
-            // Ana kanaldan çıkan doğal çatallanmalar
             for (let i = 3; i < mainPts.length - 3; i += 2) {
                 if (Math.random() < 0.42) {
                     const p = mainPts[i];
@@ -1071,7 +1086,6 @@
                         alphaScale: 0.72
                     });
 
-                    // İkincil ince dal
                     if (bPts.length > 3 && Math.random() < 0.35) {
                         const mp = bPts[Math.floor(bPts.length * 0.5)];
                         const miniPts = generateJaggedPath(
@@ -1099,7 +1113,6 @@
                 pulseSeed: Math.random() * 10
             });
 
-            // Bulut arkası yumuşak pembe-mor ışık kütlesi
             cloudGlows.push({
                 x: originX,
                 y: viewH * 0.12,
@@ -1111,7 +1124,6 @@
             flashBoost = 0.45;
             mainCard.classList.add("lightning-hit");
 
-            // Doğal çoklu çakma ritmi (return stroke etkisi)
             lightningFlash.style.opacity = "0.95";
             setTimeout(() => { lightningFlash.style.opacity = "0.14"; }, 55);
             setTimeout(() => {
@@ -1158,7 +1170,6 @@
         }
 
         function drawLightningLayer() {
-            // Bulut içi hacimsel pembe-eflatun parıltı
             for (let i = cloudGlows.length - 1; i >= 0; i--) {
                 const g = cloudGlows[i];
                 ctx.save();
@@ -1179,17 +1190,13 @@
                 if (g.alpha <= 0) cloudGlows.splice(i, 1);
             }
 
-            // Şimşek kolları ve yan dallar
             for (let i = activeBolts.length - 1; i >= 0; i--) {
                 const b = activeBolts[i];
                 const flicker = Math.sin(b.life * 28 + b.pulseSeed) > -0.65 ? 1 : 0.45;
                 const a = Math.max(0, b.life * flicker);
 
-                // Geniş pembe atmosferik hale
                 strokeSmoothPath(b.mainPts, 11, `rgba(255, 79, 163, ${a * 0.22})`, "#ff4fa3", 36);
-                // Orta neon pembe kanal
                 strokeSmoothPath(b.mainPts, 3.6, `rgba(255, 115, 188, ${a * 0.85})`, "#ff4fa3", 18);
-                // İnce parlak beyaz-pembe plazma çekirdek
                 strokeSmoothPath(b.mainPts, 1.35, `rgba(255, 242, 250, ${a})`, "#ffffff", 6);
 
                 for (let br of b.subBranches) {
@@ -1224,6 +1231,18 @@
                 m.y += m.vy;
                 if (m.x < -m.r) m.x = viewW + m.r;
                 if (m.y > viewH + m.r) m.y = -m.r;
+            }
+        }
+
+        function drawMicroBeadsLayer() {
+            for (let b of microBeads) {
+                const a = Math.min(0.45, b.alpha + flashBoost * 0.14);
+                ctx.fillStyle = b.pink
+                    ? `rgba(255, 155, 208, ${a})`
+                    : `rgba(245, 238, 252, ${a * 0.8})`;
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
@@ -1268,29 +1287,29 @@
             }
         }
 
-        // Optik ışık kırılmalı, nem izli ve birleşen cam damlaları
+        // Fotogerçekçi optik mercek kırılmalı, nem izli ve birleşen cam damlaları
         function drawGlassDropsLayer() {
-            if (glassDrops.length < 85 && Math.random() < 0.28) {
+            if (glassDrops.length < 72 && Math.random() < 0.24) {
                 glassDrops.push(
                     makeGlassDrop(
                         Math.random() * viewW,
                         Math.random() * (viewH * 0.94),
-                        1.0 + Math.random() * 1.3,
+                        1.1 + Math.random() * 1.4,
                         false
                     )
                 );
             }
 
-            // Camda süzülen damlaların arkasında kalan ince ıslak izler
+            // Camda süzülen damlaların arkasında ince ıslak iz ve mikro damlacık şeridi
             for (let i = glassTrails.length - 1; i >= 0; i--) {
                 const tr = glassTrails[i];
                 const grad = ctx.createLinearGradient(tr.x1, tr.y1, tr.x2, tr.y2);
                 if (tr.pink) {
-                    grad.addColorStop(0, `rgba(255, 139, 196, ${tr.alpha * 0.35})`);
-                    grad.addColorStop(1, `rgba(255, 165, 215, ${tr.alpha})`);
+                    grad.addColorStop(0, `rgba(255, 145, 200, ${tr.alpha * 0.22})`);
+                    grad.addColorStop(1, `rgba(255, 185, 225, ${tr.alpha})`);
                 } else {
-                    grad.addColorStop(0, `rgba(235, 225, 245, ${tr.alpha * 0.3})`);
-                    grad.addColorStop(1, `rgba(245, 240, 252, ${tr.alpha * 0.85})`);
+                    grad.addColorStop(0, `rgba(235, 225, 245, ${tr.alpha * 0.18})`);
+                    grad.addColorStop(1, `rgba(250, 245, 255, ${tr.alpha * 0.85})`);
                 }
                 ctx.beginPath();
                 ctx.moveTo(tr.x1, tr.y1);
@@ -1300,7 +1319,7 @@
                 ctx.lineCap = "round";
                 ctx.stroke();
 
-                tr.alpha -= 0.011;
+                tr.alpha -= 0.0085;
                 if (tr.alpha <= 0) glassTrails.splice(i, 1);
             }
 
@@ -1310,20 +1329,20 @@
 
                 if (!d.sliding) {
                     d.age++;
-                    if (d.age % 32 === 0 && d.r < d.releaseR + 1.1) {
+                    if (d.age % 34 === 0 && d.r < d.releaseR + 1.2) {
                         d.r += 0.12;
                     }
                     if (d.r >= d.releaseR) {
                         d.sliding = true;
-                        d.vy = 0.75;
+                        d.vy = 0.7;
                     }
                 } else {
                     const prevX = d.x;
                     const prevY = d.y;
 
-                    const accel = 0.028 + d.r * 0.011;
-                    d.vy = Math.min(8.5, d.vy + accel);
-                    d.vx += (Math.random() - 0.5) * 0.06;
+                    const accel = 0.026 + d.r * 0.011;
+                    d.vy = Math.min(8.2, d.vy + accel);
+                    d.vx += (Math.random() - 0.5) * 0.055;
                     d.vx *= 0.94;
 
                     d.x += d.vx;
@@ -1334,8 +1353,8 @@
                         y1: prevY,
                         x2: d.x,
                         y2: d.y,
-                        w: Math.max(0.55, d.r * 0.34),
-                        alpha: 0.19,
+                        w: Math.max(0.5, d.r * 0.30),
+                        alpha: 0.16,
                         pink: d.pinkRefraction
                     });
 
@@ -1345,57 +1364,88 @@
                         const other = glassDrops[j];
                         if (!other) continue;
                         const dist = Math.hypot(other.x - d.x, other.y - d.y);
-                        if (dist < d.r + other.r + 1.2) {
-                            d.r = Math.min(7.2, Math.sqrt(d.r * d.r + other.r * other.r * 0.85));
+                        if (dist < d.r + other.r + 1.4) {
+                            d.r = Math.min(7.8, Math.sqrt(d.r * d.r + other.r * other.r * 0.88));
                             d.vy += 0.45;
                             glassDrops.splice(j, 1);
                             if (j < i) i--;
                         }
                     }
 
-                    if (d.y > viewH + 20 || d.x < -25 || d.x > viewW + 25) {
+                    if (d.y > viewH + 25 || d.x < -30 || d.x > viewW + 30) {
                         glassDrops.splice(i, 1);
                         continue;
                     }
                 }
 
-                // Gerçek cam damlası optiği: radyal kırılma gradyanı + alt gölge + üst ışık yansıması
-                const rx = d.r;
-                const ry = d.sliding ? d.r * (1 + Math.min(0.42, d.vy * 0.045)) : d.r;
+                // Optik cam damlası çizimi:
+                // 1) Dış yüzeyde ince temas/gölge halkası ve ışık kırılması
+                // 2) Damla içinde mercek odak noktası (caustic) + üst kırılma yayı + alt yansıma
+                const stretch = d.sliding ? (1 + Math.min(0.48, d.vy * 0.05)) : 1;
+                const rx = d.r * (1 - stretch * 0.05);
+                const ry = d.r * stretch;
 
                 ctx.save();
                 ctx.translate(d.x, d.y);
-                ctx.scale(rx, ry);
+                ctx.rotate(d.tiltAngle + d.vx * 0.12);
 
-                const bodyGrad = ctx.createRadialGradient(-0.25, -0.25, 0.1, 0, 0, 1);
-                if (d.pinkRefraction) {
-                    bodyGrad.addColorStop(0, `rgba(255, 225, 242, ${0.28 + flashBoost * 0.35})`);
-                    bodyGrad.addColorStop(0.55, `rgba(255, 95, 175, ${0.14 + flashBoost * 0.22})`);
-                    bodyGrad.addColorStop(0.88, `rgba(255, 79, 163, ${0.24 + flashBoost * 0.25})`);
-                    bodyGrad.addColorStop(1, "rgba(255, 180, 225, 0.05)");
-                } else {
-                    bodyGrad.addColorStop(0, `rgba(255, 255, 255, ${0.24 + flashBoost * 0.25})`);
-                    bodyGrad.addColorStop(0.6, `rgba(225, 215, 240, ${0.10 + flashBoost * 0.15})`);
-                    bodyGrad.addColorStop(0.9, `rgba(200, 180, 220, ${0.20 + flashBoost * 0.15})`);
-                    bodyGrad.addColorStop(1, "rgba(255, 255, 255, 0.04)");
-                }
-
-                ctx.fillStyle = bodyGrad;
+                // Camın altında hafif yumuşak kontak gölgesi
                 ctx.beginPath();
-                ctx.arc(0, 0, 1, 0, Math.PI * 2);
+                ctx.ellipse(rx * 0.08, ry * 0.14, rx * 1.05, ry * 1.05, 0, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(8, 3, 12, ${0.24 + flashBoost * 0.08})`;
                 ctx.fill();
 
-                // İnce kenar kırılması
-                ctx.strokeStyle = d.pinkRefraction
-                    ? `rgba(255, 195, 228, ${0.32 + flashBoost * 0.45})`
-                    : `rgba(255, 255, 255, ${0.26 + flashBoost * 0.35})`;
-                ctx.lineWidth = 0.09;
+                // Ana su merceği gövdesi (radyal kırılma gradyanı)
+                const lensGrad = ctx.createRadialGradient(
+                    -rx * 0.25,
+                    -ry * 0.28,
+                    rx * 0.08,
+                    0,
+                    0,
+                    Math.max(rx, ry)
+                );
+
+                if (d.pinkRefraction) {
+                    lensGrad.addColorStop(0.0, `rgba(255, 240, 250, ${0.22 + flashBoost * 0.35})`);
+                    lensGrad.addColorStop(0.35, `rgba(255, 115, 188, ${0.07 + flashBoost * 0.16})`);
+                    lensGrad.addColorStop(0.75, `rgba(255, 79, 163, ${0.14 + flashBoost * 0.22})`);
+                    lensGrad.addColorStop(0.94, `rgba(255, 190, 228, ${0.38 + flashBoost * 0.4})`);
+                    lensGrad.addColorStop(1.0, `rgba(255, 255, 255, ${0.12 + flashBoost * 0.2})`);
+                } else {
+                    lensGrad.addColorStop(0.0, `rgba(255, 255, 255, ${0.18 + flashBoost * 0.25})`);
+                    lensGrad.addColorStop(0.42, `rgba(225, 215, 240, ${0.05 + flashBoost * 0.12})`);
+                    lensGrad.addColorStop(0.78, `rgba(195, 175, 220, ${0.12 + flashBoost * 0.14})`);
+                    lensGrad.addColorStop(0.95, `rgba(255, 255, 255, ${0.32 + flashBoost * 0.35})`);
+                    lensGrad.addColorStop(1.0, "rgba(255, 255, 255, 0.08)");
+                }
+
+                ctx.beginPath();
+                ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+                ctx.fillStyle = lensGrad;
+                ctx.fill();
+
+                // Üst-sol kırılma hilali (ışığın damla tavanından kırılıp girmesi)
+                ctx.beginPath();
+                ctx.ellipse(-rx * 0.06, -ry * 0.08, rx * 0.72, ry * 0.68, 0, Math.PI * 1.12, Math.PI * 1.68);
+                ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(0.88, 0.42 + flashBoost * 0.7)})`;
+                ctx.lineWidth = Math.max(0.55, d.r * 0.15);
+                ctx.lineCap = "round";
                 ctx.stroke();
 
-                // Üst-sol keskin ışık yansıması (specular highlight)
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.95, 0.55 + flashBoost)})`;
+                // Alt-sağ odak yansıması (ışığın damlanın alt merceğinde toplanması)
                 ctx.beginPath();
-                ctx.arc(-0.34, -0.34, 0.22, 0, Math.PI * 2);
+                ctx.ellipse(rx * 0.08, ry * 0.12, rx * 0.62, ry * 0.58, 0, Math.PI * 0.12, Math.PI * 0.65);
+                ctx.strokeStyle = d.pinkRefraction
+                    ? `rgba(255, 165, 215, ${Math.min(0.82, 0.32 + flashBoost * 0.65)})`
+                    : `rgba(235, 228, 248, ${Math.min(0.7, 0.24 + flashBoost * 0.45)})`;
+                ctx.lineWidth = Math.max(0.45, d.r * 0.12);
+                ctx.lineCap = "round";
+                ctx.stroke();
+
+                // Minik odak parlaması (specular pinpoint)
+                ctx.beginPath();
+                ctx.arc(-rx * 0.32, -ry * 0.34, Math.max(0.45, d.r * 0.17), 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.96, 0.52 + flashBoost)})`;
                 ctx.fill();
 
                 ctx.restore();
@@ -1411,6 +1461,7 @@
 
             drawLightningLayer();
             drawMistLayer();
+            drawMicroBeadsLayer();
             drawRainStreaksLayer();
             drawGlassDropsLayer();
 
