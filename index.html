@@ -25,7 +25,7 @@
             --pink-light: #ffc1df;
             --violet: #c084fc;
             --bg: #100812;
-            --surface: rgba(24, 10, 28, 0.85);
+            --surface: rgba(22, 9, 26, 0.86);
             --surface-elevated: rgba(46, 18, 52, 0.92);
             --text: #fff5fb;
             --muted: #c2a7be;
@@ -42,14 +42,21 @@
             font-family: 'Space Grotesk', sans-serif;
             color: var(--text);
             background:
-                radial-gradient(circle at 50% 10%, rgba(255, 79, 163, 0.25), transparent 44%),
-                radial-gradient(circle at 16% 80%, rgba(192, 132, 252, 0.14), transparent 48%),
-                radial-gradient(circle at 86% 76%, rgba(255, 79, 163, 0.12), transparent 46%),
-                linear-gradient(180deg, rgba(16, 8, 18, 0.78), rgba(9, 4, 11, 0.95)),
+                radial-gradient(circle at 50% 10%, rgba(255, 79, 163, 0.28), transparent 44%),
+                radial-gradient(circle at 16% 80%, rgba(192, 132, 252, 0.16), transparent 48%),
+                radial-gradient(circle at 86% 76%, rgba(255, 79, 163, 0.14), transparent 46%),
+                linear-gradient(180deg, rgba(16, 8, 18, 0.76), rgba(8, 3, 10, 0.95)),
                 url('bg.jpg') center / cover fixed;
             overflow-x: hidden;
             perspective: 1150px;
             position: relative;
+        }
+
+        /* Telefon cihazlarda tüm arka plan animasyonlarını tamamen kaldır */
+        body.is-mobile-device .weather-layer,
+        body.is-mobile-device .crt-glitch-bg,
+        body.is-mobile-device::before {
+            display: none !important;
         }
 
         /* Sinematik Sisli Yağmur + Optik Cam Damlaları + Hacimsel Pembe Şimşek Katmanı */
@@ -73,8 +80,8 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(ellipse 85% 60% at 50% 8%, rgba(255, 130, 198, 0.54), rgba(255, 79, 163, 0.25) 48%, rgba(168, 85, 247, 0.11) 74%, transparent 92%),
-                linear-gradient(180deg, rgba(255, 165, 215, 0.25) 0%, rgba(255, 79, 163, 0.08) 55%, transparent 100%);
+                radial-gradient(ellipse 85% 60% at 50% 8%, rgba(255, 130, 198, 0.56), rgba(255, 79, 163, 0.26) 48%, rgba(168, 85, 247, 0.12) 74%, transparent 92%),
+                linear-gradient(180deg, rgba(255, 165, 215, 0.26) 0%, rgba(255, 79, 163, 0.08) 55%, transparent 100%);
             opacity: 0;
             pointer-events: none;
             mix-blend-mode: screen;
@@ -85,7 +92,7 @@
             position: absolute;
             inset: 0;
             background:
-                radial-gradient(circle at 50% 35%, rgba(255, 79, 163, 0.15), transparent 68%),
+                radial-gradient(circle at 50% 35%, rgba(255, 79, 163, 0.16), transparent 68%),
                 linear-gradient(180deg, rgba(24, 11, 28, 0.52) 0%, rgba(42, 20, 46, 0.42) 52%, rgba(56, 25, 60, 0.74) 100%);
             transition: transform 0.65s ease, filter 0.65s ease;
         }
@@ -146,7 +153,7 @@
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
-            opacity: 0.54;
+            opacity: 0.56;
         }
 
         .crt-glitch-bg::before {
@@ -155,8 +162,8 @@
             inset: -50%;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(255, 79, 163, 0.08) 0px,
-                rgba(168, 85, 247, 0.06) 2px,
+                rgba(255, 79, 163, 0.085) 0px,
+                rgba(168, 85, 247, 0.065) 2px,
                 rgba(255, 255, 255, 0.035) 4px,
                 transparent 6px
             );
@@ -169,13 +176,13 @@
             top: -100%;
             left: 0;
             width: 100%;
-            height: 40px;
+            height: 44px;
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 79, 163, 0.2),
-                rgba(216, 180, 254, 0.28),
-                rgba(255, 255, 255, 0.22),
+                rgba(255, 79, 163, 0.22),
+                rgba(216, 180, 254, 0.3),
+                rgba(255, 255, 255, 0.24),
                 transparent
             );
             filter: blur(8px);
@@ -196,11 +203,11 @@
         body::before {
             content: "";
             position: fixed;
-            width: 520px;
-            height: 520px;
+            width: 560px;
+            height: 560px;
             background: radial-gradient(circle, var(--pink), var(--violet) 68%, transparent);
             filter: blur(220px);
-            opacity: 0.18;
+            opacity: 0.2;
             top: 4%;
             left: 50%;
             transform: translateX(-50%);
@@ -217,7 +224,7 @@
             display: flex;
             align-items: center;
             gap: 9px;
-            background: rgba(24, 11, 27, 0.88);
+            background: rgba(24, 11, 27, 0.9);
             border: 1px solid rgba(255, 139, 196, 0.45);
             padding: 9px 16px;
             border-radius: 999px;
@@ -229,7 +236,7 @@
             font-weight: 600;
             letter-spacing: 1.2px;
             box-shadow:
-                0 10px 28px rgba(8, 3, 12, 0.52),
+                0 10px 28px rgba(8, 3, 12, 0.54),
                 inset 0 1px 0 rgba(255, 255, 255, 0.12);
             transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -238,14 +245,47 @@
             border-color: var(--pink);
             color: #ffffff;
             transform: translateY(-1px);
-            box-shadow: 0 12px 34px rgba(255, 79, 163, 0.34);
+            box-shadow: 0 12px 34px rgba(255, 79, 163, 0.36);
         }
 
         .bg-music-toggle.playing {
             border-color: var(--pink);
             color: #ffffff;
-            background: rgba(54, 17, 52, 0.94);
-            box-shadow: 0 0 30px rgba(255, 79, 163, 0.42);
+            background: rgba(58, 17, 56, 0.95);
+            box-shadow: 0 0 32px rgba(255, 79, 163, 0.46);
+        }
+
+        .eq-bars {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 11px;
+        }
+
+        .eq-bars i {
+            display: block;
+            width: 2.5px;
+            height: 4px;
+            border-radius: 999px;
+            background: currentColor;
+            opacity: 0.55;
+            transition: height 0.2s ease, opacity 0.2s ease;
+        }
+
+        .eq-bars i:nth-child(2) { height: 7px; }
+        .eq-bars i:nth-child(3) { height: 5px; }
+
+        .bg-music-toggle.playing .eq-bars i {
+            opacity: 1;
+            animation: eqBounce 0.85s ease-in-out infinite;
+        }
+
+        .bg-music-toggle.playing .eq-bars i:nth-child(2) { animation-delay: 0.18s; }
+        .bg-music-toggle.playing .eq-bars i:nth-child(3) { animation-delay: 0.34s; }
+
+        @keyframes eqBounce {
+            0%, 100% { height: 3px; }
+            50% { height: 11px; }
         }
 
         .music-icon {
@@ -284,44 +324,57 @@
         /* Ana Kart */
         .container {
             width: 100%;
-            max-width: 504px;
+            max-width: 508px;
             position: relative;
             z-index: 2;
             padding: 44px 36px;
             background: var(--surface);
-            border: 1px solid rgba(255, 139, 196, 0.42);
+            border: 1px solid rgba(255, 139, 196, 0.44);
             border-radius: 28px;
-            backdrop-filter: blur(26px);
+            backdrop-filter: blur(28px);
             box-shadow:
-                0 28px 86px rgba(6, 2, 10, 0.78),
-                0 0 74px rgba(255, 79, 163, 0.22),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                inset 0 -1px 0 rgba(255, 79, 163, 0.15),
-                inset 0 0 42px rgba(255, 79, 163, 0.05);
+                0 30px 92px rgba(6, 2, 10, 0.82),
+                0 0 80px rgba(255, 79, 163, 0.24),
+                inset 0 1px 0 rgba(255, 255, 255, 0.16),
+                inset 0 -1px 0 rgba(255, 79, 163, 0.16),
+                inset 0 0 46px rgba(255, 79, 163, 0.06);
             animation: appear 0.8s cubic-bezier(0.22, 1, 0.36, 1), neonPulse 4.5s infinite alternate;
             transform-style: preserve-3d;
-            transition: transform 0.15s ease-out;
+            transition: transform 0.15s ease-out, box-shadow 0.25s ease, border-color 0.25s ease;
             overflow: hidden;
         }
 
+        /* Kart İçi İnce Siber Izgara & Üst Işık Çizgisi */
         .container::after {
             content: "";
             position: absolute;
             top: 0;
-            left: 10%;
-            right: 10%;
+            left: 8%;
+            right: 8%;
             height: 1.5px;
-            background: linear-gradient(90deg, transparent, rgba(255, 165, 218, 0.92), rgba(255, 79, 163, 1), rgba(216, 180, 254, 0.78), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 175, 224, 0.96), rgba(255, 79, 163, 1), rgba(216, 180, 254, 0.85), transparent);
             pointer-events: none;
             z-index: 2;
         }
 
+        .card-grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 139, 196, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 139, 196, 0.04) 1px, transparent 1px);
+            background-size: 26px 26px;
+            mask-image: radial-gradient(ellipse at 50% 25%, rgba(0, 0, 0, 0.85), transparent 78%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         .container.lightning-hit {
-            border-color: rgba(255, 190, 232, 0.96);
+            border-color: rgba(255, 195, 235, 0.98);
             box-shadow:
-                0 28px 90px rgba(8, 3, 12, 0.78),
-                0 0 105px rgba(255, 79, 163, 0.48),
-                inset 0 0 56px rgba(255, 165, 218, 0.18);
+                0 30px 96px rgba(8, 3, 12, 0.82),
+                0 0 115px rgba(255, 79, 163, 0.54),
+                inset 0 0 60px rgba(255, 165, 218, 0.2);
         }
 
         .container::before {
@@ -329,10 +382,10 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(
-                560px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-                rgba(255, 79, 163, 0.19),
-                rgba(192, 132, 252, 0.06) 34%,
-                transparent 50%
+                580px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(255, 79, 163, 0.22),
+                rgba(192, 132, 252, 0.08) 36%,
+                transparent 52%
             );
             pointer-events: none;
             z-index: 0;
@@ -351,12 +404,12 @@
 
         @keyframes neonPulse {
             0% {
-                border-color: rgba(255, 139, 196, 0.35);
-                box-shadow: 0 24px 70px rgba(8, 3, 12, 0.68), 0 0 44px rgba(255, 79, 163, 0.16);
+                border-color: rgba(255, 139, 196, 0.36);
+                box-shadow: 0 24px 72px rgba(8, 3, 12, 0.72), 0 0 48px rgba(255, 79, 163, 0.18);
             }
             100% {
-                border-color: rgba(255, 79, 163, 0.8);
-                box-shadow: 0 28px 84px rgba(8, 3, 12, 0.75), 0 0 80px rgba(255, 79, 163, 0.3);
+                border-color: rgba(255, 79, 163, 0.84);
+                box-shadow: 0 28px 88px rgba(8, 3, 12, 0.78), 0 0 86px rgba(255, 79, 163, 0.34);
             }
         }
 
@@ -374,16 +427,24 @@
         .top-line {
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 8px;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 28px;
         }
 
         .top-badges {
             display: flex;
             flex-direction: column;
-            gap: 7px;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .status-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
         }
 
         .status {
@@ -391,10 +452,10 @@
             align-items: center;
             gap: 8px;
             width: fit-content;
-            padding: 6px 13px;
+            padding: 6px 14px;
             border-radius: 999px;
             background: rgba(255, 255, 255, 0.035);
-            border: 1px solid rgba(255, 139, 196, 0.22);
+            border: 1px solid rgba(255, 139, 196, 0.24);
             color: var(--pink-soft);
             font-size: 11px;
             font-weight: 700;
@@ -405,16 +466,16 @@
 
         .status.live {
             color: #ffffff;
-            border-color: rgba(255, 79, 163, 0.58);
-            background: linear-gradient(135deg, rgba(255, 79, 163, 0.18), rgba(192, 132, 252, 0.09));
-            box-shadow: 0 0 20px rgba(255, 79, 163, 0.26);
+            border-color: rgba(255, 79, 163, 0.65);
+            background: linear-gradient(135deg, rgba(255, 79, 163, 0.22), rgba(192, 132, 252, 0.12));
+            box-shadow: 0 0 22px rgba(255, 79, 163, 0.32);
             cursor: pointer;
         }
 
         .status.live:hover {
-            border-color: rgba(255, 175, 224, 0.94);
-            background: linear-gradient(135deg, rgba(255, 79, 163, 0.26), rgba(192, 132, 252, 0.13));
-            box-shadow: 0 0 26px rgba(255, 79, 163, 0.42);
+            border-color: rgba(255, 180, 226, 0.96);
+            background: linear-gradient(135deg, rgba(255, 79, 163, 0.3), rgba(192, 132, 252, 0.16));
+            box-shadow: 0 0 28px rgba(255, 79, 163, 0.48);
         }
 
         .status.live:active {
@@ -423,7 +484,7 @@
 
         .status-sep {
             color: var(--pink-soft);
-            opacity: 0.7;
+            opacity: 0.75;
             font-weight: 500;
         }
 
@@ -459,17 +520,40 @@
         .status.unknown { color: #d6a94b; letter-spacing: 2px; font-size: 10.5px; cursor: default; }
         .status.unknown .status-dot { background: #d6a94b; box-shadow: none; animation: none; }
 
+        .stream-meta-row {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stream-meta-row.visible {
+            display: flex;
+        }
+
         .stream-category {
             font-size: 10px;
             color: var(--pink-light);
             letter-spacing: 1px;
-            background: rgba(255, 79, 163, 0.14);
+            background: rgba(255, 79, 163, 0.15);
             border: 1px solid rgba(255, 79, 163, 0.48);
             padding: 4px 12px;
             border-radius: 999px;
             width: fit-content;
-            display: none;
             box-shadow: 0 0 16px rgba(255, 79, 163, 0.26), inset 0 0 8px rgba(255, 139, 196, 0.16);
+        }
+
+        .stream-title-pill {
+            font-size: 10.5px;
+            color: #f4dfee;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 139, 196, 0.22);
+            padding: 4px 12px;
+            border-radius: 999px;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .header {
@@ -479,8 +563,8 @@
         }
 
         .avatar-wrapper {
-            width: 104px;
-            height: 104px;
+            width: 108px;
+            height: 108px;
             margin: 0 auto 22px;
             position: relative;
             display: flex;
@@ -488,9 +572,25 @@
             justify-content: center;
         }
 
+        .avatar-spin-ring {
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 15%, rgba(255, 79, 163, 0.9), rgba(192, 132, 252, 0.8), transparent 85%);
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px));
+            animation: avatarOrbit 7s linear infinite;
+            opacity: 0.78;
+            pointer-events: none;
+        }
+
+        @keyframes avatarOrbit {
+            to { transform: rotate(360deg); }
+        }
+
         .avatar-ring {
             position: absolute;
-            inset: -5px;
+            inset: -4px;
             border-radius: 50%;
             border: 2px solid var(--pink);
             animation: dcTalkPulse 2.2s infinite ease-in-out;
@@ -499,10 +599,10 @@
 
         .avatar-halo {
             position: absolute;
-            inset: -14px;
+            inset: -16px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 79, 163, 0.26), rgba(192, 132, 252, 0.1) 65%, transparent 75%);
-            filter: blur(7px);
+            background: radial-gradient(circle, rgba(255, 79, 163, 0.28), rgba(192, 132, 252, 0.12) 65%, transparent 75%);
+            filter: blur(8px);
             pointer-events: none;
         }
 
@@ -525,11 +625,11 @@
         }
 
         .avatar-core {
-            width: 80px;
-            height: 80px;
+            width: 82px;
+            height: 82px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #42173c, #160819);
-            border: 1.5px solid rgba(255, 160, 212, 0.62);
+            background: linear-gradient(135deg, #471741, #140717);
+            border: 1.5px solid rgba(255, 165, 216, 0.68);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -538,7 +638,7 @@
             letter-spacing: 1px;
             color: white;
             text-shadow: 0 0 14px var(--pink);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 12px 26px rgba(8, 2, 12, 0.65);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 28px rgba(8, 2, 12, 0.7);
             overflow: hidden;
             position: relative;
             z-index: 2;
@@ -562,12 +662,12 @@
             letter-spacing: -1.2px;
             color: white;
             position: relative;
-            text-shadow: 0 0 34px rgba(255, 79, 163, 0.38);
+            text-shadow: 0 0 36px rgba(255, 79, 163, 0.42);
         }
 
         .logo span {
             color: var(--pink);
-            text-shadow: 0 0 26px rgba(255, 79, 163, 0.72);
+            text-shadow: 0 0 28px rgba(255, 79, 163, 0.78);
         }
 
         .logo::before, .logo::after {
@@ -577,7 +677,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.72;
+            opacity: 0.74;
         }
 
         .logo::before {
@@ -613,7 +713,7 @@
             color: var(--pink-soft);
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 3.6px;
+            letter-spacing: 3.8px;
             text-transform: uppercase;
         }
 
@@ -622,11 +722,11 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 7px 17px;
+            padding: 7px 18px;
             border-radius: 999px;
-            background: linear-gradient(135deg, rgba(255, 79, 163, 0.1), rgba(192, 132, 252, 0.06));
-            border: 1px solid rgba(255, 139, 196, 0.25);
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 6px 18px rgba(8, 2, 12, 0.28);
+            background: linear-gradient(135deg, rgba(255, 79, 163, 0.12), rgba(192, 132, 252, 0.08));
+            border: 1px solid rgba(255, 139, 196, 0.28);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 6px 20px rgba(8, 2, 12, 0.32);
             color: var(--muted);
             font-size: 10.5px;
             letter-spacing: 1.7px;
@@ -636,7 +736,7 @@
             color: #ffffff;
             font-weight: 700;
             font-size: 13.5px;
-            text-shadow: 0 0 14px rgba(255, 139, 196, 0.42);
+            text-shadow: 0 0 14px rgba(255, 139, 196, 0.45);
         }
 
         .description {
@@ -666,7 +766,7 @@
             content: "";
             height: 1px;
             flex: 1;
-            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.42), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 139, 196, 0.46), transparent);
         }
 
         .menu {
@@ -686,13 +786,13 @@
             font-size: 13px;
             font-weight: 500;
             letter-spacing: 0.75px;
-            background: linear-gradient(120deg, rgba(58, 22, 54, 0.9), rgba(24, 12, 30, 0.94));
-            border: 1px solid rgba(255, 139, 196, 0.28);
+            background: linear-gradient(120deg, rgba(62, 22, 58, 0.92), rgba(22, 10, 28, 0.95));
+            border: 1px solid rgba(255, 139, 196, 0.3);
             border-radius: 15px;
             box-shadow:
-                inset 0 1px 0 rgba(255, 210, 238, 0.2),
-                inset 0 -1px 0 rgba(8, 3, 12, 0.74),
-                0 8px 22px rgba(8, 3, 12, 0.4);
+                inset 0 1px 0 rgba(255, 210, 238, 0.22),
+                inset 0 -1px 0 rgba(8, 3, 12, 0.76),
+                0 8px 22px rgba(8, 3, 12, 0.42);
             transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
             position: relative;
             overflow: hidden;
@@ -700,31 +800,31 @@
         }
 
         .link-btn.donate-btn {
-            background: linear-gradient(120deg, rgba(84, 22, 66, 0.94), rgba(36, 12, 35, 0.96));
-            border-color: rgba(255, 79, 163, 0.58);
+            background: linear-gradient(120deg, rgba(92, 22, 72, 0.95), rgba(38, 12, 37, 0.97));
+            border-color: rgba(255, 79, 163, 0.62);
             box-shadow:
-                inset 0 1px 0 rgba(255, 215, 240, 0.26),
+                inset 0 1px 0 rgba(255, 215, 240, 0.28),
                 inset 0 -1px 0 rgba(8, 3, 12, 0.78),
-                0 8px 26px rgba(255, 79, 163, 0.2);
+                0 8px 28px rgba(255, 79, 163, 0.24);
         }
 
         .link-btn::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 160, 214, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 175, 224, 0.24), transparent);
             transform: translateX(-100%);
             transition: transform 0.55s ease;
         }
 
         .link-btn:hover {
             transform: translateY(-3px);
-            border-color: rgba(255, 165, 218, 0.82);
+            border-color: rgba(255, 175, 224, 0.88);
             box-shadow:
-                inset 0 1px 0 rgba(255, 225, 246, 0.34),
+                inset 0 1px 0 rgba(255, 225, 246, 0.36),
                 inset 0 -1px 0 rgba(8, 3, 12, 0.84),
-                0 14px 32px rgba(255, 79, 163, 0.3);
-            background: linear-gradient(120deg, rgba(74, 28, 70, 0.95), rgba(32, 15, 39, 0.97));
+                0 14px 34px rgba(255, 79, 163, 0.34);
+            background: linear-gradient(120deg, rgba(80, 28, 76, 0.96), rgba(34, 15, 42, 0.98));
         }
 
         .link-btn:hover::before {
@@ -767,7 +867,7 @@
         .link-btn:hover .platform-icon {
             color: #ffffff;
             transform: scale(1.12);
-            filter: drop-shadow(0 0 8px rgba(255, 79, 163, 0.75));
+            filter: drop-shadow(0 0 8px rgba(255, 79, 163, 0.78));
         }
 
         .arrow-badge {
@@ -776,8 +876,8 @@
             width: 31px;
             height: 31px;
             border-radius: 10px;
-            background: rgba(255, 79, 163, 0.1);
-            border: 1px solid rgba(255, 139, 196, 0.28);
+            background: rgba(255, 79, 163, 0.12);
+            border: 1px solid rgba(255, 139, 196, 0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -796,7 +896,7 @@
             background: var(--pink);
             border-color: var(--pink);
             color: #100812;
-            box-shadow: 0 0 16px rgba(255, 79, 163, 0.7);
+            box-shadow: 0 0 18px rgba(255, 79, 163, 0.75);
         }
 
         .link-btn:hover .arrow-badge svg {
@@ -805,7 +905,7 @@
 
         details {
             margin-top: 22px;
-            border: 1px solid rgba(255, 139, 196, 0.28);
+            border: 1px solid rgba(255, 139, 196, 0.3);
             border-radius: 15px;
             background: rgba(255, 255, 255, 0.025);
             overflow: hidden;
@@ -813,8 +913,8 @@
         }
 
         details[open] {
-            border-color: rgba(255, 79, 163, 0.5);
-            background: rgba(255, 79, 163, 0.035);
+            border-color: rgba(255, 79, 163, 0.54);
+            background: rgba(255, 79, 163, 0.04);
         }
 
         summary {
@@ -911,7 +1011,7 @@
             font-size: 12px;
             font-weight: 600;
             letter-spacing: 3.4px;
-            text-shadow: 0 0 16px rgba(255, 79, 163, 0.3);
+            text-shadow: 0 0 16px rgba(255, 79, 163, 0.34);
         }
 
         .footer-text {
@@ -936,6 +1036,9 @@
         <svg class="music-icon" viewBox="0 0 24 24">
             <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
         </svg>
+        <span class="eq-bars" aria-hidden="true">
+            <i></i><i></i><i></i>
+        </span>
         <span id="musicText">MÜZİK: KAPALI</span>
     </button>
 
@@ -946,7 +1049,7 @@
     </div>
 
     <!-- Sinematik Sis + Optik Cam Damlaları + 4K Sağanak + Hacimsel Pembe Şimşek -->
-    <div class="weather-layer">
+    <div class="weather-layer" id="weatherLayer">
         <div class="fog-haze" id="fogHaze"></div>
         <div class="fog-bank"></div>
         <div class="fog-bank second"></div>
@@ -956,25 +1059,32 @@
     </div>
 
     <!-- Arkada Çalışan Pembe-Beyaz-Mor Monitör Glitch Katmanı -->
-    <div class="crt-glitch-bg"></div>
+    <div class="crt-glitch-bg" id="crtGlitchBg"></div>
 
     <main class="container" id="tiltContainer">
+        <div class="card-grid-overlay"></div>
 
         <div class="top-line">
             <div class="top-badges">
-                <div class="status unknown" id="streamStatus" role="button" tabindex="-1" aria-disabled="true">
-                    <span class="status-dot"></span>
-                    <span id="statusText">KONTROL EDİLİYOR...</span>
+                <div class="status-row">
+                    <div class="status unknown" id="streamStatus" role="button" tabindex="-1" aria-disabled="true">
+                        <span class="status-dot"></span>
+                        <span id="statusText">KONTROL EDİLİYOR...</span>
+                    </div>
                 </div>
-                <!-- Dinamik Pembe Kategori Alanı -->
-                <div id="streamCategory" class="stream-category">Kategori: Yükleniyor...</div>
+                <!-- Canlı Yayında Kategori ve Yayın Başlığı -->
+                <div class="stream-meta-row" id="streamMetaRow">
+                    <div id="streamCategory" class="stream-category">Kategori: Yükleniyor...</div>
+                    <div id="streamTitlePill" class="stream-title-pill"></div>
+                </div>
             </div>
         </div>
 
         <header class="header">
             <div class="avatar-wrapper">
-                <!-- Discord Tarzı Nabız Atan Tek Renk Pembe Çember -->
+                <!-- Dönen Neon Halka + Discord Tarzı Nabız Atan Pembe Çember -->
                 <div class="avatar-halo"></div>
+                <div class="avatar-spin-ring"></div>
                 <div class="avatar-ring"></div>
                 <div class="avatar-core">
                     <img id="kickAvatar" alt="RaRBennn">
@@ -1116,819 +1226,830 @@
 
     </main>
 
-    <!-- Fotogerçekçi Optik Cam Damlaları, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek -->
+    <!-- Fotogerçekçi Optik Cam Damlaları, Hareket Bulanıklı Sağanak ve Hacimsel Pembe Şimşek (Sadece PC) -->
     <script>
         const DIRECT_AUDIO_URL = "";
         const DEFAULT_YOUTUBE_URL = "https://youtu.be/gD3SqwOJ9Sc?si=7xVev-QNveAajMo8";
 
-        const canvas = document.getElementById("weatherCanvas");
-        const ctx = canvas.getContext("2d");
-        const lightningFlash = document.getElementById("lightningFlash");
-        const fogHaze = document.getElementById("fogHaze");
-        const mainCard = document.getElementById("tiltContainer");
+        const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(navigator.userAgent || "")
+            || (navigator.userAgentData && navigator.userAgentData.mobile === true);
 
-        let viewW = window.innerWidth;
-        let viewH = window.innerHeight;
-        let dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-        let lastFrameTime = performance.now();
-        let isPageHidden = false;
+        if (isMobileDevice) {
+            document.body.classList.add("is-mobile-device");
+            const weatherEl = document.getElementById("weatherLayer");
+            const glitchEl = document.getElementById("crtGlitchBg");
+            if (weatherEl) weatherEl.remove();
+            if (glitchEl) glitchEl.remove();
+        } else {
+            const canvas = document.getElementById("weatherCanvas");
+            const ctx = canvas.getContext("2d");
+            const lightningFlash = document.getElementById("lightningFlash");
+            const fogHaze = document.getElementById("fogHaze");
+            const mainCard = document.getElementById("tiltContainer");
 
-        let rainStreaks = [];
-        let mistParticles = [];
-        let fogEdgeGlows = [];
-        let horizontalFogWaves = [];
-        let lightDustParticles = [];
-        let microBeads = [];
-        let glassDrops = [];
-        let glassTrails = [];
-        let trailFragments = [];
-        let activeBolts = [];
-        let cloudGlows = [];
-        let postStrikeTails = [];
-        let preStrikeAccumulators = [];
-        let flashBoost = 0;
+            let viewW = window.innerWidth;
+            let viewH = window.innerHeight;
+            let dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+            let lastFrameTime = performance.now();
+            let isPageHidden = false;
 
-        function resizeWeather() {
-            viewW = window.innerWidth;
-            viewH = window.innerHeight;
-            dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+            let rainStreaks = [];
+            let mistParticles = [];
+            let fogEdgeGlows = [];
+            let horizontalFogWaves = [];
+            let lightDustParticles = [];
+            let microBeads = [];
+            let glassDrops = [];
+            let glassTrails = [];
+            let trailFragments = [];
+            let activeBolts = [];
+            let cloudGlows = [];
+            let postStrikeTails = [];
+            let preStrikeAccumulators = [];
+            let flashBoost = 0;
 
-            canvas.width = Math.floor(viewW * dpr);
-            canvas.height = Math.floor(viewH * dpr);
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            function resizeWeather() {
+                viewW = window.innerWidth;
+                viewH = window.innerHeight;
+                dpr = Math.min(window.devicePixelRatio || 1, 2.5);
 
-            initRainStreaks();
-            initMist();
-            initLightDust();
-            initMicroBeads();
-            initGlassDrops();
-        }
+                canvas.width = Math.floor(viewW * dpr);
+                canvas.height = Math.floor(viewH * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        function initRainStreaks() {
-            const count = Math.min(280, Math.floor(viewW / 4.8));
-            rainStreaks = [];
-            for (let i = 0; i < count; i++) {
-                const roll = Math.random();
-                const depth = roll < 0.48 ? 0 : (roll > 0.85 ? 2 : 1);
-                const angle = -0.14 - depth * 0.03;
-                const speed = depth === 0 ? (6.5 + Math.random() * 3.5) : (depth === 1 ? (11.5 + Math.random() * 5) : (18 + Math.random() * 7));
-                const len = depth === 0 ? (14 + Math.random() * 10) : (depth === 1 ? (26 + Math.random() * 16) : (42 + Math.random() * 24));
-
-                rainStreaks.push({
-                    x: Math.random() * (viewW + 240) - 120,
-                    y: Math.random() * viewH,
-                    depth,
-                    vx: Math.sin(angle) * speed,
-                    vy: Math.cos(angle) * speed,
-                    len,
-                    width: depth === 0 ? 0.55 : (depth === 1 ? 0.9 : 1.35),
-                    alpha: depth === 0 ? (0.04 + Math.random() * 0.05) : (depth === 1 ? (0.09 + Math.random() * 0.11) : (0.16 + Math.random() * 0.14)),
-                    pinkBias: Math.random() > 0.55
-                });
+                initRainStreaks();
+                initMist();
+                initLightDust();
+                initMicroBeads();
+                initGlassDrops();
             }
-        }
 
-        function initMist() {
-            const count = Math.min(144, Math.floor((viewW * viewH) / 11500));
-            mistParticles = [];
-            for (let i = 0; i < count; i++) {
-                const layer = i % 4;
-                const speedScale = layer === 0 ? 0.42 : (layer === 1 ? 0.95 : (layer === 2 ? 1.65 : 0.72));
-                mistParticles.push({
-                    x: Math.random() * viewW,
-                    y: Math.random() * viewH,
-                    r: layer === 0 ? (68 + Math.random() * 88) : (layer === 1 ? (38 + Math.random() * 60) : (layer === 2 ? (24 + Math.random() * 38) : (54 + Math.random() * 74))),
-                    vx: (-0.28 - Math.random() * 0.48) * speedScale,
-                    vy: (0.06 + Math.random() * 0.22) * speedScale,
-                    alpha: layer === 0 ? (0.044 + Math.random() * 0.038) : (layer === 1 ? (0.034 + Math.random() * 0.038) : (layer === 2 ? (0.026 + Math.random() * 0.032) : (0.040 + Math.random() * 0.036))),
-                    pink: Math.random() > 0.42
-                });
-            }
-        }
+            function initRainStreaks() {
+                const count = Math.min(280, Math.floor(viewW / 4.8));
+                rainStreaks = [];
+                for (let i = 0; i < count; i++) {
+                    const roll = Math.random();
+                    const depth = roll < 0.48 ? 0 : (roll > 0.85 ? 2 : 1);
+                    const angle = -0.14 - depth * 0.03;
+                    const speed = depth === 0 ? (6.5 + Math.random() * 3.5) : (depth === 1 ? (11.5 + Math.random() * 5) : (18 + Math.random() * 7));
+                    const len = depth === 0 ? (14 + Math.random() * 10) : (depth === 1 ? (26 + Math.random() * 16) : (42 + Math.random() * 24));
 
-        function initLightDust() {
-            const count = Math.min(88, Math.floor((viewW * viewH) / 20500));
-            lightDustParticles = [];
-            for (let i = 0; i < count; i++) {
-                lightDustParticles.push({
-                    x: Math.random() * viewW,
-                    y: Math.random() * viewH,
-                    r: 0.75 + Math.random() * 1.45,
-                    vx: (Math.random() - 0.5) * 0.35 - 0.12,
-                    vy: -0.12 - Math.random() * 0.28,
-                    phase: Math.random() * Math.PI * 2,
-                    alpha: 0.14 + Math.random() * 0.22,
-                    pink: Math.random() > 0.35
-                });
-            }
-        }
-
-        function initMicroBeads() {
-            const count = Math.min(180, Math.floor((viewW * viewH) / 9500));
-            microBeads = [];
-            for (let i = 0; i < count; i++) {
-                microBeads.push({
-                    x: Math.random() * viewW,
-                    y: Math.random() * viewH,
-                    r: 0.55 + Math.random() * 1.05,
-                    alpha: 0.06 + Math.random() * 0.12,
-                    pink: Math.random() > 0.5
-                });
-            }
-        }
-
-        function makeGlassDrop(x, y, r, sliding = false, tailed = false) {
-            return {
-                x,
-                y,
-                r,
-                vy: sliding ? (1.05 + r * 0.35) : 0,
-                vx: (Math.random() - 0.5) * 0.12,
-                sliding,
-                tailed,
-                age: Math.random() * 240,
-                releaseR: 4.5 + Math.random() * 2.9,
-                pinkRefraction: Math.random() > 0.38,
-                wobble: (Math.random() - 0.5) * 0.14,
-                tiltAngle: (Math.random() - 0.5) * 0.24,
-                facetSeed: Math.random() * Math.PI * 2
-            };
-        }
-
-        function initGlassDrops() {
-            const count = Math.min(78, Math.floor((viewW * viewH) / 19500));
-            glassDrops = [];
-            for (let i = 0; i < count; i++) {
-                const isSliding = Math.random() < 0.28;
-                glassDrops.push(
-                    makeGlassDrop(
-                        Math.random() * viewW,
-                        Math.random() * viewH,
-                        1.4 + Math.random() * 3.2,
-                        isSliding,
-                        isSliding && Math.random() < 0.45
-                    )
-                );
-            }
-        }
-
-        function generateJaggedPath(x1, y1, x2, y2, displ, segs) {
-            let points = [{ x: x1, y: y1 }];
-            function subdivide(ax, ay, bx, by, d, depth) {
-                if (depth === 0) {
-                    points.push({ x: bx, y: by });
-                    return;
-                }
-                const midX = (ax + bx) * 0.5 + (Math.random() - 0.5) * d;
-                const midY = (ay + by) * 0.5 + (Math.random() - 0.5) * d * 0.45;
-                subdivide(ax, ay, midX, midY, d * 0.54, depth - 1);
-                subdivide(midX, midY, bx, by, d * 0.54, depth - 1);
-            }
-            subdivide(x1, y1, x2, y2, displ, segs);
-            return points;
-        }
-
-        function triggerStormSequence(isSecondary = false) {
-            if (isPageHidden) return;
-            const originX = viewW * (0.14 + Math.random() * 0.72);
-            const originY = viewH * (0.12 + Math.random() * 0.16);
-
-            preStrikeAccumulators.push({
-                x: originX,
-                y: originY,
-                radius: 26,
-                maxRadius: isSecondary ? 130 : 180,
-                alpha: 0.045,
-                growSpeed: isSecondary ? 2.8 : 2.3
-            });
-
-            fogHaze.classList.add("storm-swell");
-            setTimeout(() => fogHaze.classList.remove("storm-swell"), 850);
-
-            setTimeout(() => {
-                createRealisticLightning(originX, isSecondary);
-            }, isSecondary ? 220 : 340);
-        }
-
-        function createRealisticLightning(forcedOriginX = null, isSecondary = false) {
-            if (isPageHidden) return;
-            const originX = typeof forcedOriginX === "number"
-                ? forcedOriginX
-                : viewW * (0.14 + Math.random() * 0.72);
-            const originY = -10;
-            const endX = originX + (Math.random() - 0.5) * (viewW * 0.28);
-            const endY = viewH * (isSecondary ? (0.42 + Math.random() * 0.28) : (0.55 + Math.random() * 0.36));
-
-            const mainPts = generateJaggedPath(originX, originY, endX, endY, isSecondary ? 95 : 130, 5);
-            const subBranches = [];
-
-            for (let i = 3; i < mainPts.length - 3; i += 2) {
-                if (Math.random() < (isSecondary ? 0.26 : 0.42)) {
-                    const p = mainPts[i];
-                    const dir = Math.random() > 0.5 ? 1 : -1;
-                    const bLenX = dir * (45 + Math.random() * 115);
-                    const bLenY = 55 + Math.random() * 140;
-                    const bPts = generateJaggedPath(p.x, p.y, p.x + bLenX, Math.min(viewH * 0.95, p.y + bLenY), 55, 3);
-                    subBranches.push({
-                        pts: bPts,
-                        width: (1.15 + Math.random() * 0.7) * (isSecondary ? 0.75 : 1),
-                        alphaScale: isSecondary ? 0.48 : 0.72
+                    rainStreaks.push({
+                        x: Math.random() * (viewW + 240) - 120,
+                        y: Math.random() * viewH,
+                        depth,
+                        vx: Math.sin(angle) * speed,
+                        vy: Math.cos(angle) * speed,
+                        len,
+                        width: depth === 0 ? 0.55 : (depth === 1 ? 0.9 : 1.35),
+                        alpha: depth === 0 ? (0.04 + Math.random() * 0.05) : (depth === 1 ? (0.09 + Math.random() * 0.11) : (0.16 + Math.random() * 0.14)),
+                        pinkBias: Math.random() > 0.55
                     });
+                }
+            }
 
-                    if (!isSecondary && bPts.length > 3 && Math.random() < 0.35) {
-                        const mp = bPts[Math.floor(bPts.length * 0.5)];
-                        const miniPts = generateJaggedPath(
-                            mp.x,
-                            mp.y,
-                            mp.x + dir * (25 + Math.random() * 55),
-                            mp.y + 30 + Math.random() * 65,
-                            28,
-                            2
-                        );
+            function initMist() {
+                const count = Math.min(144, Math.floor((viewW * viewH) / 11500));
+                mistParticles = [];
+                for (let i = 0; i < count; i++) {
+                    const layer = i % 4;
+                    const speedScale = layer === 0 ? 0.42 : (layer === 1 ? 0.95 : (layer === 2 ? 1.65 : 0.72));
+                    mistParticles.push({
+                        x: Math.random() * viewW,
+                        y: Math.random() * viewH,
+                        r: layer === 0 ? (68 + Math.random() * 88) : (layer === 1 ? (38 + Math.random() * 60) : (layer === 2 ? (24 + Math.random() * 38) : (54 + Math.random() * 74))),
+                        vx: (-0.28 - Math.random() * 0.48) * speedScale,
+                        vy: (0.06 + Math.random() * 0.22) * speedScale,
+                        alpha: layer === 0 ? (0.044 + Math.random() * 0.038) : (layer === 1 ? (0.034 + Math.random() * 0.038) : (layer === 2 ? (0.026 + Math.random() * 0.032) : (0.040 + Math.random() * 0.036))),
+                        pink: Math.random() > 0.42
+                    });
+                }
+            }
+
+            function initLightDust() {
+                const count = Math.min(88, Math.floor((viewW * viewH) / 20500));
+                lightDustParticles = [];
+                for (let i = 0; i < count; i++) {
+                    lightDustParticles.push({
+                        x: Math.random() * viewW,
+                        y: Math.random() * viewH,
+                        r: 0.75 + Math.random() * 1.45,
+                        vx: (Math.random() - 0.5) * 0.35 - 0.12,
+                        vy: -0.12 - Math.random() * 0.28,
+                        phase: Math.random() * Math.PI * 2,
+                        alpha: 0.14 + Math.random() * 0.22,
+                        pink: Math.random() > 0.35
+                    });
+                }
+            }
+
+            function initMicroBeads() {
+                const count = Math.min(180, Math.floor((viewW * viewH) / 9500));
+                microBeads = [];
+                for (let i = 0; i < count; i++) {
+                    microBeads.push({
+                        x: Math.random() * viewW,
+                        y: Math.random() * viewH,
+                        r: 0.55 + Math.random() * 1.05,
+                        alpha: 0.06 + Math.random() * 0.12,
+                        pink: Math.random() > 0.5
+                    });
+                }
+            }
+
+            function makeGlassDrop(x, y, r, sliding = false, tailed = false) {
+                return {
+                    x,
+                    y,
+                    r,
+                    vy: sliding ? (1.05 + r * 0.35) : 0,
+                    vx: (Math.random() - 0.5) * 0.12,
+                    sliding,
+                    tailed,
+                    age: Math.random() * 240,
+                    releaseR: 4.5 + Math.random() * 2.9,
+                    pinkRefraction: Math.random() > 0.38,
+                    wobble: (Math.random() - 0.5) * 0.14,
+                    tiltAngle: (Math.random() - 0.5) * 0.24,
+                    facetSeed: Math.random() * Math.PI * 2
+                };
+            }
+
+            function initGlassDrops() {
+                const count = Math.min(78, Math.floor((viewW * viewH) / 19500));
+                glassDrops = [];
+                for (let i = 0; i < count; i++) {
+                    const isSliding = Math.random() < 0.28;
+                    glassDrops.push(
+                        makeGlassDrop(
+                            Math.random() * viewW,
+                            Math.random() * viewH,
+                            1.4 + Math.random() * 3.2,
+                            isSliding,
+                            isSliding && Math.random() < 0.45
+                        )
+                    );
+                }
+            }
+
+            function generateJaggedPath(x1, y1, x2, y2, displ, segs) {
+                let points = [{ x: x1, y: y1 }];
+                function subdivide(ax, ay, bx, by, d, depth) {
+                    if (depth === 0) {
+                        points.push({ x: bx, y: by });
+                        return;
+                    }
+                    const midX = (ax + bx) * 0.5 + (Math.random() - 0.5) * d;
+                    const midY = (ay + by) * 0.5 + (Math.random() - 0.5) * d * 0.45;
+                    subdivide(ax, ay, midX, midY, d * 0.54, depth - 1);
+                    subdivide(midX, midY, bx, by, d * 0.54, depth - 1);
+                }
+                subdivide(x1, y1, x2, y2, displ, segs);
+                return points;
+            }
+
+            function triggerStormSequence(isSecondary = false) {
+                if (isPageHidden) return;
+                const originX = viewW * (0.14 + Math.random() * 0.72);
+                const originY = viewH * (0.12 + Math.random() * 0.16);
+
+                preStrikeAccumulators.push({
+                    x: originX,
+                    y: originY,
+                    radius: 26,
+                    maxRadius: isSecondary ? 130 : 180,
+                    alpha: 0.045,
+                    growSpeed: isSecondary ? 2.8 : 2.3
+                });
+
+                fogHaze.classList.add("storm-swell");
+                setTimeout(() => fogHaze.classList.remove("storm-swell"), 850);
+
+                setTimeout(() => {
+                    createRealisticLightning(originX, isSecondary);
+                }, isSecondary ? 220 : 340);
+            }
+
+            function createRealisticLightning(forcedOriginX = null, isSecondary = false) {
+                if (isPageHidden) return;
+                const originX = typeof forcedOriginX === "number"
+                    ? forcedOriginX
+                    : viewW * (0.14 + Math.random() * 0.72);
+                const originY = -10;
+                const endX = originX + (Math.random() - 0.5) * (viewW * 0.28);
+                const endY = viewH * (isSecondary ? (0.42 + Math.random() * 0.28) : (0.55 + Math.random() * 0.36));
+
+                const mainPts = generateJaggedPath(originX, originY, endX, endY, isSecondary ? 95 : 130, 5);
+                const subBranches = [];
+
+                for (let i = 3; i < mainPts.length - 3; i += 2) {
+                    if (Math.random() < (isSecondary ? 0.26 : 0.42)) {
+                        const p = mainPts[i];
+                        const dir = Math.random() > 0.5 ? 1 : -1;
+                        const bLenX = dir * (45 + Math.random() * 115);
+                        const bLenY = 55 + Math.random() * 140;
+                        const bPts = generateJaggedPath(p.x, p.y, p.x + bLenX, Math.min(viewH * 0.95, p.y + bLenY), 55, 3);
                         subBranches.push({
-                            pts: miniPts,
-                            width: 0.65,
-                            alphaScale: 0.48
+                            pts: bPts,
+                            width: (1.15 + Math.random() * 0.7) * (isSecondary ? 0.75 : 1),
+                            alphaScale: isSecondary ? 0.48 : 0.72
                         });
+
+                        if (!isSecondary && bPts.length > 3 && Math.random() < 0.35) {
+                            const mp = bPts[Math.floor(bPts.length * 0.5)];
+                            const miniPts = generateJaggedPath(
+                                mp.x,
+                                mp.y,
+                                mp.x + dir * (25 + Math.random() * 55),
+                                mp.y + 30 + Math.random() * 65,
+                                28,
+                                2
+                            );
+                            subBranches.push({
+                                pts: miniPts,
+                                width: 0.65,
+                                alphaScale: 0.48
+                            });
+                        }
                     }
                 }
-            }
 
-            const intensity = isSecondary ? 0.58 : 1.0;
+                const intensity = isSecondary ? 0.58 : 1.0;
 
-            activeBolts.push({
-                mainPts,
-                subBranches,
-                life: intensity,
-                decay: isSecondary ? 0.036 : (0.028 + Math.random() * 0.012),
-                pulseSeed: Math.random() * 10,
-                softness: isSecondary ? 0.65 : 1.0
-            });
-
-            postStrikeTails.push({
-                pts: mainPts,
-                alpha: isSecondary ? 0.16 : 0.28,
-                fade: isSecondary ? 0.0055 : 0.0042,
-                width: isSecondary ? 20 : 28
-            });
-
-            fogEdgeGlows.push({
-                x: originX,
-                y: viewH * (0.25 + Math.random() * 0.45),
-                rx: viewW * (isSecondary ? 0.42 : 0.55),
-                ry: viewH * (isSecondary ? 0.28 : 0.38),
-                alpha: isSecondary ? 0.18 : 0.30,
-                fade: isSecondary ? 0.0045 : 0.0034
-            });
-
-            const waveCount = isSecondary ? 2 : 3;
-            for (let w = 0; w < waveCount; w++) {
-                horizontalFogWaves.push({
-                    y: viewH * (0.16 + w * 0.24 + Math.random() * 0.08),
-                    h: 28 + Math.random() * 34,
-                    alpha: isSecondary ? 0.12 : 0.20,
-                    fade: 0.0055 + Math.random() * 0.003,
-                    drift: (Math.random() - 0.5) * 1.4
+                activeBolts.push({
+                    mainPts,
+                    subBranches,
+                    life: intensity,
+                    decay: isSecondary ? 0.036 : (0.028 + Math.random() * 0.012),
+                    pulseSeed: Math.random() * 10,
+                    softness: isSecondary ? 0.65 : 1.0
                 });
-            }
 
-            cloudGlows.push({
-                x: originX,
-                y: viewH * 0.14,
-                rx: viewW * (isSecondary ? 0.30 : 0.38) + Math.random() * (viewW * 0.2),
-                ry: viewH * (isSecondary ? 0.24 : 0.32),
-                alpha: isSecondary ? 0.24 : 0.46
-            });
+                postStrikeTails.push({
+                    pts: mainPts,
+                    alpha: isSecondary ? 0.16 : 0.28,
+                    fade: isSecondary ? 0.0055 : 0.0042,
+                    width: isSecondary ? 20 : 28
+                });
 
-            flashBoost = Math.max(flashBoost, isSecondary ? 0.26 : 0.54);
-            if (!isSecondary) {
-                mainCard.classList.add("lightning-hit");
-            }
+                fogEdgeGlows.push({
+                    x: originX,
+                    y: viewH * (0.25 + Math.random() * 0.45),
+                    rx: viewW * (isSecondary ? 0.42 : 0.55),
+                    ry: viewH * (isSecondary ? 0.28 : 0.38),
+                    alpha: isSecondary ? 0.18 : 0.30,
+                    fade: isSecondary ? 0.0045 : 0.0034
+                });
 
-            const peakFlash = isSecondary ? "0.42" : "0.95";
-            lightningFlash.style.opacity = peakFlash;
-            setTimeout(() => { lightningFlash.style.opacity = isSecondary ? "0.08" : "0.14"; }, 55);
-            setTimeout(() => {
-                lightningFlash.style.opacity = isSecondary ? "0.48" : "1";
-                flashBoost = Math.max(flashBoost, isSecondary ? 0.22 : 0.44);
-            }, 115);
-            setTimeout(() => { lightningFlash.style.opacity = "0.14"; }, 185);
-            setTimeout(() => { lightningFlash.style.opacity = isSecondary ? "0.24" : "0.55"; }, 225);
-            setTimeout(() => {
-                lightningFlash.style.opacity = "0";
-                mainCard.classList.remove("lightning-hit");
-            }, 420);
-        }
-
-        function scheduleLightning() {
-            const wait = 2100 + Math.random() * 2800;
-            setTimeout(() => {
-                triggerStormSequence(false);
-                if (Math.random() < 0.32) {
-                    setTimeout(() => triggerStormSequence(true), 580 + Math.random() * 420);
-                }
-                scheduleLightning();
-            }, wait);
-        }
-
-        function strokeSmoothPath(pts, width, strokeStyle, blurColor, blurSize) {
-            if (pts.length < 2) return;
-            ctx.save();
-            ctx.beginPath();
-            ctx.moveTo(pts[0].x, pts[0].y);
-            for (let i = 1; i < pts.length; i++) {
-                ctx.lineTo(pts[i].x, pts[i].y);
-            }
-            ctx.strokeStyle = strokeStyle;
-            ctx.lineWidth = width;
-            ctx.lineCap = "round";
-            ctx.lineJoin = "round";
-            if (blurColor && blurSize > 0) {
-                ctx.shadowColor = blurColor;
-                ctx.shadowBlur = blurSize;
-            }
-            ctx.stroke();
-            ctx.restore();
-        }
-
-        function drawLightningLayer(dtScale) {
-            for (let i = preStrikeAccumulators.length - 1; i >= 0; i--) {
-                const p = preStrikeAccumulators[i];
-                const grad = ctx.createRadialGradient(p.x, p.y, 4, p.x, p.y, p.radius);
-                grad.addColorStop(0, `rgba(255, 145, 205, ${p.alpha})`);
-                grad.addColorStop(0.55, `rgba(255, 79, 163, ${p.alpha * 0.55})`);
-                grad.addColorStop(1, "rgba(255, 79, 163, 0)");
-                ctx.fillStyle = grad;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fill();
-
-                p.radius += p.growSpeed * dtScale;
-                p.alpha = Math.min(0.28, p.alpha + 0.014 * dtScale);
-                if (p.radius >= p.maxRadius) {
-                    preStrikeAccumulators.splice(i, 1);
-                }
-            }
-
-            for (let i = horizontalFogWaves.length - 1; i >= 0; i--) {
-                const w = horizontalFogWaves[i];
-                const grad = ctx.createLinearGradient(0, w.y - w.h * 0.5, 0, w.y + w.h * 0.5);
-                grad.addColorStop(0, "rgba(255, 79, 163, 0)");
-                grad.addColorStop(0.5, `rgba(255, 165, 218, ${w.alpha})`);
-                grad.addColorStop(1, "rgba(255, 79, 163, 0)");
-
-                ctx.save();
-                ctx.translate(w.drift, 0);
-                ctx.fillStyle = grad;
-                ctx.fillRect(-40, w.y - w.h * 0.5, viewW + 80, w.h);
-                ctx.restore();
-
-                w.drift *= Math.pow(1.02, dtScale);
-                w.alpha -= w.fade * dtScale;
-                if (w.alpha <= 0) horizontalFogWaves.splice(i, 1);
-            }
-
-            for (let i = fogEdgeGlows.length - 1; i >= 0; i--) {
-                const eg = fogEdgeGlows[i];
-                ctx.save();
-                ctx.translate(eg.x, eg.y);
-                ctx.scale(eg.rx / 100, eg.ry / 100);
-                const grad = ctx.createRadialGradient(0, 0, 12, 0, 0, 100);
-                grad.addColorStop(0, `rgba(255, 125, 195, ${eg.alpha * 0.55})`);
-                grad.addColorStop(0.6, `rgba(255, 79, 163, ${eg.alpha * 0.35})`);
-                grad.addColorStop(1, "rgba(255, 79, 163, 0)");
-                ctx.fillStyle = grad;
-                ctx.beginPath();
-                ctx.arc(0, 0, 100, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-
-                eg.rx += 2.2 * dtScale;
-                eg.ry += 1.4 * dtScale;
-                eg.alpha -= eg.fade * dtScale;
-                if (eg.alpha <= 0) fogEdgeGlows.splice(i, 1);
-            }
-
-            for (let i = postStrikeTails.length - 1; i >= 0; i--) {
-                const tail = postStrikeTails[i];
-                strokeSmoothPath(
-                    tail.pts,
-                    tail.width,
-                    `rgba(255, 79, 163, ${tail.alpha * 0.45})`,
-                    "#ff4fa3",
-                    42
-                );
-                tail.alpha -= tail.fade * dtScale;
-                tail.width += 0.14 * dtScale;
-                if (tail.alpha <= 0) postStrikeTails.splice(i, 1);
-            }
-
-            for (let i = cloudGlows.length - 1; i >= 0; i--) {
-                const g = cloudGlows[i];
-                ctx.save();
-                ctx.translate(g.x, g.y);
-                ctx.scale(g.rx / 100, g.ry / 100);
-                const grad = ctx.createRadialGradient(0, 0, 5, 0, 0, 100);
-                grad.addColorStop(0, `rgba(255, 160, 215, ${g.alpha * 0.75})`);
-                grad.addColorStop(0.45, `rgba(255, 79, 163, ${g.alpha * 0.42})`);
-                grad.addColorStop(0.8, `rgba(168, 85, 247, ${g.alpha * 0.16})`);
-                grad.addColorStop(1, "rgba(16, 8, 18, 0)");
-                ctx.fillStyle = grad;
-                ctx.beginPath();
-                ctx.arc(0, 0, 100, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-
-                g.alpha -= 0.016 * dtScale;
-                if (g.alpha <= 0) cloudGlows.splice(i, 1);
-            }
-
-            for (let i = activeBolts.length - 1; i >= 0; i--) {
-                const b = activeBolts[i];
-                const flicker = Math.sin(b.life * 28 + b.pulseSeed) > -0.65 ? 1 : 0.45;
-                const a = Math.max(0, b.life * flicker);
-                const s = b.softness || 1;
-
-                strokeSmoothPath(b.mainPts, 14 * s, `rgba(255, 79, 163, ${a * 0.26})`, "#ff4fa3", 44 * s);
-                strokeSmoothPath(b.mainPts, 3.6 * s, `rgba(255, 115, 188, ${a * 0.85})`, "#ff4fa3", 18 * s);
-                strokeSmoothPath(b.mainPts, 1.35 * s, `rgba(255, 242, 250, ${a})`, "#ffffff", 6 * s);
-
-                for (let br of b.subBranches) {
-                    const ba = a * br.alphaScale;
-                    strokeSmoothPath(br.pts, br.width * 2.4, `rgba(255, 79, 163, ${ba * 0.25})`, "#ff4fa3", 20 * s);
-                    strokeSmoothPath(br.pts, br.width, `rgba(255, 175, 222, ${ba * 0.85})`, "#ff8bc4", 10 * s);
-                    strokeSmoothPath(br.pts, Math.max(0.55, br.width * 0.45), `rgba(255, 245, 251, ${ba})`, null, 0);
+                const waveCount = isSecondary ? 2 : 3;
+                for (let w = 0; w < waveCount; w++) {
+                    horizontalFogWaves.push({
+                        y: viewH * (0.16 + w * 0.24 + Math.random() * 0.08),
+                        h: 28 + Math.random() * 34,
+                        alpha: isSecondary ? 0.12 : 0.20,
+                        fade: 0.0055 + Math.random() * 0.003,
+                        drift: (Math.random() - 0.5) * 1.4
+                    });
                 }
 
-                b.life -= b.decay * dtScale;
-                if (b.life <= 0) activeBolts.splice(i, 1);
-            }
-        }
+                cloudGlows.push({
+                    x: originX,
+                    y: viewH * 0.14,
+                    rx: viewW * (isSecondary ? 0.30 : 0.38) + Math.random() * (viewW * 0.2),
+                    ry: viewH * (isSecondary ? 0.24 : 0.32),
+                    alpha: isSecondary ? 0.24 : 0.46
+                });
 
-        function drawMistLayer(dtScale) {
-            for (let m of mistParticles) {
-                const grad = ctx.createRadialGradient(m.x, m.y, m.r * 0.1, m.x, m.y, m.r);
-                const boost = flashBoost * 0.12;
-                if (m.pink) {
-                    grad.addColorStop(0, `rgba(255, 139, 196, ${m.alpha + boost})`);
+                flashBoost = Math.max(flashBoost, isSecondary ? 0.26 : 0.54);
+                if (!isSecondary) {
+                    mainCard.classList.add("lightning-hit");
+                }
+
+                const peakFlash = isSecondary ? "0.42" : "0.95";
+                lightningFlash.style.opacity = peakFlash;
+                setTimeout(() => { lightningFlash.style.opacity = isSecondary ? "0.08" : "0.14"; }, 55);
+                setTimeout(() => {
+                    lightningFlash.style.opacity = isSecondary ? "0.48" : "1";
+                    flashBoost = Math.max(flashBoost, isSecondary ? 0.22 : 0.44);
+                }, 115);
+                setTimeout(() => { lightningFlash.style.opacity = "0.14"; }, 185);
+                setTimeout(() => { lightningFlash.style.opacity = isSecondary ? "0.24" : "0.55"; }, 225);
+                setTimeout(() => {
+                    lightningFlash.style.opacity = "0";
+                    mainCard.classList.remove("lightning-hit");
+                }, 420);
+            }
+
+            function scheduleLightning() {
+                const wait = 2100 + Math.random() * 2800;
+                setTimeout(() => {
+                    triggerStormSequence(false);
+                    if (Math.random() < 0.32) {
+                        setTimeout(() => triggerStormSequence(true), 580 + Math.random() * 420);
+                    }
+                    scheduleLightning();
+                }, wait);
+            }
+
+            function strokeSmoothPath(pts, width, strokeStyle, blurColor, blurSize) {
+                if (pts.length < 2) return;
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(pts[0].x, pts[0].y);
+                for (let i = 1; i < pts.length; i++) {
+                    ctx.lineTo(pts[i].x, pts[i].y);
+                }
+                ctx.strokeStyle = strokeStyle;
+                ctx.lineWidth = width;
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                if (blurColor && blurSize > 0) {
+                    ctx.shadowColor = blurColor;
+                    ctx.shadowBlur = blurSize;
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            function drawLightningLayer(dtScale) {
+                for (let i = preStrikeAccumulators.length - 1; i >= 0; i--) {
+                    const p = preStrikeAccumulators[i];
+                    const grad = ctx.createRadialGradient(p.x, p.y, 4, p.x, p.y, p.radius);
+                    grad.addColorStop(0, `rgba(255, 145, 205, ${p.alpha})`);
+                    grad.addColorStop(0.55, `rgba(255, 79, 163, ${p.alpha * 0.55})`);
                     grad.addColorStop(1, "rgba(255, 79, 163, 0)");
-                } else {
-                    grad.addColorStop(0, `rgba(240, 225, 245, ${m.alpha * 0.92 + boost * 0.7})`);
-                    grad.addColorStop(1, "rgba(240, 225, 245, 0)");
-                }
-                ctx.fillStyle = grad;
-                ctx.beginPath();
-                ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
-                ctx.fill();
-
-                m.x += m.vx * dtScale;
-                m.y += m.vy * dtScale;
-                if (m.x < -m.r) m.x = viewW + m.r;
-                if (m.y > viewH + m.r) m.y = -m.r;
-            }
-        }
-
-        function drawLightDustLayer(dtScale) {
-            for (let p of lightDustParticles) {
-                p.phase += 0.025 * dtScale;
-                const twinkle = 0.65 + Math.sin(p.phase) * 0.35;
-                const surge = flashBoost > 0.05 ? (1 + flashBoost * 1.45) : 1;
-                const a = Math.min(0.78, (p.alpha + flashBoost * 0.28) * twinkle);
-
-                if (flashBoost > 0.08) {
-                    const halo = ctx.createRadialGradient(p.x, p.y, 0.2, p.x, p.y, p.r * 3.4 * surge);
-                    halo.addColorStop(0, `rgba(255, 185, 225, ${Math.min(0.45, flashBoost * 0.55)})`);
-                    halo.addColorStop(1, "rgba(255, 79, 163, 0)");
-                    ctx.fillStyle = halo;
+                    ctx.fillStyle = grad;
                     ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.r * 3.4 * surge, 0, Math.PI * 2);
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    p.radius += p.growSpeed * dtScale;
+                    p.alpha = Math.min(0.28, p.alpha + 0.014 * dtScale);
+                    if (p.radius >= p.maxRadius) {
+                        preStrikeAccumulators.splice(i, 1);
+                    }
+                }
+
+                for (let i = horizontalFogWaves.length - 1; i >= 0; i--) {
+                    const w = horizontalFogWaves[i];
+                    const grad = ctx.createLinearGradient(0, w.y - w.h * 0.5, 0, w.y + w.h * 0.5);
+                    grad.addColorStop(0, "rgba(255, 79, 163, 0)");
+                    grad.addColorStop(0.5, `rgba(255, 165, 218, ${w.alpha})`);
+                    grad.addColorStop(1, "rgba(255, 79, 163, 0)");
+
+                    ctx.save();
+                    ctx.translate(w.drift, 0);
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(-40, w.y - w.h * 0.5, viewW + 80, w.h);
+                    ctx.restore();
+
+                    w.drift *= Math.pow(1.02, dtScale);
+                    w.alpha -= w.fade * dtScale;
+                    if (w.alpha <= 0) horizontalFogWaves.splice(i, 1);
+                }
+
+                for (let i = fogEdgeGlows.length - 1; i >= 0; i--) {
+                    const eg = fogEdgeGlows[i];
+                    ctx.save();
+                    ctx.translate(eg.x, eg.y);
+                    ctx.scale(eg.rx / 100, eg.ry / 100);
+                    const grad = ctx.createRadialGradient(0, 0, 12, 0, 0, 100);
+                    grad.addColorStop(0, `rgba(255, 125, 195, ${eg.alpha * 0.55})`);
+                    grad.addColorStop(0.6, `rgba(255, 79, 163, ${eg.alpha * 0.35})`);
+                    grad.addColorStop(1, "rgba(255, 79, 163, 0)");
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 100, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    eg.rx += 2.2 * dtScale;
+                    eg.ry += 1.4 * dtScale;
+                    eg.alpha -= eg.fade * dtScale;
+                    if (eg.alpha <= 0) fogEdgeGlows.splice(i, 1);
+                }
+
+                for (let i = postStrikeTails.length - 1; i >= 0; i--) {
+                    const tail = postStrikeTails[i];
+                    strokeSmoothPath(
+                        tail.pts,
+                        tail.width,
+                        `rgba(255, 79, 163, ${tail.alpha * 0.45})`,
+                        "#ff4fa3",
+                        42
+                    );
+                    tail.alpha -= tail.fade * dtScale;
+                    tail.width += 0.14 * dtScale;
+                    if (tail.alpha <= 0) postStrikeTails.splice(i, 1);
+                }
+
+                for (let i = cloudGlows.length - 1; i >= 0; i--) {
+                    const g = cloudGlows[i];
+                    ctx.save();
+                    ctx.translate(g.x, g.y);
+                    ctx.scale(g.rx / 100, g.ry / 100);
+                    const grad = ctx.createRadialGradient(0, 0, 5, 0, 0, 100);
+                    grad.addColorStop(0, `rgba(255, 160, 215, ${g.alpha * 0.75})`);
+                    grad.addColorStop(0.45, `rgba(255, 79, 163, ${g.alpha * 0.42})`);
+                    grad.addColorStop(0.8, `rgba(168, 85, 247, ${g.alpha * 0.16})`);
+                    grad.addColorStop(1, "rgba(16, 8, 18, 0)");
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 100, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    g.alpha -= 0.016 * dtScale;
+                    if (g.alpha <= 0) cloudGlows.splice(i, 1);
+                }
+
+                for (let i = activeBolts.length - 1; i >= 0; i--) {
+                    const b = activeBolts[i];
+                    const flicker = Math.sin(b.life * 28 + b.pulseSeed) > -0.65 ? 1 : 0.45;
+                    const a = Math.max(0, b.life * flicker);
+                    const s = b.softness || 1;
+
+                    strokeSmoothPath(b.mainPts, 14 * s, `rgba(255, 79, 163, ${a * 0.26})`, "#ff4fa3", 44 * s);
+                    strokeSmoothPath(b.mainPts, 3.6 * s, `rgba(255, 115, 188, ${a * 0.85})`, "#ff4fa3", 18 * s);
+                    strokeSmoothPath(b.mainPts, 1.35 * s, `rgba(255, 242, 250, ${a})`, "#ffffff", 6 * s);
+
+                    for (let br of b.subBranches) {
+                        const ba = a * br.alphaScale;
+                        strokeSmoothPath(br.pts, br.width * 2.4, `rgba(255, 79, 163, ${ba * 0.25})`, "#ff4fa3", 20 * s);
+                        strokeSmoothPath(br.pts, br.width, `rgba(255, 175, 222, ${ba * 0.85})`, "#ff8bc4", 10 * s);
+                        strokeSmoothPath(br.pts, Math.max(0.55, br.width * 0.45), `rgba(255, 245, 251, ${ba})`, null, 0);
+                    }
+
+                    b.life -= b.decay * dtScale;
+                    if (b.life <= 0) activeBolts.splice(i, 1);
+                }
+            }
+
+            function drawMistLayer(dtScale) {
+                for (let m of mistParticles) {
+                    const grad = ctx.createRadialGradient(m.x, m.y, m.r * 0.1, m.x, m.y, m.r);
+                    const boost = flashBoost * 0.12;
+                    if (m.pink) {
+                        grad.addColorStop(0, `rgba(255, 139, 196, ${m.alpha + boost})`);
+                        grad.addColorStop(1, "rgba(255, 79, 163, 0)");
+                    } else {
+                        grad.addColorStop(0, `rgba(240, 225, 245, ${m.alpha * 0.92 + boost * 0.7})`);
+                        grad.addColorStop(1, "rgba(240, 225, 245, 0)");
+                    }
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    m.x += m.vx * dtScale;
+                    m.y += m.vy * dtScale;
+                    if (m.x < -m.r) m.x = viewW + m.r;
+                    if (m.y > viewH + m.r) m.y = -m.r;
+                }
+            }
+
+            function drawLightDustLayer(dtScale) {
+                for (let p of lightDustParticles) {
+                    p.phase += 0.025 * dtScale;
+                    const twinkle = 0.65 + Math.sin(p.phase) * 0.35;
+                    const surge = flashBoost > 0.05 ? (1 + flashBoost * 1.45) : 1;
+                    const a = Math.min(0.78, (p.alpha + flashBoost * 0.28) * twinkle);
+
+                    if (flashBoost > 0.08) {
+                        const halo = ctx.createRadialGradient(p.x, p.y, 0.2, p.x, p.y, p.r * 3.4 * surge);
+                        halo.addColorStop(0, `rgba(255, 185, 225, ${Math.min(0.45, flashBoost * 0.55)})`);
+                        halo.addColorStop(1, "rgba(255, 79, 163, 0)");
+                        ctx.fillStyle = halo;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.r * 3.4 * surge, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    ctx.fillStyle = p.pink
+                        ? `rgba(255, 180, 222, ${a})`
+                        : `rgba(255, 250, 255, ${a * 0.92})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r * surge, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    p.x += (p.vx + Math.sin(p.phase * 0.5) * 0.12) * dtScale;
+                    p.y += p.vy * dtScale;
+
+                    if (p.y < -12) {
+                        p.y = viewH + 12;
+                        p.x = Math.random() * viewW;
+                    }
+                    if (p.x < -12) p.x = viewW + 12;
+                    if (p.x > viewW + 12) p.x = -12;
+                }
+            }
+
+            function drawMicroBeadsLayer() {
+                for (let b of microBeads) {
+                    const a = Math.min(0.45, b.alpha + flashBoost * 0.14);
+                    ctx.fillStyle = b.pink
+                        ? `rgba(255, 155, 208, ${a})`
+                        : `rgba(245, 238, 252, ${a * 0.8})`;
+                    ctx.beginPath();
+                    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
                     ctx.fill();
                 }
-
-                ctx.fillStyle = p.pink
-                    ? `rgba(255, 180, 222, ${a})`
-                    : `rgba(255, 250, 255, ${a * 0.92})`;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r * surge, 0, Math.PI * 2);
-                ctx.fill();
-
-                p.x += (p.vx + Math.sin(p.phase * 0.5) * 0.12) * dtScale;
-                p.y += p.vy * dtScale;
-
-                if (p.y < -12) {
-                    p.y = viewH + 12;
-                    p.x = Math.random() * viewW;
-                }
-                if (p.x < -12) p.x = viewW + 12;
-                if (p.x > viewW + 12) p.x = -12;
-            }
-        }
-
-        function drawMicroBeadsLayer() {
-            for (let b of microBeads) {
-                const a = Math.min(0.45, b.alpha + flashBoost * 0.14);
-                ctx.fillStyle = b.pink
-                    ? `rgba(255, 155, 208, ${a})`
-                    : `rgba(245, 238, 252, ${a * 0.8})`;
-                ctx.beginPath();
-                ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function drawRainStreaksLayer(dtScale) {
-            for (let s of rainStreaks) {
-                const mag = Math.hypot(s.vx, s.vy) || 1;
-                const nx = s.vx / mag;
-                const ny = s.vy / mag;
-                const x2 = s.x - nx * s.len;
-                const y2 = s.y - ny * s.len;
-
-                const a = Math.min(0.75, s.alpha + flashBoost * (s.depth === 2 ? 0.38 : 0.18));
-                const grad = ctx.createLinearGradient(x2, y2, s.x, s.y);
-                if (s.pinkBias) {
-                    grad.addColorStop(0, "rgba(255, 139, 196, 0)");
-                    grad.addColorStop(0.65, `rgba(255, 115, 185, ${a * 0.45})`);
-                    grad.addColorStop(1, `rgba(255, 195, 226, ${a})`);
-                } else {
-                    grad.addColorStop(0, "rgba(235, 228, 245, 0)");
-                    grad.addColorStop(0.65, `rgba(235, 228, 245, ${a * 0.4})`);
-                    grad.addColorStop(1, `rgba(250, 245, 255, ${a * 0.85})`);
-                }
-
-                ctx.beginPath();
-                ctx.moveTo(x2, y2);
-                ctx.lineTo(s.x, s.y);
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = s.width;
-                ctx.lineCap = "round";
-                ctx.stroke();
-
-                s.x += s.vx * dtScale;
-                s.y += s.vy * dtScale;
-
-                if (s.y > viewH + 50) {
-                    s.y = -30;
-                    s.x = Math.random() * (viewW + 240) - 80;
-                }
-                if (s.x < -120) {
-                    s.x = viewW + 80;
-                }
-            }
-        }
-
-        function drawGlassDropsLayer(dtScale) {
-            if (glassDrops.length < 78 && Math.random() < 0.25 * dtScale) {
-                glassDrops.push(
-                    makeGlassDrop(
-                        Math.random() * viewW,
-                        Math.random() * (viewH * 0.94),
-                        1.15 + Math.random() * 1.5,
-                        false,
-                        false
-                    )
-                );
             }
 
-            for (let i = glassTrails.length - 1; i >= 0; i--) {
-                const tr = glassTrails[i];
-                const grad = ctx.createLinearGradient(tr.x1, tr.y1, tr.x2, tr.y2);
-                if (tr.pink) {
-                    grad.addColorStop(0, `rgba(255, 145, 200, ${tr.alpha * 0.22})`);
-                    grad.addColorStop(1, `rgba(255, 185, 225, ${tr.alpha})`);
-                } else {
-                    grad.addColorStop(0, `rgba(235, 225, 245, ${tr.alpha * 0.18})`);
-                    grad.addColorStop(1, `rgba(250, 245, 255, ${tr.alpha * 0.85})`);
-                }
-                ctx.beginPath();
-                ctx.moveTo(tr.x1, tr.y1);
-                ctx.lineTo(tr.x2, tr.y2);
-                ctx.strokeStyle = grad;
-                ctx.lineWidth = Math.max(0.25, tr.w * (tr.alpha / 0.16));
-                ctx.lineCap = "round";
-                ctx.stroke();
+            function drawRainStreaksLayer(dtScale) {
+                for (let s of rainStreaks) {
+                    const mag = Math.hypot(s.vx, s.vy) || 1;
+                    const nx = s.vx / mag;
+                    const ny = s.vy / mag;
+                    const x2 = s.x - nx * s.len;
+                    const y2 = s.y - ny * s.len;
 
-                if (tr.alpha < 0.095 && Math.random() < 0.16 * dtScale && trailFragments.length < 140) {
-                    trailFragments.push({
-                        x: tr.x2 + (Math.random() - 0.5) * 2.2,
-                        y: tr.y2,
-                        r: 0.45 + Math.random() * 0.75,
-                        alpha: tr.alpha * 1.1,
-                        pink: tr.pink
-                    });
-                }
-
-                tr.alpha -= 0.0085 * dtScale;
-                if (tr.alpha <= 0) glassTrails.splice(i, 1);
-            }
-
-            for (let i = trailFragments.length - 1; i >= 0; i--) {
-                const frag = trailFragments[i];
-                ctx.fillStyle = frag.pink
-                    ? `rgba(255, 175, 220, ${frag.alpha})`
-                    : `rgba(248, 242, 255, ${frag.alpha * 0.85})`;
-                ctx.beginPath();
-                ctx.arc(frag.x, frag.y, frag.r, 0, Math.PI * 2);
-                ctx.fill();
-
-                frag.alpha -= 0.012 * dtScale;
-                if (frag.alpha <= 0) trailFragments.splice(i, 1);
-            }
-
-            for (let i = glassDrops.length - 1; i >= 0; i--) {
-                const d = glassDrops[i];
-                if (!d) continue;
-
-                if (!d.sliding) {
-                    d.age += dtScale;
-                    if (d.age >= 34 && d.r < d.releaseR + 1.2) {
-                        d.age = 0;
-                        d.r += 0.12;
+                    const a = Math.min(0.75, s.alpha + flashBoost * (s.depth === 2 ? 0.38 : 0.18));
+                    const grad = ctx.createLinearGradient(x2, y2, s.x, s.y);
+                    if (s.pinkBias) {
+                        grad.addColorStop(0, "rgba(255, 139, 196, 0)");
+                        grad.addColorStop(0.65, `rgba(255, 115, 185, ${a * 0.45})`);
+                        grad.addColorStop(1, `rgba(255, 195, 226, ${a})`);
+                    } else {
+                        grad.addColorStop(0, "rgba(235, 228, 245, 0)");
+                        grad.addColorStop(0.65, `rgba(235, 228, 245, ${a * 0.4})`);
+                        grad.addColorStop(1, `rgba(250, 245, 255, ${a * 0.85})`);
                     }
-                    if (d.r >= d.releaseR) {
-                        d.sliding = true;
-                        d.tailed = Math.random() < 0.45;
-                        d.vy = 0.75;
+
+                    ctx.beginPath();
+                    ctx.moveTo(x2, y2);
+                    ctx.lineTo(s.x, s.y);
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = s.width;
+                    ctx.lineCap = "round";
+                    ctx.stroke();
+
+                    s.x += s.vx * dtScale;
+                    s.y += s.vy * dtScale;
+
+                    if (s.y > viewH + 50) {
+                        s.y = -30;
+                        s.x = Math.random() * (viewW + 240) - 80;
                     }
-                } else {
-                    const prevX = d.x;
-                    const prevY = d.y;
+                    if (s.x < -120) {
+                        s.x = viewW + 80;
+                    }
+                }
+            }
 
-                    const accel = 0.026 + d.r * 0.011;
-                    d.vy = Math.min(8.2, d.vy + accel * dtScale);
-                    d.vx += (Math.random() - 0.5) * 0.055 * dtScale;
-                    d.vx *= Math.pow(0.94, dtScale);
+            function drawGlassDropsLayer(dtScale) {
+                if (glassDrops.length < 78 && Math.random() < 0.25 * dtScale) {
+                    glassDrops.push(
+                        makeGlassDrop(
+                            Math.random() * viewW,
+                            Math.random() * (viewH * 0.94),
+                            1.15 + Math.random() * 1.5,
+                            false,
+                            false
+                        )
+                    );
+                }
 
-                    d.x += d.vx * dtScale;
-                    d.y += d.vy * dtScale;
+                for (let i = glassTrails.length - 1; i >= 0; i--) {
+                    const tr = glassTrails[i];
+                    const grad = ctx.createLinearGradient(tr.x1, tr.y1, tr.x2, tr.y2);
+                    if (tr.pink) {
+                        grad.addColorStop(0, `rgba(255, 145, 200, ${tr.alpha * 0.22})`);
+                        grad.addColorStop(1, `rgba(255, 185, 225, ${tr.alpha})`);
+                    } else {
+                        grad.addColorStop(0, `rgba(235, 225, 245, ${tr.alpha * 0.18})`);
+                        grad.addColorStop(1, `rgba(250, 245, 255, ${tr.alpha * 0.85})`);
+                    }
+                    ctx.beginPath();
+                    ctx.moveTo(tr.x1, tr.y1);
+                    ctx.lineTo(tr.x2, tr.y2);
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = Math.max(0.25, tr.w * (tr.alpha / 0.16));
+                    ctx.lineCap = "round";
+                    ctx.stroke();
 
-                    glassTrails.push({
-                        x1: prevX,
-                        y1: prevY,
-                        x2: d.x,
-                        y2: d.y,
-                        w: Math.max(0.5, d.r * 0.30),
-                        alpha: 0.16,
-                        pink: d.pinkRefraction
-                    });
+                    if (tr.alpha < 0.095 && Math.random() < 0.16 * dtScale && trailFragments.length < 140) {
+                        trailFragments.push({
+                            x: tr.x2 + (Math.random() - 0.5) * 2.2,
+                            y: tr.y2,
+                            r: 0.45 + Math.random() * 0.75,
+                            alpha: tr.alpha * 1.1,
+                            pink: tr.pink
+                        });
+                    }
 
-                    for (let j = glassDrops.length - 1; j >= 0; j--) {
-                        if (i === j) continue;
-                        const other = glassDrops[j];
-                        if (!other) continue;
-                        const dist = Math.hypot(other.x - d.x, other.y - d.y);
-                        if (dist < d.r + other.r + 1.4) {
-                            d.r = Math.min(7.8, Math.sqrt(d.r * d.r + other.r * other.r * 0.88));
-                            d.vy += 0.45;
-                            d.tailed = true;
-                            glassDrops.splice(j, 1);
-                            if (j < i) i--;
+                    tr.alpha -= 0.0085 * dtScale;
+                    if (tr.alpha <= 0) glassTrails.splice(i, 1);
+                }
+
+                for (let i = trailFragments.length - 1; i >= 0; i--) {
+                    const frag = trailFragments[i];
+                    ctx.fillStyle = frag.pink
+                        ? `rgba(255, 175, 220, ${frag.alpha})`
+                        : `rgba(248, 242, 255, ${frag.alpha * 0.85})`;
+                    ctx.beginPath();
+                    ctx.arc(frag.x, frag.y, frag.r, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    frag.alpha -= 0.012 * dtScale;
+                    if (frag.alpha <= 0) trailFragments.splice(i, 1);
+                }
+
+                for (let i = glassDrops.length - 1; i >= 0; i--) {
+                    const d = glassDrops[i];
+                    if (!d) continue;
+
+                    if (!d.sliding) {
+                        d.age += dtScale;
+                        if (d.age >= 34 && d.r < d.releaseR + 1.2) {
+                            d.age = 0;
+                            d.r += 0.12;
+                        }
+                        if (d.r >= d.releaseR) {
+                            d.sliding = true;
+                            d.tailed = Math.random() < 0.45;
+                            d.vy = 0.75;
+                        }
+                    } else {
+                        const prevX = d.x;
+                        const prevY = d.y;
+
+                        const accel = 0.026 + d.r * 0.011;
+                        d.vy = Math.min(8.2, d.vy + accel * dtScale);
+                        d.vx += (Math.random() - 0.5) * 0.055 * dtScale;
+                        d.vx *= Math.pow(0.94, dtScale);
+
+                        d.x += d.vx * dtScale;
+                        d.y += d.vy * dtScale;
+
+                        glassTrails.push({
+                            x1: prevX,
+                            y1: prevY,
+                            x2: d.x,
+                            y2: d.y,
+                            w: Math.max(0.5, d.r * 0.30),
+                            alpha: 0.16,
+                            pink: d.pinkRefraction
+                        });
+
+                        for (let j = glassDrops.length - 1; j >= 0; j--) {
+                            if (i === j) continue;
+                            const other = glassDrops[j];
+                            if (!other) continue;
+                            const dist = Math.hypot(other.x - d.x, other.y - d.y);
+                            if (dist < d.r + other.r + 1.4) {
+                                d.r = Math.min(7.8, Math.sqrt(d.r * d.r + other.r * other.r * 0.88));
+                                d.vy += 0.45;
+                                d.tailed = true;
+                                glassDrops.splice(j, 1);
+                                if (j < i) i--;
+                            }
+                        }
+
+                        if (d.y > viewH + 25 || d.x < -30 || d.x > viewW + 30) {
+                            glassDrops.splice(i, 1);
+                            continue;
                         }
                     }
 
-                    if (d.y > viewH + 25 || d.x < -30 || d.x > viewW + 30) {
-                        glassDrops.splice(i, 1);
-                        continue;
+                    const stretch = d.sliding ? (1 + Math.min(0.52, d.vy * 0.055)) : 1;
+                    const rx = d.r * (1 - stretch * 0.06);
+                    const ry = d.r * stretch;
+
+                    ctx.save();
+                    ctx.translate(d.x, d.y);
+                    ctx.rotate(d.tiltAngle + d.vx * 0.12);
+
+                    function traceOrganicDrop(scaleX = 1, scaleY = 1) {
+                        const w = rx * scaleX;
+                        const h = ry * scaleY;
+                        const c = Math.sin(d.facetSeed) * 0.14;
+                        ctx.beginPath();
+                        ctx.moveTo(0, -h);
+                        ctx.bezierCurveTo(w * (0.96 + c), -h * 0.72, w * 1.04, h * 0.28, w * (0.68 - c), h * 0.92);
+                        ctx.bezierCurveTo(w * 0.25, h * 1.06, -w * 0.35, h * 1.04, -w * (0.74 + c), h * 0.86);
+                        ctx.bezierCurveTo(-w * 1.05, h * 0.22, -w * (0.95 - c), -h * 0.74, 0, -h);
+                        ctx.closePath();
                     }
-                }
 
-                const stretch = d.sliding ? (1 + Math.min(0.52, d.vy * 0.055)) : 1;
-                const rx = d.r * (1 - stretch * 0.06);
-                const ry = d.r * stretch;
+                    if (d.tailed && d.sliding) {
+                        const tailLen = Math.min(28, ry * 2.6 + d.vy * 1.6);
+                        const tailGrad = ctx.createLinearGradient(0, -ry * 0.7, 0, -ry - tailLen);
+                        tailGrad.addColorStop(0, d.pinkRefraction
+                            ? `rgba(255, 195, 228, ${0.42 + flashBoost * 0.38})`
+                            : `rgba(248, 244, 255, ${0.38 + flashBoost * 0.35})`);
+                        tailGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
 
-                ctx.save();
-                ctx.translate(d.x, d.y);
-                ctx.rotate(d.tiltAngle + d.vx * 0.12);
+                        ctx.beginPath();
+                        ctx.moveTo(-rx * 0.38, -ry * 0.72);
+                        ctx.quadraticCurveTo(-rx * 0.14, -ry - tailLen * 0.65, -rx * 0.05, -ry - tailLen);
+                        ctx.lineTo(rx * 0.08, -ry - tailLen * 0.85);
+                        ctx.quadraticCurveTo(rx * 0.24, -ry - tailLen * 0.45, rx * 0.38, -ry * 0.72);
+                        ctx.closePath();
+                        ctx.fillStyle = tailGrad;
+                        ctx.fill();
+                    }
 
-                function traceOrganicDrop(scaleX = 1, scaleY = 1) {
-                    const w = rx * scaleX;
-                    const h = ry * scaleY;
-                    const c = Math.sin(d.facetSeed) * 0.14;
-                    ctx.beginPath();
-                    ctx.moveTo(0, -h);
-                    ctx.bezierCurveTo(w * (0.96 + c), -h * 0.72, w * 1.04, h * 0.28, w * (0.68 - c), h * 0.92);
-                    ctx.bezierCurveTo(w * 0.25, h * 1.06, -w * 0.35, h * 1.04, -w * (0.74 + c), h * 0.86);
-                    ctx.bezierCurveTo(-w * 1.05, h * 0.22, -w * (0.95 - c), -h * 0.74, 0, -h);
-                    ctx.closePath();
-                }
-
-                if (d.tailed && d.sliding) {
-                    const tailLen = Math.min(28, ry * 2.6 + d.vy * 1.6);
-                    const tailGrad = ctx.createLinearGradient(0, -ry * 0.7, 0, -ry - tailLen);
-                    tailGrad.addColorStop(0, d.pinkRefraction
-                        ? `rgba(255, 195, 228, ${0.42 + flashBoost * 0.38})`
-                        : `rgba(248, 244, 255, ${0.38 + flashBoost * 0.35})`);
-                    tailGrad.addColorStop(1, "rgba(255, 255, 255, 0)");
-
-                    ctx.beginPath();
-                    ctx.moveTo(-rx * 0.38, -ry * 0.72);
-                    ctx.quadraticCurveTo(-rx * 0.14, -ry - tailLen * 0.65, -rx * 0.05, -ry - tailLen);
-                    ctx.lineTo(rx * 0.08, -ry - tailLen * 0.85);
-                    ctx.quadraticCurveTo(rx * 0.24, -ry - tailLen * 0.45, rx * 0.38, -ry * 0.72);
-                    ctx.closePath();
-                    ctx.fillStyle = tailGrad;
+                    ctx.save();
+                    ctx.translate(rx * 0.08, ry * 0.14);
+                    traceOrganicDrop(1.05, 1.05);
+                    ctx.fillStyle = `rgba(8, 3, 12, ${0.26 + flashBoost * 0.08})`;
                     ctx.fill();
-                }
+                    ctx.restore();
 
-                ctx.save();
-                ctx.translate(rx * 0.08, ry * 0.14);
-                traceOrganicDrop(1.05, 1.05);
-                ctx.fillStyle = `rgba(8, 3, 12, ${0.26 + flashBoost * 0.08})`;
-                ctx.fill();
-                ctx.restore();
+                    const lensGrad = ctx.createRadialGradient(
+                        -rx * 0.25,
+                        -ry * 0.28,
+                        rx * 0.08,
+                        0,
+                        0,
+                        Math.max(rx, ry)
+                    );
 
-                const lensGrad = ctx.createRadialGradient(
-                    -rx * 0.25,
-                    -ry * 0.28,
-                    rx * 0.08,
-                    0,
-                    0,
-                    Math.max(rx, ry)
-                );
+                    if (d.pinkRefraction) {
+                        lensGrad.addColorStop(0.0, `rgba(255, 240, 250, ${0.22 + flashBoost * 0.38})`);
+                        lensGrad.addColorStop(0.35, `rgba(255, 115, 188, ${0.07 + flashBoost * 0.18})`);
+                        lensGrad.addColorStop(0.75, `rgba(255, 79, 163, ${0.14 + flashBoost * 0.24})`);
+                        lensGrad.addColorStop(0.94, `rgba(255, 190, 228, ${0.38 + flashBoost * 0.42})`);
+                        lensGrad.addColorStop(1.0, `rgba(255, 255, 255, ${0.12 + flashBoost * 0.22})`);
+                    } else {
+                        lensGrad.addColorStop(0.0, `rgba(255, 255, 255, ${0.18 + flashBoost * 0.28})`);
+                        lensGrad.addColorStop(0.42, `rgba(225, 215, 240, ${0.05 + flashBoost * 0.14})`);
+                        lensGrad.addColorStop(0.78, `rgba(195, 175, 220, ${0.12 + flashBoost * 0.16})`);
+                        lensGrad.addColorStop(0.95, `rgba(255, 255, 255, ${0.32 + flashBoost * 0.35})`);
+                        lensGrad.addColorStop(1.0, "rgba(255, 255, 255, 0.08)");
+                    }
 
-                if (d.pinkRefraction) {
-                    lensGrad.addColorStop(0.0, `rgba(255, 240, 250, ${0.22 + flashBoost * 0.38})`);
-                    lensGrad.addColorStop(0.35, `rgba(255, 115, 188, ${0.07 + flashBoost * 0.18})`);
-                    lensGrad.addColorStop(0.75, `rgba(255, 79, 163, ${0.14 + flashBoost * 0.24})`);
-                    lensGrad.addColorStop(0.94, `rgba(255, 190, 228, ${0.38 + flashBoost * 0.42})`);
-                    lensGrad.addColorStop(1.0, `rgba(255, 255, 255, ${0.12 + flashBoost * 0.22})`);
-                } else {
-                    lensGrad.addColorStop(0.0, `rgba(255, 255, 255, ${0.18 + flashBoost * 0.28})`);
-                    lensGrad.addColorStop(0.42, `rgba(225, 215, 240, ${0.05 + flashBoost * 0.14})`);
-                    lensGrad.addColorStop(0.78, `rgba(195, 175, 220, ${0.12 + flashBoost * 0.16})`);
-                    lensGrad.addColorStop(0.95, `rgba(255, 255, 255, ${0.32 + flashBoost * 0.35})`);
-                    lensGrad.addColorStop(1.0, "rgba(255, 255, 255, 0.08)");
-                }
-
-                traceOrganicDrop(1, 1);
-                ctx.fillStyle = lensGrad;
-                ctx.fill();
-
-                if (flashBoost > 0.08) {
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, rx * 0.65, ry * 0.65, 0, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 145, 205, ${Math.min(0.45, flashBoost * 0.65)})`;
+                    traceOrganicDrop(1, 1);
+                    ctx.fillStyle = lensGrad;
                     ctx.fill();
+
+                    if (flashBoost > 0.08) {
+                        ctx.beginPath();
+                        ctx.ellipse(0, 0, rx * 0.65, ry * 0.65, 0, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(255, 145, 205, ${Math.min(0.45, flashBoost * 0.65)})`;
+                        ctx.fill();
+                    }
+
+                    ctx.beginPath();
+                    ctx.ellipse(-rx * 0.06, -ry * 0.08, rx * 0.72, ry * 0.68, 0, Math.PI * 1.12, Math.PI * 1.68);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(0.88, 0.42 + flashBoost * 0.7)})`;
+                    ctx.lineWidth = Math.max(0.55, d.r * 0.15);
+                    ctx.lineCap = "round";
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.ellipse(rx * 0.08, ry * 0.12, rx * 0.62, ry * 0.58, 0, Math.PI * 0.12, Math.PI * 0.65);
+                    ctx.strokeStyle = d.pinkRefraction
+                        ? `rgba(255, 165, 215, ${Math.min(0.82, 0.32 + flashBoost * 0.65)})`
+                        : `rgba(235, 228, 248, ${Math.min(0.7, 0.24 + flashBoost * 0.45)})`;
+                    ctx.lineWidth = Math.max(0.45, d.r * 0.12);
+                    ctx.lineCap = "round";
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(-rx * 0.32, -ry * 0.34, Math.max(0.45, d.r * 0.17), 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.96, 0.52 + flashBoost)})`;
+                    ctx.fill();
+
+                    ctx.restore();
                 }
-
-                ctx.beginPath();
-                ctx.ellipse(-rx * 0.06, -ry * 0.08, rx * 0.72, ry * 0.68, 0, Math.PI * 1.12, Math.PI * 1.68);
-                ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(0.88, 0.42 + flashBoost * 0.7)})`;
-                ctx.lineWidth = Math.max(0.55, d.r * 0.15);
-                ctx.lineCap = "round";
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.ellipse(rx * 0.08, ry * 0.12, rx * 0.62, ry * 0.58, 0, Math.PI * 0.12, Math.PI * 0.65);
-                ctx.strokeStyle = d.pinkRefraction
-                    ? `rgba(255, 165, 215, ${Math.min(0.82, 0.32 + flashBoost * 0.65)})`
-                    : `rgba(235, 228, 248, ${Math.min(0.7, 0.24 + flashBoost * 0.45)})`;
-                ctx.lineWidth = Math.max(0.45, d.r * 0.12);
-                ctx.lineCap = "round";
-                ctx.stroke();
-
-                ctx.beginPath();
-                ctx.arc(-rx * 0.32, -ry * 0.34, Math.max(0.45, d.r * 0.17), 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.96, 0.52 + flashBoost)})`;
-                ctx.fill();
-
-                ctx.restore();
-            }
-        }
-
-        function renderScene(now = performance.now()) {
-            const rawDt = (now - lastFrameTime) / 16.6667;
-            lastFrameTime = now;
-
-            if (!isPageHidden) {
-                const dtScale = Math.min(2.2, Math.max(0.35, rawDt));
-                ctx.clearRect(0, 0, viewW, viewH);
-
-                if (flashBoost > 0) {
-                    flashBoost = Math.max(0, flashBoost - 0.011 * dtScale);
-                }
-
-                drawLightningLayer(dtScale);
-                drawMistLayer(dtScale);
-                drawLightDustLayer(dtScale);
-                drawMicroBeadsLayer();
-                drawRainStreaksLayer(dtScale);
-                drawGlassDropsLayer(dtScale);
             }
 
+            function renderScene(now = performance.now()) {
+                const rawDt = (now - lastFrameTime) / 16.6667;
+                lastFrameTime = now;
+
+                if (!isPageHidden) {
+                    const dtScale = Math.min(2.2, Math.max(0.35, rawDt));
+                    ctx.clearRect(0, 0, viewW, viewH);
+
+                    if (flashBoost > 0) {
+                        flashBoost = Math.max(0, flashBoost - 0.011 * dtScale);
+                    }
+
+                    drawLightningLayer(dtScale);
+                    drawMistLayer(dtScale);
+                    drawLightDustLayer(dtScale);
+                    drawMicroBeadsLayer();
+                    drawRainStreaksLayer(dtScale);
+                    drawGlassDropsLayer(dtScale);
+                }
+
+                requestAnimationFrame(renderScene);
+            }
+
+            document.addEventListener("visibilitychange", () => {
+                isPageHidden = document.hidden;
+                lastFrameTime = performance.now();
+            });
+
+            window.addEventListener("resize", resizeWeather);
+            resizeWeather();
             requestAnimationFrame(renderScene);
+            setTimeout(() => triggerStormSequence(false), 800);
+            scheduleLightning();
         }
-
-        document.addEventListener("visibilitychange", () => {
-            isPageHidden = document.hidden;
-            lastFrameTime = performance.now();
-        });
-
-        window.addEventListener("resize", resizeWeather);
-        resizeWeather();
-        requestAnimationFrame(renderScene);
-        setTimeout(() => triggerStormSequence(false), 800);
-        scheduleLightning();
     </script>
 
     <!-- YouTube Müzik Oynatıcı (Eski Fon Müziği Kaldırıldı, YouTube Loop Aktif) -->
@@ -2112,13 +2233,15 @@
         });
     </script>
 
-    <!-- Kick Canlı Yayın, İzleyici Sayısı, Kategori, Takipçi, Gizli Yayın Yönlendirme ve 3D Kart Etkileşimi -->
+    <!-- Kick Canlı Yayın, İzleyici Sayısı, Kategori, Yayın Başlığı, Takipçi, Gizli Yayın Yönlendirme ve 3D Kart Etkileşimi -->
     <script>
         const channel = "rarbennn";
         const liveStreamUrl = `https://kick.com/${channel}`;
         const statusBox = document.getElementById("streamStatus");
         const statusText = document.getElementById("statusText");
+        const streamMetaRow = document.getElementById("streamMetaRow");
         const streamCategory = document.getElementById("streamCategory");
+        const streamTitlePill = document.getElementById("streamTitlePill");
         const followerCount = document.getElementById("followerCount");
         const kickAvatar = document.getElementById("kickAvatar");
         const avatarFallback = document.getElementById("avatarFallback");
@@ -2161,27 +2284,29 @@
             });
         });
 
-        document.addEventListener("mousemove", (e) => {
-            if (isPageHidden) return;
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 58;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 58;
-            tiltContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        if (!isMobileDevice) {
+            document.addEventListener("mousemove", (e) => {
+                if (document.hidden) return;
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 58;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 58;
+                tiltContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
 
-            const rect = tiltContainer.getBoundingClientRect();
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-            tiltContainer.style.setProperty("--mouse-x", `${mouseX}px`);
-            tiltContainer.style.setProperty("--mouse-y", `${mouseY}px`);
-        });
+                const rect = tiltContainer.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+                tiltContainer.style.setProperty("--mouse-x", `${mouseX}px`);
+                tiltContainer.style.setProperty("--mouse-y", `${mouseY}px`);
+            });
 
-        document.addEventListener("mouseleave", () => {
-            tiltContainer.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            tiltContainer.style.transition = "transform 0.5s ease";
-        });
+            document.addEventListener("mouseleave", () => {
+                tiltContainer.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                tiltContainer.style.transition = "transform 0.5s ease";
+            });
 
-        document.addEventListener("mouseenter", () => {
-            tiltContainer.style.transition = "none";
-        });
+            document.addEventListener("mouseenter", () => {
+                tiltContainer.style.transition = "none";
+            });
+        }
 
         async function checkStream() {
             try {
@@ -2194,13 +2319,28 @@
                 if (stream && (stream.id || stream.is_live)) {
                     const viewers = Number(stream.viewer_count ?? stream.viewers);
                     setStatus("live", Number.isFinite(viewers) ? viewers.toLocaleString("tr-TR") : "0");
+
                     const categoryName = stream.category?.name || stream.subcategory?.name;
+                    const streamTitle = (stream.session_title || stream.title || "").trim();
+                    let hasMeta = false;
+
                     if (categoryName) {
                         streamCategory.textContent = `Kategori: ${categoryName}`;
                         streamCategory.style.display = "block";
+                        hasMeta = true;
                     } else {
                         streamCategory.style.display = "none";
                     }
+
+                    if (streamTitle) {
+                        streamTitlePill.textContent = streamTitle;
+                        streamTitlePill.style.display = "block";
+                        hasMeta = true;
+                    } else {
+                        streamTitlePill.style.display = "none";
+                    }
+
+                    streamMetaRow.classList.toggle("visible", hasMeta);
                 } else {
                     setStatus("offline");
                 }
@@ -2222,7 +2362,9 @@
                 statusBox.setAttribute("tabindex", "-1");
                 statusBox.setAttribute("aria-disabled", "true");
                 statusBox.removeAttribute("title");
+                streamMetaRow.classList.remove("visible");
                 streamCategory.style.display = "none";
+                streamTitlePill.style.display = "none";
             }
         }
 
