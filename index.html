@@ -17,6 +17,16 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        img {
+            -webkit-user-drag: none;
+            user-drag: none;
         }
 
         :root {
@@ -732,6 +742,7 @@
             height: 100%;
             object-fit: cover;
             display: none;
+            pointer-events: none;
         }
 
         .logo {
@@ -1324,7 +1335,7 @@
                 <div class="avatar-spin-ring"></div>
                 <div class="avatar-ring"></div>
                 <div class="avatar-core">
-                    <img id="kickAvatar" alt="RaRBennn">
+                    <img id="kickAvatar" alt="RaRBennn" draggable="false">
                     <div id="avatarFallback">R<span>B</span></div>
                 </div>
             </div>
@@ -1474,6 +1485,17 @@
         </footer>
 
     </main>
+
+    <!-- Metin Seçimi, Kopyalama ve Sağ Tık Engeli -->
+    <script>
+        (function protectContent() {
+            ["copy", "cut", "contextmenu", "selectstart", "dragstart"].forEach((eventName) => {
+                document.addEventListener(eventName, (e) => {
+                    e.preventDefault();
+                });
+            });
+        })();
+    </script>
 
     <!-- Her Daim Çalışan Siber Hover & Tıklama Ses Efektleri (Web Audio API) -->
     <script>
